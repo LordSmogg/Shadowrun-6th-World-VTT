@@ -1,0 +1,56 @@
+{
+    "name": "shadowrun6e",
+    "title": "Shadowrun 6th Edition",
+    "description": "Shadowrun 6th Edition game",
+    "version": "0.7.17",
+    "templateVersion": "3",
+    "author": "LordSmogg",
+    "esmodules": ["dist/bundle.js"],
+    "styles": ["dist/bundle.css"],
+    "minimumCoreVersion": "0.8.5",
+    "compatibleCoreVersion": "0.8.5",
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "dist/locale/en/config.json"
+        },
+        {
+            "lang": "de",
+            "name": "Deutsch",
+            "path": "dist/locale/de/config.json"
+        },
+        {
+            "lang": "pt-BR",
+            "name": "Português (Brasil)",
+            "path": "dist/locale/pt-BR/config.json"
+        }
+    ],
+    "packs": [
+        {
+            "name": "Roles",
+            "label": "SR5e NPCs",
+            "system": "shadowrun6e",
+            "path": "./packs/sr5e-npcs.db",
+            "entity": "Actor"
+        },
+        {
+            "name": "Matrix Actions",
+            "label": "SR5e Matrix Actions",
+            "system": "shadowrun6e",
+            "path": "./packs/sr5e-matrix-actions.db",
+            "entity": "Item"
+        }
+    ],
+    "initiative": "@initiative.current.base.value + @initiative.current.dice.text - @wounds.value",
+    "primaryTokenAttribute": "track.physical",
+    "secondaryTokenAttribute": "track.stun",
+    "gridDistance": 1,
+    "gridUnits": "m",
+    "socket": true,
+    "manifest": "https://raw.githubusercontent.com/LordSmogg/SR6-FoundryVTT/master/system.json",
+    "url": "https://github.com/LordSmogg/SR6-FoundryVTT",
+    "download": "https://github.com/LordSmogg/SR6-FoundryVTT/archive/refs/tags/Smogg0.0.3.zip",
+    "allowBugReporter": true,
+    "bugs": "https://github.com/LordSmogg/SR6-FoundryVTT/issues"
+}
