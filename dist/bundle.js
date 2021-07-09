@@ -22308,10 +22308,10 @@ exports.SR = {
             },
             levels: {
                 good: 0,
-                light: -1,
-                moderate: -3,
-                heavy: -6,
-                extreme: -10,
+                light: 1,
+                moderate: 2,
+                heavy: 3,
+                extreme: 4,
             }
         },
         INI_RESULT_MOD_AFTER_INI_PASS: -100,
@@ -27559,13 +27559,6 @@ exports.ChatData = {
             props.push(`${game.i18n.localize('SR5.Conceal')} ${data.technology.conceal.value}`);
         }
         if (data.category === 'range') {
-            if (data.range.rc) {
-                let rcString = `${game.i18n.localize('SR5.RecoilCompensation')} ${data.range.rc.value}`;
-                if (item === null || item === void 0 ? void 0 : item.actor) {
-                    rcString += ` (${game.i18n.localize('SR5.Total')} ${item.actor.getRecoilCompensation()})`;
-                }
-                props.push(rcString);
-            }
             if (data.range.modes) {
                 const newModes = [];
                 const { modes } = data.range;
@@ -28247,19 +28240,13 @@ class SR5Item extends Item {
         return parts.list;
     }
     calculateRecoil() {
-        var _a;
-        const lastFireMode = this.getLastFireMode();
-        if (!lastFireMode)
-            return 0;
-        if (lastFireMode.value === 20)
-            return 0;
-        return Math.min(this.getRecoilCompensation(true) - (((_a = this.getLastFireMode()) === null || _a === void 0 ? void 0 : _a.value) || 0), 0);
+		return 0;
     }
     _addWeaponParts(parts) {
         if (this.isRangedWeapon()) {
             const recoil = this.calculateRecoil();
-            if (recoil)
-                parts.addUniquePart('SR5.Recoil', recoil);
+               if (recoil) 
+				   parts.addUniquePart('SR5.Recoil', recoil);
         }
     }
     isSin() {
