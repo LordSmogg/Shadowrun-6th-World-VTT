@@ -1,7 +1,7 @@
 Manifest: https://raw.githubusercontent.com/LordSmogg/Shadowrun-6th-World-VTT/master/system.json
 
 
-This is based on a 5th edtion system, and I think there are still some dependencies left, if the system is not working right, try also install: https://raw.githubusercontent.com/smilligan93/SR5-FoundryVTT/master/system.json
+This is based on a 5th edtion system, and I think there are still some dependencies left. If the system is not working right, try also install: https://raw.githubusercontent.com/smilligan93/SR5-FoundryVTT/master/system.json
 
 So what is this:
 Lacking a foundry system for Shadowrun 6th edtion, I modified a 5th edition system to align it as close as i could to 6th without having to go too deep into coding. Basically i just wanted something that worked. 
