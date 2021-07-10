@@ -16264,7 +16264,7 @@ class SoakRules {
         if (mod) {
             soakParts.addUniquePart('SR6.Bonus', mod);
         }
-        actor._addArmorParts(soakParts);
+        // actor._addArmorParts(soakParts);
     }
     static applyArmorPenetration(soakParts, armor, damageData) {
         var _a;
@@ -20059,7 +20059,7 @@ class ShadowrunActorDialogs {
                 label: 'SR6.Parry',
                 weapon: weapon.name,
                 value: (_a = actor.findActiveSkill(weapon.getActionSkill())) === null || _a === void 0 ? void 0 : _a.value,
-                init: -5,
+                init: 0,
             };
             defenseReach = Math.max(defenseReach, weapon.getReach());
         });
