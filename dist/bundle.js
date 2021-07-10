@@ -20042,12 +20042,12 @@ class ShadowrunActorDialogs {
             },
             dodge: {
                 label: 'SR6.Dodge',
-                value: (_b = actor.findActiveSkill('Athletics')) === null || _b === void 0 ? void 0 : _b.value,
+                value: (_b = actor.findActiveSkill('athletics')) === null || _b === void 0 ? void 0 : _b.value,
                 initMod: 0,
             },
             block: {
                 label: 'SR6.Block',
-                value: (_c = actor.findActiveSkill('Close Combat')) === null || _c === void 0 ? void 0 : _c.value,
+                value: (_c = actor.findActiveSkill('close_combat')) === null || _c === void 0 ? void 0 : _c.value,
                 initMod: 0,
             },
         };
@@ -22025,7 +22025,25 @@ exports.SR6 = {
         interests: 'SR6.KnowledgeSkillInterests',
     },
     activeSkills: {
-		
+		astral: 'SR6.SkillAstral',
+		athletics: 'SR6.SkillAthletics',
+		biotech: 'SR6.SkillBiotech',
+		close_combat: 'SR6.SkillCloseCombat',
+		con: 'SR6.SkillCon',
+		conjuring: 'SR6.SkillConjuring',
+		cracking: 'SR6.SkillCracking',
+		electronics: 'SR6.SkillElectronics',
+		enchanting: 'SR6.SkillEnchanting',
+		engineering: 'SR6.SkillEngineering',
+		exotic_weapons: 'SR6.SkillExoticWeapons',
+		firearms: 'SR6.SkillFirearms',
+		influence: 'SR6.SkillInfluence',
+		outdoors: 'SR6.SkillOutdoors',
+		perception: 'SR6.SkillPerception',
+		piloting: 'SR6.SkillPiloting',
+		sorcery: 'SR6.SkillSorcery',
+		stealth: 'SR6.SkillStealth',
+		tasking: 'SR6.SkillTasking',
 	},
     actionTypes: {
         none: 'SR6.ActionTypeNone',

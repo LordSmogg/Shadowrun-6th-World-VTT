@@ -139,6 +139,158 @@
             "skills": {
                 "skills": {
                     "active": {
+                        "astral": {
+                            "value": 0,
+                            "attribute": "intuition",
+                            "canDefault": false,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "athletics": {
+                            "value": 0,
+                            "attribute": "agility",
+                            "canDefault": true,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "biotech": {
+                            "value": 0,
+                            "attribute": "logic",
+                            "canDefault": false,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "close_combat": {
+                            "value": 0,
+                            "attribute": "agility",
+                            "canDefault": true,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "con": {
+                            "value": 0,
+                            "attribute": "charisma",
+                            "canDefault": true,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "conjuring": {
+                            "value": 0,
+                            "attribute": "magic",
+                            "canDefault": false,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "cracking": {
+                            "value": 0,
+                            "attribute": "logic",
+                            "canDefault": false,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "electronics": {
+                            "value": 0,
+                            "attribute": "logic",
+                            "canDefault": true,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "enchanting": {
+                            "value": 0,
+                            "attribute": "magic",
+                            "canDefault": false,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "engineering": {
+                            "value": 0,
+                            "attribute": "logic",
+                            "canDefault": true,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "exotic_weapons": {
+                            "value": 0,
+                            "attribute": "agility",
+                            "canDefault": false,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "firearms": {
+                            "value": 0,
+                            "attribute": "agility",
+                            "canDefault": true,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "influence": {
+                            "value": 0,
+                            "attribute": "charisma",
+                            "canDefault": true,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "outdoors": {
+                            "value": 0,
+                            "attribute": "intuition",
+                            "canDefault": true,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "perception": {
+                            "value": 0,
+                            "attribute": "intuition",
+                            "canDefault": true,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "piloting": {
+                            "value": 0,
+                            "attribute": "reaction",
+                            "canDefault": true,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "sorcery": {
+                            "value": 0,
+                            "attribute": "magic",
+                            "canDefault": false,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "stealth": {
+                            "value": 0,
+                            "attribute": "agility",
+                            "canDefault": true,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        },
+                        "tasking": {
+                            "value": 0,
+                            "attribute": "resonance",
+                            "canDefault": false,
+                            "group": "",
+                            "mod": [],
+                            "specs": []
+                        }
 					},
                     "knowledge": {
                         "street": {
