@@ -18,4 +18,4 @@ So what was changed:
 
 So in short, many things were adjusted to make it playable for 6th edtion, but its not perfect, and I dont expect to mantain it much. 
 
-The guys at RPG Framework are doing great progress on another Shadowrun 6th Edtion Module, so I reccomend you check that out as well: https://www.rpgframework.de/index.php/en/welcome-to-rpg-framework/
+The guys at RPG Framework are doing great progress on another Shadowrun 6th Edtion System for VTT, so I reccomend you check that out as well: https://www.rpgframework.de/index.php/en/welcome-to-rpg-framework/
