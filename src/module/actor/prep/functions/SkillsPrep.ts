@@ -1,14 +1,14 @@
-import SR5ActorData = Shadowrun.SR5ActorData;
+import SR6ActorData = Shadowrun.SR6ActorData;
 import { Helpers } from '../../../helpers';
 import { PartsList } from '../../../parts/PartsList';
 import SkillField = Shadowrun.SkillField;
-import {SR5} from "../../../config";
+import {SR6} from "../../../config";
 
 export class SkillsPrep {
     /**
      * Prepare actor data for skills
      */
-    static prepareSkills(data: SR5ActorData) {
+    static prepareSkills(data: SR6ActorData) {
         const { language, active, knowledge } = data.skills;
         if (language) {
             if (!language.value) {
@@ -74,7 +74,7 @@ export class SkillsPrep {
 
         // skill labels
         for (let [skillKey, skillValue] of Object.entries(active)) {
-            skillValue.label = SR5.activeSkills[skillKey];
+            skillValue.label = SR6.activeSkills[skillKey];
         }
     }
 }

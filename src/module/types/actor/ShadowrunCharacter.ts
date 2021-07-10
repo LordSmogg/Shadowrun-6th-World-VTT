@@ -1,37 +1,37 @@
 /// <reference path="../Shadowrun.ts" />
 
 declare namespace Shadowrun {
-    export type SR5ActorSheetData = ActorSheet.Data & {
-        config: typeof SR5CONFIG;
-        data: SR5ActorData;
-        filters: SR5SheetFilters;
+    export type SR6ActorSheetData = ActorSheet.Data & {
+        config: typeof SR6CONFIG;
+        data: SR6ActorData;
+        filters: SR6SheetFilters;
         isCharacter: boolean;
         isSpirit: boolean;
         isCritter: boolean;
         awakened: boolean;
         emerged: boolean;
         woundTolerance: number;
-        vehicle: SR5VehicleSheetData;
+        vehicle: SR6VehicleSheetData;
     };
 
-    export type SR5VehicleSheetData = {
-        // TODO: SR5 Actor class, however conflicts between SR5Actor and SR5ActorBase prohibit this...
+    export type SR6VehicleSheetData = {
+        // TODO: SR6 Actor class, however conflicts between SR6Actor and SR6ActorBase prohibit this...
         driver?: object
     }
 
-    export type SR5SheetFilters = {
+    export type SR6SheetFilters = {
         skills: string;
         showUntrainedSkills
     };
 
-    export type SR5ActorType = SR5SpiritType | SR5CharacterType | SR5SpriteType | SR5VehicleType | SR5CritterType;
+    export type SR6ActorType = SR6SpiritType | SR6CharacterType | SR6SpriteType | SR6VehicleType | SR6CritterType;
 
     // TODO: A lot of duplicate type definitions to what's in Actor.Data. Might cause problems during a FoundryVTT update
-    export type SR5ActorBase = Actor.Data & {
+    export type SR6ActorBase = Actor.Data & {
         name: string;
         _id: string;
         folder: string | null;
-        data: SR5ActorData;
+        data: SR6ActorData;
         items: Collection<Item>;
         flags: object;
         type: string;
@@ -41,12 +41,12 @@ declare namespace Shadowrun {
     };
 
 
-    export type SR5CharacterType = SR5ActorBase & {
+    export type SR6CharacterType = SR6ActorBase & {
         data: CharacterActorData;
         type: 'character';
     };
 
-    export type SR5ActorData =
+    export type SR6ActorData =
         SpiritActorData
         | CharacterActorData
         | SpriteActorData
@@ -74,7 +74,7 @@ declare namespace Shadowrun {
         special: SpecialTrait;
         initiative: Initiative;
         recoil_compensation: number;
-        metatype: string | keyof typeof SR5CONFIG.character.types;
+        metatype: string | keyof typeof SR6CONFIG.character.types;
         full_defense_attribute: string;
     };
 

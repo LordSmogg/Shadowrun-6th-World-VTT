@@ -1,6 +1,6 @@
 /// <reference path="../Shadowrun.ts" />
 declare namespace Shadowrun {
-    export type SR5ItemType =
+    export type SR6ItemType =
         | Action
         | AdeptPower
         | Ammo
@@ -21,7 +21,7 @@ declare namespace Shadowrun {
         | SpritePower
         | Weapon;
 
-    export type SR5ItemDataPartial = Partial<ActionData> &
+    export type SR6ItemDataPartial = Partial<ActionData> &
         Partial<AdeptPowerData> &
         Partial<AmmoData> &
         Partial<ArmorData> &
@@ -41,7 +41,7 @@ declare namespace Shadowrun {
         Partial<SpritePowerData> &
         Partial<WeaponData>;
 
-    export type SR5ItemData<DataType> = Item.Data<DataType> & {
+    export type SR6ItemData<DataType> = Item.Data<DataType> & {
         _id: string;
         folder?: string | null;
         permission?: {

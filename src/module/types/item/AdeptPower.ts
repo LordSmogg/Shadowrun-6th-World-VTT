@@ -1,5 +1,5 @@
 declare namespace Shadowrun {
-    export type AdeptPower = SR5ItemData<AdeptPowerData> & {
+    export type AdeptPower = SR6ItemData<AdeptPowerData> & {
         type: 'adept_power';
     };
 

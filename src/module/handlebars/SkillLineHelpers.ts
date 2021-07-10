@@ -1,6 +1,6 @@
 import SkillField = Shadowrun.SkillField;
 import { Helpers } from '../helpers';
-import SR5SheetFilters = Shadowrun.SR5SheetFilters;
+import SR6SheetFilters = Shadowrun.SR6SheetFilters;
 import SkillCategories = Shadowrun.SkillCategories;
 import {SkillRules} from "../actor/SkillRules";
 import {FLAGS, SYSTEM_NAME} from "../constants";
@@ -9,8 +9,8 @@ export const registerSkillLineHelpers = () => {
     Handlebars.registerHelper('SkillHeaderIcons', function (category: SkillCategories) {
         const addIcon = {
             icon: 'fas fa-plus',
-            title: game.i18n.localize('SR5.AddSkill'),
-            text: game.i18n.localize('SR5.Add'),
+            title: game.i18n.localize('SR6.AddSkill'),
+            text: game.i18n.localize('SR6.Add'),
             cssClass: '',
         };
         switch (category) {
@@ -28,10 +28,10 @@ export const registerSkillLineHelpers = () => {
         }
     });
 
-    Handlebars.registerHelper('SkillHeaderRightSide', function (id, filters: SR5SheetFilters) {
+    Handlebars.registerHelper('SkillHeaderRightSide', function (id, filters: SR6SheetFilters) {
         const specs = {
             text: {
-                text: game.i18n.localize('SR5.Specialization'),
+                text: game.i18n.localize('SR6.Specialization'),
                 cssClass: 'skill-spec-item',
             },
         };
@@ -40,8 +40,8 @@ export const registerSkillLineHelpers = () => {
             // Change Rating header to show active filtering.
             text: {
                 text: !filters || filters.showUntrainedSkills ?
-                    game.i18n.localize('SR5.Rtg') :
-                    game.i18n.localize('SR5.RtgAboveZero'),
+                    game.i18n.localize('SR6.Rtg') :
+                    game.i18n.localize('SR6.RtgAboveZero'),
                 cssClass: 'rtg',
             },
         };
@@ -76,7 +76,7 @@ export const registerSkillLineHelpers = () => {
     Handlebars.registerHelper('SkillAdditionCssClass', function(skill: SkillField): string[] {
         const classes: string[] = [];
 
-        // @PDF SR5#151 not defaultable skills should be shown as italic.
+        // @PDF SR6#151 not defaultable skills should be shown as italic.
         if (game.settings.get(SYSTEM_NAME, FLAGS.ShowSkillsWithDetails) && !SkillRules.allowDefaultingRoll(skill)) {
             classes.push('skill-roll-not-defaultable');
         }
@@ -87,12 +87,12 @@ export const registerSkillLineHelpers = () => {
     Handlebars.registerHelper('SkillIcons', function (skillType: string, skill: SkillField) {
         const editIcon = {
             icon: 'fas fa-edit',
-            title: game.i18n.localize('SR5.EditSkill'),
+            title: game.i18n.localize('SR6.EditSkill'),
             cssClass: '',
         };
         const removeIcon = {
             icon: 'fas fa-trash',
-            title: game.i18n.localize('SR5.DeleteSkill'),
+            title: game.i18n.localize('SR6.DeleteSkill'),
             cssClass: '',
         };
         switch (skillType) {

@@ -1,6 +1,6 @@
 import SkillField = Shadowrun.SkillField;
 import {PartsList} from "../parts/PartsList";
-import {SR5} from "../config";
+import {SR6} from "../config";
 import {SR} from "../constants";
 
 export class SkillRules {
@@ -10,7 +10,7 @@ export class SkillRules {
     }
     /**
      * Allow defaulting a skill role.
-     * @PDF SR5#130
+     * @PDF SR6#130
      * @param skill Check for this skills ability to be defaulted.
      * @return true will allow for a SuccessTest / role to proceed.
      */
@@ -22,7 +22,7 @@ export class SkillRules {
 
     /**
      * Allow a skill role.
-     * @PDF SR5#130
+     * @PDF SR6#130
      * @param skill Check for this skills ability to be rolled.
      * @return true will allow for a SuccessTest / role to proceed.
      */
@@ -35,7 +35,7 @@ export class SkillRules {
      * @param parts Should be a PartsList involved with skills.
      */
     static addDefaultingPart(parts: PartsList<number>) {
-        parts.addUniquePart('SR5.Defaulting', SkillRules.getDefaultingModifier());
+        parts.addUniquePart('SR6.Defaulting', SkillRules.getDefaultingModifier());
     }
 
     static getDefaultingModifier(): number {

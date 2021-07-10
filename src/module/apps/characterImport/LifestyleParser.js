@@ -1,5 +1,5 @@
 import { parseDescription, getArray, createItemData } from "./BaseParserFunctions.js"
-import {SR5} from "../../config"
+import {SR6} from "../../config"
 
 export class LifestyleParser {
     parseLifestyles(chummerChar) {
@@ -24,13 +24,13 @@ export class LifestyleParser {
         const data = {};
 
         // Advanced lifestyles and lifestyle qualities are not supported at the moment
-        // Map the chummer lifestyle type to our sr5 foundry type. 
+        // Map the chummer lifestyle type to our sr6 foundry type. 
         const chummerLifestyleType = chummerLifestyle.baselifestyle.toLowerCase();
-        if ((chummerLifestyleType in SR5.lifestyleTypes)) {
+        if ((chummerLifestyleType in SR6.lifestyleTypes)) {
             data.type = chummerLifestyleType;
         }
         else {
-            // This is necessary because of a typo in SR5 config.
+            // This is necessary because of a typo in SR6 config.
             if (chummerLifestyleType === 'luxury') {
                 data.type = 'luxory';
             }

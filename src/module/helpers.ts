@@ -10,10 +10,10 @@ import DamageType = Shadowrun.DamageType;
 import DamageElement = Shadowrun.DamageElement;
 import {PartsList} from './parts/PartsList';
 import {DEFAULT_ID_LENGTH, FLAGS, LENGTH_UNIT, LENGTH_UNIT_TO_METERS_MULTIPLIERS, SR, SYSTEM_NAME} from "./constants";
-import {SR5Actor} from "./actor/SR5Actor";
+import {SR6Actor} from "./actor/SR6Actor";
 import {DataTemplates} from "./dataTemplates";
 import {DeleteConfirmationDialog} from "./apps/dialogs/DeleteConfirmationDialog";
-import { SR5Item } from './item/SR5Item';
+import { SR6Item } from './item/SR6Item';
 import Skills = Shadowrun.Skills;
 import {ShadowrunRoll} from "./rolls/ShadowrunRoller";
 
@@ -34,7 +34,7 @@ export class Helpers {
         const parts = new PartsList(value.mod);
         // if a temp field is found, add it as a unique part
         if (value['temp'] !== undefined) {
-            parts.addUniquePart('SR5.Temporary', value['temp']);
+            parts.addUniquePart('SR6.Temporary', value['temp']);
         }
 
         value.value = Helpers.roundTo(parts.total + value.base, 3);
@@ -75,25 +75,25 @@ export class Helpers {
         return event.currentTarget.closest('.list-item').dataset.itemId;
     }
 
-    // replace 'SR5.'s on keys with 'SR5_DOT_'
+    // replace 'SR6.'s on keys with 'SR6_DOT_'
     static onSetFlag(data) {
         if (typeof data !== 'object') return data;
         if (data === undefined || data === null) return data;
         const newData = {};
         for (const [key, value] of Object.entries(data)) {
-            const newKey = key.replace('SR5.', 'SR5_DOT_');
+            const newKey = key.replace('SR6.', 'SR6_DOT_');
             newData[newKey] = this.onSetFlag(value);
         }
         return newData;
     }
 
-    // replace 'SR5_DOT_' with 'SR5.' on keys
+    // replace 'SR6_DOT_' with 'SR6.' on keys
     static onGetFlag(data) {
         if (typeof data !== 'object') return data;
         if (data === undefined || data === null) return data;
         const newData = {};
         for (const [key, value] of Object.entries(data)) {
-            const newKey = key.replace('SR5_DOT_', 'SR5.');
+            const newKey = key.replace('SR6_DOT_', 'SR6.');
             newData[newKey] = this.onGetFlag(value);
         }
         return newData;
@@ -104,15 +104,15 @@ export class Helpers {
         if (typeof atts === 'boolean') return atts;
         // array of labels to check for on the incoming data
         const matrixLabels = [
-            'SR5.MatrixAttrFirewall',
-            'SR5.MatrixAttrDataProcessing',
-            'SR5.MatrixAttrSleaze',
-            'SR5.MatrixAttrAttack',
-            'SR5.SkillComputer',
-            'SR5.SkillHacking',
-            'SR5.SkillCybercombat',
-            'SR5.SkillElectronicWarfare',
-            'SR5.Software',
+            'SR6.MatrixAttrFirewall',
+            'SR6.MatrixAttrDataProcessing',
+            'SR6.MatrixAttrSleaze',
+            'SR6.MatrixAttrAttack',
+            'SR6.SkillComputer',
+            'SR6.SkillHacking',
+            'SR6.SkillCybercombat',
+            'SR6.SkillElectronicWarfare',
+            'SR6.Software',
         ];
         if (!Array.isArray(atts)) atts = [atts];
         atts = atts.filter((att) => att);
@@ -190,7 +190,7 @@ export class Helpers {
         if (rounds === 3) return '-2';
         if (rounds === 6) return '-5';
         if (rounds === 10) return '-9';
-        if (rounds === 20) return 'SR5.DuckOrCover';
+        if (rounds === 20) return 'SR6.DuckOrCover';
         return '';
     }
 
@@ -281,7 +281,7 @@ export class Helpers {
      * Use this helper to get a tokens actor from any given scene id, while the sceneTokenId is a mixed ID
      * @param sceneTokenId A mixed id with the format '<sceneId>.<tokenid>
      */
-    static getSceneTokenActor(sceneTokenId: string): SR5Actor | undefined {
+    static getSceneTokenActor(sceneTokenId: string): SR6Actor | undefined {
         const [sceneId, tokenId] = sceneTokenId.split('.');
         const scene = game.scenes.get(sceneId);
         if (!scene) return;
@@ -343,7 +343,7 @@ export class Helpers {
             return ranges[rangeKey];
         } else {
             const {extreme} = ranges;
-            return Helpers.createRangeDescription('SR5.OutOfRange', extreme.distance, SR.combat.environmental.range_modifiers.out_of_range);
+            return Helpers.createRangeDescription('SR6.OutOfRange', extreme.distance, SR.combat.environmental.range_modifiers.out_of_range);
         }
     }
 
@@ -352,13 +352,13 @@ export class Helpers {
         return canvas.tokens.controlled;
     }
 
-    static getSelectedActorsOrCharacter(): SR5Actor[] {
+    static getSelectedActorsOrCharacter(): SR6Actor[] {
         const tokens = Helpers.getControlledTokens();
-        const actors = tokens.map(token => token.actor) as SR5Actor[];
+        const actors = tokens.map(token => token.actor) as SR6Actor[];
 
         // Try to default to a users character.
         if (actors.length === 0 && game.user?.character) {
-            actors.push(game.user?.character as SR5Actor);
+            actors.push(game.user?.character as SR6Actor);
         }
 
         return actors;
@@ -378,7 +378,7 @@ export class Helpers {
         });
     }
 
-    static getChatSpeakerName(actor: SR5Actor): string {
+    static getChatSpeakerName(actor: SR6Actor): string {
         if (!actor) return '';
 
         const useTokenNameForChatOutput = game.settings.get(SYSTEM_NAME, FLAGS.ShowTokenNameForChatOutput);
@@ -389,7 +389,7 @@ export class Helpers {
         return actor.name;
     }
 
-    static createDamageData(value: number, type: DamageType, ap: number = 0, element: DamageElement = '', sourceItem? : SR5Item): DamageData {
+    static createDamageData(value: number, type: DamageType, ap: number = 0, element: DamageElement = '', sourceItem? : SR6Item): DamageData {
         const damage = duplicate(DataTemplates.damage) as DamageData;
         damage.base = value;
         damage.value = value;
@@ -416,7 +416,7 @@ export class Helpers {
      * Retrieves the item causing the damage, if there is any.
      * This only works for embedded items at the moment
      */
-    static findDamageSource(damageData : DamageData) : SR5Item | undefined{
+    static findDamageSource(damageData : DamageData) : SR6Item | undefined{
         if (!damageData.source) {
             return;
         }
@@ -432,7 +432,7 @@ export class Helpers {
 
         // First search the actor itself for the item
         const itemId = damageData.source.itemId;
-        const actorItem = actorSource.items.get(itemId) as unknown as SR5Item;
+        const actorItem = actorSource.items.get(itemId) as unknown as SR6Item;
         if (actorItem)
         {
             return actorItem;
@@ -442,11 +442,11 @@ export class Helpers {
         // This will not work if we are on a different scene or the token got deleted, which is expected when you put an
         // item on a token without linking it.
         const tokens = actorSource.getActiveTokens();
-        let tokenItem : SR5Item | undefined;
+        let tokenItem : SR6Item | undefined;
         tokens.forEach(token => {
             const foundItem = token.actor.items.find(i => i.id === itemId);
             if (foundItem) {
-                tokenItem = foundItem as unknown as SR5Item;
+                tokenItem = foundItem as unknown as SR6Item;
             }
         });
 
@@ -577,7 +577,7 @@ export class Helpers {
     }
 
     /**
-     * Alphabetically sort any SR5 config object with a key to label structure.
+     * Alphabetically sort any SR6 config object with a key to label structure.
      *
      * Sorting should be aware of UTF-8, however please blame JavaScript if it's not. :)
      *

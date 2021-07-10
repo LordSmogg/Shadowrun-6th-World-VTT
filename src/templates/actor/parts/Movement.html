@@ -1,12 +1,12 @@
-{{#> "systems/shadowrun5e/dist/templates/common/Attribute.html" cssClass="no-grow"}}
+{{#> "systems/shadowrun6e/dist/templates/common/Attribute.html" cssClass="no-grow"}}
     <div class="attribute-name">
-        {{localize "SR5.Movement"}}
+        {{localize "SR6.Movement"}}
     </div>
     <div class="track">
         <div class="attribute-input-container">
-            {{> 'systems/shadowrun5e/dist/templates/common/ValueInput.html'
+            {{> 'systems/shadowrun6e/dist/templates/common/ValueInput.html'
                     cssClass="attribute-input"
-                    title=(localize 'SR5.WalkingSpeed')
+                    title=(localize 'SR6.WalkingSpeed')
                     size="2"
                     maxLength="2"
                     value=data.movement.walk.value
@@ -15,9 +15,9 @@
         </div>
         <div class="track-slash"></div>
         <div class="attribute-input-container">
-            {{> 'systems/shadowrun5e/dist/templates/common/ValueInput.html'
+            {{> 'systems/shadowrun6e/dist/templates/common/ValueInput.html'
                     cssClass="attribute-input"
-                    title=(localize 'SR5.RunningSpeed')
+                    title=(localize 'SR6.RunningSpeed')
                     size="2"
                     maxLength="2"
                     value=data.movement.run.value
@@ -26,9 +26,9 @@
         </div>
         <div class="track-slash"></div>
         <div class="input attribute-input-container">
-            {{> 'systems/shadowrun5e/dist/templates/common/ValueInput.html'
+            {{> 'systems/shadowrun6e/dist/templates/common/ValueInput.html'
                     cssClass="attribute-input"
-                    title=(localize 'SR5.RunningSpeed')
+                    title=(localize 'SR6.RunningSpeed')
                     size="2"
                     maxLength="2"
                     value=data.movement.sprint
@@ -37,4 +37,4 @@
             <span class="unit"> + </span>
         </div>
     </div>
-{{/"systems/shadowrun5e/dist/templates/common/Attribute.html"}}
+{{/"systems/shadowrun6e/dist/templates/common/Attribute.html"}}

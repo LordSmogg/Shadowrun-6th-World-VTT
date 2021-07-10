@@ -1,9 +1,9 @@
 <form>
     <div class="form-group">
-        <label>{{localize "SR5.SecondAttribute"}}</label>
+        <label>{{localize "SR6.SecondAttribute"}}</label>
         <select name="attribute2">
             {{#select attribute2}}
-            <option value="none">{{localize "SR5.None"}}</option>
+            <option value="none">{{localize "SR6.None"}}</option>
             {{#each attributes as |att a|}} {{#ifne att attribute}}
             <option value="{{a}}">{{localize att.label}}</option>
             {{/ifne}} {{/each}} {{/select}}

@@ -1,6 +1,6 @@
 /// <reference path="../Shadowrun.ts" />
 declare namespace Shadowrun {
-    export type Quality = SR5ItemData<QualityData> & {
+    export type Quality = SR6ItemData<QualityData> & {
         type: 'quality';
     };
 

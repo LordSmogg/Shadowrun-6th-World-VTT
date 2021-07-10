@@ -9,18 +9,18 @@ export class DeleteConfirmationDialog extends FormDialog {
 
     static getDialogData() {
         return {
-            title: game.i18n.localize("SR5.DeleteConfirmationApplication.Title"),
+            title: game.i18n.localize("SR6.DeleteConfirmationApplication.Title"),
             buttons: {
                 delete: {
-                    label: game.i18n.localize('SR5.DeleteConfirmationApplication.Delete')
+                    label: game.i18n.localize('SR6.DeleteConfirmationApplication.Delete')
                 },
                 cancel: {
-                    label: game.i18n.localize('SR5.DeleteConfirmationApplication.Cancel')
+                    label: game.i18n.localize('SR6.DeleteConfirmationApplication.Cancel')
                 }
             },
             default: 'cancel',
             templateData: {},
-            templatePath: 'systems/shadowrun5e/dist/templates/apps/dialogs/delete-confirmation-dialog.html'
+            templatePath: 'systems/shadowrun6e/dist/templates/apps/dialogs/delete-confirmation-dialog.html'
         }
     }
 
@@ -28,7 +28,7 @@ export class DeleteConfirmationDialog extends FormDialog {
         const options = super.defaultOptions;
         options.id = 'delete-confirmation-application';
         // Class Dialog here is needed for dialog button styling.
-        options.classes = ['sr5', 'form-dialog'];
+        options.classes = ['sr6', 'form-dialog'];
         options.resizable = true;
         options.height = 'auto';
         return options;

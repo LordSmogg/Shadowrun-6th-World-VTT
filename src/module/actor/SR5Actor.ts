@@ -1,13 +1,13 @@
 import {ShadowrunRoll, ShadowrunRoller} from '../rolls/ShadowrunRoller';
 import {Helpers} from '../helpers';
-import {SR5Item} from '../item/SR5Item';
+import {SR6Item} from '../item/SR6Item';
 import {FLAGS, SKILL_DEFAULT_NAME, SR, SYSTEM_NAME} from '../constants';
 import {PartsList} from '../parts/PartsList';
 import {ActorPrepFactory} from './prep/ActorPrepFactory';
 import {ShadowrunActorDialogs} from "../apps/dialogs/ShadowrunActorDialogs";
 import {createRollChatMessage} from "../chat";
-import {SR5Combat} from "../combat/SR5Combat";
-import {Modifiers} from "../sr5/Modifiers";
+import {SR6Combat} from "../combat/SR6Combat";
+import {Modifiers} from "../sr6/Modifiers";
 import {SoakFlow} from './SoakFlow';
 import {DefaultValues} from '../dataTemplates';
 import {SkillFlow} from "./SkillFlow";
@@ -19,7 +19,7 @@ import SkillRollOptions = Shadowrun.SkillRollOptions;
 import SkillField = Shadowrun.SkillField;
 import ModList = Shadowrun.ModList;
 import LimitField = Shadowrun.LimitField;
-import SR5ActorType = Shadowrun.SR5ActorType;
+import SR6ActorType = Shadowrun.SR6ActorType;
 import EdgeAttributeField = Shadowrun.EdgeAttributeField;
 import VehicleActorData = Shadowrun.VehicleActorData;
 import VehicleStat = Shadowrun.VehicleStat;
@@ -31,21 +31,21 @@ import OverflowTrackType = Shadowrun.OverflowTrackType;
 import SpellDefenseOptions = Shadowrun.SpellDefenseOptions;
 import NumberOrEmpty = Shadowrun.NumberOrEmpty;
 import CharacterActorData = Shadowrun.CharacterActorData;
-import SR5VehicleType = Shadowrun.SR5VehicleType;
+import SR6VehicleType = Shadowrun.SR6VehicleType;
 import VehicleStats = Shadowrun.VehicleStats;
-import SR5CharacterType = Shadowrun.SR5CharacterType;
+import SR6CharacterType = Shadowrun.SR6CharacterType;
 import ActorArmorData = Shadowrun.ActorArmorData;
 import ConditionData = Shadowrun.ConditionData;
-import SR5SpiritType = Shadowrun.SR5SpiritType;
-import SR5SpriteType = Shadowrun.SR5SpriteType;
-import SR5CritterType = Shadowrun.SR5CritterType;
+import SR6SpiritType = Shadowrun.SR6SpiritType;
+import SR6SpriteType = Shadowrun.SR6SpriteType;
+import SR6CritterType = Shadowrun.SR6CritterType;
 import Skills = Shadowrun.Skills;
 import {SkillRules} from "./SkillRules";
 import CharacterSkills = Shadowrun.CharacterSkills;
-import {SR5} from "../config";
+import {SR6} from "../config";
 
-export class SR5Actor extends Actor<SR5ActorType> {
-    // NOTE: Overwrite Actor.data additionally to extends Actor<T as SR5Actortype.Data: SR5ActorData> to still have
+export class SR6Actor extends Actor<SR6ActorType> {
+    // NOTE: Overwrite Actor.data additionally to extends Actor<T as SR6Actortype.Data: SR6ActorData> to still have
     //       access to Actor.data.type checks.
 
     getOverwatchScore() {
@@ -174,14 +174,14 @@ export class SR5Actor extends Actor<SR5ActorType> {
     }
 
     // TODO: Foundry 0.9 Check if this can be replaced with this.items.get and correct typing.
-    getOwnedSR5Item(itemId: string): SR5Item | null {
-        return this.items.get(itemId) as unknown as  SR5Item;
+    getOwnedSR6Item(itemId: string): SR6Item | null {
+        return this.items.get(itemId) as unknown as  SR6Item;
     }
 
-    getMatrixDevice(): SR5Item | undefined | null {
+    getMatrixDevice(): SR6Item | undefined | null {
         if (!("matrix" in this.data.data)) return;
         const matrix = this.data.data.matrix;
-        if (matrix.device) return this.getOwnedSR5Item(matrix.device);
+        if (matrix.device) return this.getOwnedSR6Item(matrix.device);
     }
 
     getFullDefenseAttribute(): AttributeField | undefined {
@@ -197,9 +197,9 @@ export class SR5Actor extends Actor<SR5ActorType> {
         }
     }
 
-    getEquippedWeapons(): SR5Item[] {
-        // @ts-ignore // TODO: How to define SR5Actor.items as SR5Item[]?
-        return this.items.filter((item: SR5Item) => item.isEquipped() && item.isWeapon());
+    getEquippedWeapons(): SR6Item[] {
+        // @ts-ignore // TODO: How to define SR6Actor.items as SR6Item[]?
+        return this.items.filter((item: SR6Item) => item.isEquipped() && item.isWeapon());
     }
 
     getRecoilCompensation(): number {
@@ -236,7 +236,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
     }
 
     /** Return actor type, which can be different kind of actors from 'character' to 'vehicle'.
-     *  Please check SR5ActorType for reference.
+     *  Please check SR6ActorType for reference.
      */
     getType(): string {
         return this.data.type;
@@ -576,9 +576,9 @@ export class SR5Actor extends Actor<SR5ActorType> {
         const parts = new PartsList<number>();
         parts.addUniquePart(wil.label, wil.value);
         parts.addUniquePart(res.label, res.value);
-        if (data.modifiers.fade) parts.addUniquePart('SR5.Bonus', data.modifiers.fade);
+        if (data.modifiers.fade) parts.addUniquePart('SR6.Bonus', data.modifiers.fade);
 
-        let title = `${game.i18n.localize('SR5.Resist')} ${game.i18n.localize('SR5.Fade')}`;
+        let title = `${game.i18n.localize('SR6.Resist')} ${game.i18n.localize('SR6.Fade')}`;
 
         const actor = this;
         const roll = await ShadowrunRoller.advancedRoll({
@@ -593,7 +593,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
 
         // Reduce damage by soak roll and inform user.
         const incomingDamage = Helpers.createDamageData(incoming, 'stun');
-        const damage = Helpers.reduceDamageByHits(incomingDamage, roll.hits, 'SR5.Fade');
+        const damage = Helpers.reduceDamageByHits(incomingDamage, roll.hits, 'SR6.Fade');
 
         await createRollChatMessage({title, roll, actor, damage});
 
@@ -611,9 +611,9 @@ export class SR5Actor extends Actor<SR5ActorType> {
         const parts = new PartsList<number>();
         parts.addPart(wil.label, wil.value);
         parts.addPart(drainAtt.label, drainAtt.value);
-        if (data.modifiers.drain) parts.addUniquePart('SR5.Bonus', data.modifiers.drain);
+        if (data.modifiers.drain) parts.addUniquePart('SR6.Bonus', data.modifiers.drain);
 
-        let title = `${game.i18n.localize('SR5.Resist')} ${game.i18n.localize('SR5.Drain')}`;
+        let title = `${game.i18n.localize('SR6.Resist')} ${game.i18n.localize('SR6.Drain')}`;
         const actor = this;
         const roll = await ShadowrunRoller.advancedRoll({
             parts: parts.list,
@@ -627,7 +627,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
 
         // Reduce damage by soak roll and inform user.
         const incomingDamage = Helpers.createDamageData(incoming, 'stun');
-        const damage = Helpers.reduceDamageByHits(incomingDamage, roll.hits, 'SR5.Drain');
+        const damage = Helpers.reduceDamageByHits(incomingDamage, roll.hits, 'SR6.Drain');
 
         await createRollChatMessage({title, roll, actor, damage});
 
@@ -641,7 +641,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
             event: options.event,
             actor: this,
             parts: parts.list,
-            title: game.i18n.localize('SR5.Armor'),
+            title: game.i18n.localize('SR6.Armor'),
             wounds: false,
         });
     }
@@ -660,7 +660,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
             event: options.event,
             actor: this,
             parts: defenseActionData.parts.list,
-            title: game.i18n.localize('SR5.DefenseTest'),
+            title: game.i18n.localize('SR6.DefenseTest'),
             incomingAttack: attack,
             combat: defenseActionData.combat
         });
@@ -685,7 +685,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
 
         // modified damage value by netHits.
         if (netHits > 0) {
-            const {modified} = Helpers.modifyDamageByHits(damage, netHits, "SR5.NetHits");
+            const {modified} = Helpers.modifyDamageByHits(damage, netHits, "SR6.NetHits");
             damage = modified;
         }
 
@@ -697,7 +697,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
         await this.rollSoak(soakRollOptions);
     }
 
-    async rollDirectSpellDefense(spell: SR5Item, options: SpellDefenseOptions): Promise<ShadowrunRoll | undefined> {
+    async rollDirectSpellDefense(spell: SR6Item, options: SpellDefenseOptions): Promise<ShadowrunRoll | undefined> {
         if (!spell.isDirectCombatSpell()) return;
 
         // Prepare the actual roll.
@@ -712,9 +712,9 @@ export class SR5Actor extends Actor<SR5ActorType> {
 
         // Prepare the resulting damage message.
         const title = spell.isManaSpell() ?
-            game.i18n.localize('SR5.SpellDefenseDirectMana') :
-            game.i18n.localize('SR5.SpellDefenseDirectPhysical');
-        const modificationLabel = 'SR5.SpellDefense';
+            game.i18n.localize('SR6.SpellDefenseDirectMana') :
+            game.i18n.localize('SR6.SpellDefenseDirectPhysical');
+        const modificationLabel = 'SR6.SpellDefense';
         const actor = this;
         const damage = Helpers.reduceDamageByHits(options.attack.damage, roll.hits, modificationLabel);
 
@@ -723,14 +723,14 @@ export class SR5Actor extends Actor<SR5ActorType> {
         return roll;
     }
 
-    async rollIndirectSpellDefense(spell: SR5Item, options: SpellDefenseOptions): Promise<ShadowrunRoll | undefined> {
+    async rollIndirectSpellDefense(spell: SR6Item, options: SpellDefenseOptions): Promise<ShadowrunRoll | undefined> {
         if (!spell.isIndirectCombatSpell()) return;
 
         const opposedParts = spell.getOpposedTestMod();
 
         // TODO: indirect LOS spell defense works like a ranged weapon defense, but indirect LOS(A) spell defense
         //       work like grenade attack (no defense, but soak, with the threshold net hits modifying damage.)
-        //       Grenades: SR5#181 Combat Spells: SR5#283
+        //       Grenades: SR6#181 Combat Spells: SR6#283
         return await this.rollAttackDefense(options, opposedParts.list);
     }
 
@@ -820,11 +820,11 @@ export class SR5Actor extends Actor<SR5ActorType> {
         if (!("matrix" in this.data.data)) return;
 
         let matrix_att = duplicate(this.data.data.matrix[attr]);
-        let title = game.i18n.localize(SR5.matrixAttributes[attr]);
+        let title = game.i18n.localize(SR6.matrixAttributes[attr]);
         const parts = new PartsList<number>();
-        parts.addPart(SR5.matrixAttributes[attr], matrix_att.value);
+        parts.addPart(SR6.matrixAttributes[attr], matrix_att.value);
 
-        if (options && options.event && options.event[SR5.kbmod.SPEC]) parts.addUniquePart('SR5.Specialization', 2);
+        if (options && options.event && options.event[SR6.kbmod.SPEC]) parts.addUniquePart('SR6.Specialization', 2);
         if (Helpers.hasModifiers(options?.event)) {
             return ShadowrunRoller.advancedRoll({
                 event: options?.event,
@@ -848,7 +848,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
         };
 
         let cancel = true;
-        renderTemplate('systems/shadowrun5e/dist/templates/rolls/matrix-roll.html', dialogData).then((dlg) => {
+        renderTemplate('systems/shadowrun6e/dist/templates/rolls/matrix-roll.html', dialogData).then((dlg) => {
             // @ts-ignore
             new Dialog({
                 title: `${title} Test`,
@@ -860,7 +860,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
                     let att: AttributeField | undefined = undefined;
                     if (newAtt) {
                         att = this.data.data.attributes[newAtt];
-                        title += ` + ${game.i18n.localize(SR5.attributes[newAtt])}`;
+                        title += ` + ${game.i18n.localize(SR6.attributes[newAtt])}`;
                     }
                     if (att !== undefined) {
                         if (att.value && att.label) parts.addPart(att.label, att.value);
@@ -892,7 +892,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
     }
 
     rollDeviceRating(options?: ActorRollOptions) {
-        const title = game.i18n.localize('SR5.Labels.ActorSheet.DeviceRating');
+        const title = game.i18n.localize('SR6.Labels.ActorSheet.DeviceRating');
         const parts = new PartsList<number>();
         const rating = this.getDeviceRating();
         // add device rating twice as this is the most common roll
@@ -908,26 +908,26 @@ export class SR5Actor extends Actor<SR5ActorType> {
     }
 
     rollAttributesTest(rollId, options?: ActorRollOptions) {
-        const title = game.i18n.localize(SR5.attributeRolls[rollId]);
+        const title = game.i18n.localize(SR6.attributeRolls[rollId]);
         const atts = this.data.data.attributes;
         const modifiers = this.data.data.modifiers;
         const parts = new PartsList<number>();
         if (rollId === 'composure') {
             parts.addUniquePart(atts.charisma.label, atts.charisma.value);
             parts.addUniquePart(atts.willpower.label, atts.willpower.value);
-            if (modifiers.composure) parts.addUniquePart('SR5.Bonus', modifiers.composure);
+            if (modifiers.composure) parts.addUniquePart('SR6.Bonus', modifiers.composure);
         } else if (rollId === 'judge_intentions') {
             parts.addUniquePart(atts.charisma.label, atts.charisma.value);
             parts.addUniquePart(atts.intuition.label, atts.intuition.value);
-            if (modifiers.judge_intentions) parts.addUniquePart('SR5.Bonus', modifiers.judge_intentions);
+            if (modifiers.judge_intentions) parts.addUniquePart('SR6.Bonus', modifiers.judge_intentions);
         } else if (rollId === 'lift_carry') {
             parts.addUniquePart(atts.strength.label, atts.strength.value);
             parts.addUniquePart(atts.body.label, atts.body.value);
-            if (modifiers.lift_carry) parts.addUniquePart('SR5.Bonus', modifiers.lift_carry);
+            if (modifiers.lift_carry) parts.addUniquePart('SR6.Bonus', modifiers.lift_carry);
         } else if (rollId === 'memory') {
             parts.addUniquePart(atts.willpower.label, atts.willpower.value);
             parts.addUniquePart(atts.logic.label, atts.logic.value);
-            if (modifiers.memory) parts.addUniquePart('SR5.Bonus', modifiers.memory);
+            if (modifiers.memory) parts.addUniquePart('SR6.Bonus', modifiers.memory);
         }
 
         this._addGlobalParts(parts);
@@ -943,7 +943,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
         // NOTE: Currently defaulting happens at multiple places, which is why SkillFlow.handleDefaulting isn't used
         //       here, yet. A general skill usage clean up between Skill, Attribute and Item action handling is needed.
         if (!SkillFlow.allowRoll(skill)) {
-            ui.notifications.warn(game.i18n.localize('SR5.Warnings.SkillCantBeDefault'));
+            ui.notifications.warn(game.i18n.localize('SR6.Warnings.SkillCantBeDefault'));
             return;
         }
 
@@ -955,7 +955,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
         const attributeName = options?.attribute ? options.attribute : skill.attribute;
         const attribute = this.getAttribute(attributeName);
         if (!attribute) {
-            ui.notifications.error(game.i18n.localize('SR5.Errors.SkillWithoutAttribute'));
+            ui.notifications.error(game.i18n.localize('SR6.Errors.SkillWithoutAttribute'));
             return;
         }
         let limit = attribute.limit ? this.getLimit(attribute.limit) : undefined;
@@ -969,14 +969,14 @@ export class SR5Actor extends Actor<SR5ActorType> {
         // Directly test, without further skill dialog.
         if (options?.event && Helpers.hasModifiers(options?.event)) {
             parts.addUniquePart(attribute.label, attribute.value);
-            if (options.event[SR5.kbmod.SPEC]) parts.addUniquePart('SR5.Specialization', 2);
+            if (options.event[SR6.kbmod.SPEC]) parts.addUniquePart('SR6.Specialization', 2);
 
             return await ShadowrunRoller.advancedRoll({
                 event: options.event,
                 actor: this,
                 parts: parts.list,
                 limit,
-                title: `${title} ${game.i18n.localize('SR5.Test')}`,
+                title: `${title} ${game.i18n.localize('SR6.Test')}`,
             });
         }
 
@@ -1014,8 +1014,8 @@ export class SR5Actor extends Actor<SR5ActorType> {
             const limit = this.findLimit('sensor');
 
             if (perception && limit) {
-                parts.addPart('SR5.Vehicle.Clearsight', Helpers.calcTotal(perception));
-                parts.addPart('SR5.Vehicle.Stats.Pilot', pilot);
+                parts.addPart('SR6.Vehicle.Clearsight', Helpers.calcTotal(perception));
+                parts.addPart('SR6.Vehicle.Stats.Pilot', pilot);
 
                 this._addGlobalParts(parts);
 
@@ -1024,7 +1024,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
                     actor: this,
                     parts: parts.list,
                     limit,
-                    title: game.i18n.localize('SR5.Labels.ActorSheet.RollDronePerception'),
+                    title: game.i18n.localize('SR6.Labels.ActorSheet.RollDronePerception'),
                 });
             }
         } else {
@@ -1046,9 +1046,9 @@ export class SR5Actor extends Actor<SR5ActorType> {
             const limit = this.findLimit(environment);
 
             if (skill && limit) {
-                parts.addPart('SR5.Vehicle.Stats.Pilot', pilot);
+                parts.addPart('SR6.Vehicle.Stats.Pilot', pilot);
                 // TODO possibly look for autosoft item level?
-                parts.addPart('SR5.Vehicle.Maneuvering', Helpers.calcTotal(skill));
+                parts.addPart('SR6.Vehicle.Maneuvering', Helpers.calcTotal(skill));
 
                 this._addGlobalParts(parts);
 
@@ -1057,7 +1057,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
                     actor: this,
                     parts: parts.list,
                     limit,
-                    title: game.i18n.localize('SR5.Labels.ActorSheet.RollPilotVehicleTest'),
+                    title: game.i18n.localize('SR6.Labels.ActorSheet.RollPilotVehicleTest'),
                 });
             }
         } else {
@@ -1081,8 +1081,8 @@ export class SR5Actor extends Actor<SR5ActorType> {
             const limit = this.findLimit('sensor');
 
             if (sneaking && limit) {
-                parts.addPart('SR5.Vehicle.Stealth', Helpers.calcTotal(sneaking));
-                parts.addPart('SR5.Vehicle.Stats.Pilot', pilot);
+                parts.addPart('SR6.Vehicle.Stealth', Helpers.calcTotal(sneaking));
+                parts.addPart('SR6.Vehicle.Stats.Pilot', pilot);
 
                 this._addGlobalParts(parts);
 
@@ -1091,7 +1091,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
                     actor: this,
                     parts: parts.list,
                     limit,
-                    title: game.i18n.localize('SR5.Labels.ActorSheet.RollDroneInfiltration'),
+                    title: game.i18n.localize('SR6.Labels.ActorSheet.RollDroneInfiltration'),
                 });
             }
         } else {
@@ -1120,7 +1120,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
     }
 
     rollAttribute(attId, options?: ActorRollOptions) {
-        let title = game.i18n.localize(SR5.attributes[attId]);
+        let title = game.i18n.localize(SR6.attributes[attId]);
         const att = duplicate(this.data.data.attributes[attId]);
         const atts = duplicate(this.data.data.attributes);
         const parts = new PartsList<number>();
@@ -1130,7 +1130,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
             attributes: atts,
         };
         let cancel = true;
-        renderTemplate('systems/shadowrun5e/dist/templates/rolls/single-attribute.html', dialogData).then((dlg) => {
+        renderTemplate('systems/shadowrun6e/dist/templates/rolls/single-attribute.html', dialogData).then((dlg) => {
             new Dialog({
                 title: `${title} Attribute Test`,
                 content: dlg,
@@ -1150,12 +1150,12 @@ export class SR5Actor extends Actor<SR5ActorType> {
                         att2 = atts[att2Id];
                         if (att2?.label) {
                             parts.addPart(att2.label, att2.value);
-                            const att2IdLabel = game.i18n.localize(SR5.attributes[att2Id]);
+                            const att2IdLabel = game.i18n.localize(SR6.attributes[att2Id]);
                             title += ` + ${att2IdLabel}`;
                         }
                     }
                     if (att2Id === 'default') {
-                        parts.addUniquePart('SR5.Defaulting', -1);
+                        parts.addUniquePart('SR6.Defaulting', -1);
                     }
                     this._addMatrixParts(parts, [att, att2]);
                     this._addGlobalParts(parts);
@@ -1175,13 +1175,13 @@ export class SR5Actor extends Actor<SR5ActorType> {
             if (!("matrix" in this.data.data)) return;
 
             const matrix = this.data.data.matrix;
-            if (matrix.hot_sim) parts.addUniquePart('SR5.HotSim', 2);
-            if (matrix.running_silent) parts.addUniquePart('SR5.RunningSilent', -2);
+            if (matrix.hot_sim) parts.addUniquePart('SR6.HotSim', 2);
+            if (matrix.running_silent) parts.addUniquePart('SR6.RunningSilent', -2);
         }
     }
     _addGlobalParts(parts: PartsList<number>) {
         if (this.data.data.modifiers.global) {
-            parts.addUniquePart('SR5.Global', this.data.data.modifiers.global);
+            parts.addUniquePart('SR6.Global', this.data.data.modifiers.global);
         }
     }
 
@@ -1193,30 +1193,30 @@ export class SR5Actor extends Actor<SR5ActorType> {
             }
             const skill = this.getVehicleTypeSkill();
             if (skill) {
-                parts.addUniquePart('SR5.Vehicle.Maneuvering', Helpers.calcTotal(skill));
+                parts.addUniquePart('SR6.Vehicle.Maneuvering', Helpers.calcTotal(skill));
             }
         } else {
             const reaction = this.findAttribute('reaction');
             const intuition = this.findAttribute('intuition');
 
             if (reaction) {
-                parts.addUniquePart(reaction.label || 'SR5.Reaction', reaction.value);
+                parts.addUniquePart(reaction.label || 'SR6.Reaction', reaction.value);
             }
             if (intuition) {
-                parts.addUniquePart(intuition.label || 'SR5.Intuition', intuition.value);
+                parts.addUniquePart(intuition.label || 'SR6.Intuition', intuition.value);
             }
         }
 
         const mod = this.getModifier('defense');
         if (mod) {
-            parts.addUniquePart('SR5.Bonus', mod);
+            parts.addUniquePart('SR6.Bonus', mod);
         }
     }
 
     _addArmorParts(parts: PartsList<number>) {
         const armor = this.getArmor();
         if (armor) {
-            parts.addUniquePart(armor.label || 'SR5.Armor', armor.base);
+            parts.addUniquePart(armor.label || 'SR6.Armor', armor.base);
             for (let part of armor.mod) {
                 parts.addUniquePart(part.name, part.value);
             }
@@ -1227,14 +1227,14 @@ export class SR5Actor extends Actor<SR5ActorType> {
         let msg: ChatMessage = game.messages.get(li.data().messageId);
 
         if (msg.getFlag(SYSTEM_NAME, FLAGS.MessageCustomRoll)) {
-            let actor = (msg.user.character as unknown) as SR5Actor;
+            let actor = (msg.user.character as unknown) as SR6Actor;
             if (!actor) {
                 const tokens = Helpers.getControlledTokens();
                 if (tokens.length > 0) {
                     for (let token of tokens) {
                         // @ts-ignore // TODO: foundry-vtt-types not yet on 0.8
                         if (token.actor.isOwner) {
-                            actor = token.actor as SR5Actor;
+                            actor = token.actor as SR6Actor;
                             break;
                         }
                     }
@@ -1242,9 +1242,9 @@ export class SR5Actor extends Actor<SR5ActorType> {
             }
             if (actor) {
                 const parts = new PartsList<number>();
-                parts.addUniquePart('SR5.PushTheLimit', actor.getEdge().value);
+                parts.addUniquePart('SR6.PushTheLimit', actor.getEdge().value);
                 ShadowrunRoller.basicRoll({
-                    title: ` - ${game.i18n.localize('SR5.PushTheLimit')}`,
+                    title: ` - ${game.i18n.localize('SR6.PushTheLimit')}`,
                     parts: parts.list,
                     actor: actor,
                 }).then(() => {
@@ -1254,7 +1254,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
                 });
             } else {
                 // @ts-ignore
-                ui.notifications.warn(game.i18n.localize('SR5.SelectTokenMessage'));
+                ui.notifications.warn(game.i18n.localize('SR6.SelectTokenMessage'));
             }
         }
     }
@@ -1271,14 +1271,14 @@ export class SR5Actor extends Actor<SR5ActorType> {
             let match = matches[1];
             let pool = parseInt(match.replace('d6', ''));
             if (!isNaN(pool) && !isNaN(hits)) {
-                let actor = (msg.user.character as unknown) as SR5Actor;
+                let actor = (msg.user.character as unknown) as SR6Actor;
                 if (!actor) {
                     const tokens = Helpers.getControlledTokens();
                     if (tokens.length > 0) {
                         for (let token of tokens) {
                             // @ts-ignore // TODO: foundry-vtt-types not yet on 0.8
                             if (token.actor.isOwner) {
-                                actor = token.actor as SR5Actor;
+                                actor = token.actor as SR6Actor;
                                 break;
                             }
                         }
@@ -1286,8 +1286,8 @@ export class SR5Actor extends Actor<SR5ActorType> {
                 }
                 if (actor) {
                     const parts = new PartsList<number>();
-                    parts.addUniquePart('SR5.OriginalDicePool', pool);
-                    parts.addUniquePart('SR5.Successes', -hits);
+                    parts.addUniquePart('SR6.OriginalDicePool', pool);
+                    parts.addUniquePart('SR6.Successes', -hits);
 
                     return ShadowrunRoller.basicRoll({
                         title: ` - Second Chance`,
@@ -1298,14 +1298,14 @@ export class SR5Actor extends Actor<SR5ActorType> {
                     });
                 } else {
                     // @ts-ignore
-                    ui.notifications.warn(game.i18n.localize('SR5.SelectTokenMessage'));
+                    ui.notifications.warn(game.i18n.localize('SR6.SelectTokenMessage'));
                 }
             }
         }
     }
 
     /**
-     * Override setFlag to remove the 'SR5.' from keys in modlists, otherwise it handles them as embedded keys
+     * Override setFlag to remove the 'SR6.' from keys in modlists, otherwise it handles them as embedded keys
      * @param scope
      * @param key
      * @param value
@@ -1316,7 +1316,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
     }
 
     /**
-     * Override getFlag to add back the 'SR5.' keys correctly to be handled
+     * Override getFlag to add back the 'SR6.' keys correctly to be handled
      * @param scope
      * @param key
      */
@@ -1401,7 +1401,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
         return track;
     }
 
-    async _addDamageToDeviceTrack(damage: DamageData, device: SR5Item) {
+    async _addDamageToDeviceTrack(damage: DamageData, device: SR6Item) {
         if (!device) return;
 
         let condition = device.getCondition();
@@ -1463,7 +1463,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
 
         // Only change damage type when needed, in order to avoid confusion of callers.
         if (overflow.value > 0) {
-            // Apply Stun overflow damage to physical track according to: SR5E#170
+            // Apply Stun overflow damage to physical track according to: SR6E#170
             overflow.value = Math.floor(overflow.value / 2);
             overflow.type.value = 'physical';
         }
@@ -1550,7 +1550,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
         const modified = duplicate(this.getArmor());
         if (modified) {
             // @ts-ignore
-            modified.mod = PartsList.AddUniquePart(modified.mod, 'SR5.DV', damage.ap.value);
+            modified.mod = PartsList.AddUniquePart(modified.mod, 'SR6.DV', damage.ap.value);
             // @ts-ignore
             modified.value = Helpers.calcTotal(modified, {min: 0});
         }
@@ -1571,7 +1571,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
         // No change needed for nothing to change.
         if (modifier === 0) return;
 
-        const combat: SR5Combat = game.combat as SR5Combat;
+        const combat: SR6Combat = game.combat as SR6Combat;
         const combatant = combat.getActorCombatant(this);
 
         // Token might not be part of active combat.
@@ -1584,31 +1584,31 @@ export class SR5Actor extends Actor<SR5ActorType> {
         return "track" in this.data.data;
     }
 
-    asVehicleData(): SR5VehicleType | undefined {
+    asVehicleData(): SR6VehicleType | undefined {
         if (this.isVehicle())
-            return this.data as SR5VehicleType;
+            return this.data as SR6VehicleType;
     }
 
-    asCharacterData(): SR5CharacterType | undefined {
+    asCharacterData(): SR6CharacterType | undefined {
         if (this.isCharacter())
-            return this.data as SR5CharacterType;
+            return this.data as SR6CharacterType;
     }
 
-    asSpiritData(): SR5SpiritType | undefined {
+    asSpiritData(): SR6SpiritType | undefined {
         if (this.isSpirit()) {
-            return this.data as SR5SpiritType;
+            return this.data as SR6SpiritType;
         }
     }
 
-    asSpriteData(): SR5SpriteType | undefined {
+    asSpriteData(): SR6SpriteType | undefined {
         if (this.isSprite()) {
-            return this.data as SR5SpriteType;
+            return this.data as SR6SpriteType;
         }
     }
 
-    asCritterData(): SR5CritterType | undefined {
+    asCritterData(): SR6CritterType | undefined {
         if (this.isCritter()){
-            return this.data as SR5CritterType;
+            return this.data as SR6CritterType;
         }
     }
 
@@ -1625,7 +1625,7 @@ export class SR5Actor extends Actor<SR5ActorType> {
     async addVehicleDriver(id: string) {
         if (!this.isVehicle()) return;
 
-        const driver = game.actors.get(id) as SR5Actor;
+        const driver = game.actors.get(id) as SR6Actor;
         if (!driver) return;
 
         // NOTE: In THEORY almost all actor types can drive a vehicle.
@@ -1647,12 +1647,12 @@ export class SR5Actor extends Actor<SR5ActorType> {
         return data.data.driver.length > 0;
     }
 
-    getVehicleDriver(): SR5Actor|undefined {
+    getVehicleDriver(): SR6Actor|undefined {
         if (!this.hasDriver()) return;
         const data = this.asVehicleData();
         if (!data) return;
 
-        const driver = game.actors.get(data.data.driver) as SR5Actor;
+        const driver = game.actors.get(data.data.driver) as SR6Actor;
         // If no driver id is set, we won't get an actor and should explicitly return undefined.
         if (!driver) return;
         return driver;

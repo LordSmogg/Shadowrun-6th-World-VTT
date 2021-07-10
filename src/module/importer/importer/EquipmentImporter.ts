@@ -67,7 +67,7 @@ export class EquipmentImporter extends DataImporter {
 
             // Replace / as it's used as a separator in GetFolderAtPath.
             const category = ImportHelper.TranslateCategory(ImportHelper.StringValue(equipment, 'category'), this.categoryTranslations).replace('/', ' ');
-            let categoryFolder = await ImportHelper.GetFolderAtPath(`${Constants.ROOT_IMPORT_FOLDER_NAME}/${game.i18n.localize('SR5.Gear')}/${category}`, true);
+            let categoryFolder = await ImportHelper.GetFolderAtPath(`${Constants.ROOT_IMPORT_FOLDER_NAME}/${game.i18n.localize('SR6.Gear')}/${category}`, true);
 
             const data = this.GetDefaultData();
             data.name = ImportHelper.StringValue(equipment, 'name');

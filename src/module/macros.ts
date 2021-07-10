@@ -7,12 +7,12 @@
  */
 import {Helpers} from "./helpers";
 import SkillField = Shadowrun.SkillField;
-import {SR5Actor} from "./actor/SR5Actor";
+import {SR6Actor} from "./actor/SR6Actor";
 
 export async function createItemMacro(item, slot) {
     if (!game || !game.macros) return;
 
-    const command = `game.shadowrun5e.rollItemMacro("${item.name}");`;
+    const command = `game.shadowrun6e.rollItemMacro("${item.name}");`;
     // @ts-ignore // TODO: foundry-vtt-types Does not support DocumentCollection yet.
     let macro = game.macros.contents.find((m) => m.name === item.name);
     if (!macro) {
@@ -22,7 +22,7 @@ export async function createItemMacro(item, slot) {
                 type: 'script',
                 img: item.img,
                 command: command,
-                flags: { 'shadowrun5e.itemMacro': true },
+                flags: { 'shadowrun6e.itemMacro': true },
             },
             { displaySheet: false },
         )) as Macro;
@@ -71,7 +71,7 @@ export async function createSkillMacro(data: {skillId: string, skill: SkillField
     if (existingMacro) return;
 
     // Setup macro data.
-    const command = `game.shadowrun5e.rollSkillMacro("${name}");`;
+    const command = `game.shadowrun6e.rollSkillMacro("${name}");`;
     const macro = await Macro.create({
         name,
         type: 'script',
@@ -92,13 +92,13 @@ export async function rollSkillMacro(skillLabel) {
 
     // Fetch the actor from the current users token or the actor collection.
     const speaker = ChatMessage.getSpeaker();
-    const actor =  (game.actors.tokens[speaker.token] || game.actors.get(speaker.actor)) as SR5Actor
+    const actor =  (game.actors.tokens[speaker.token] || game.actors.get(speaker.actor)) as SR6Actor
 
     if (!actor) return;
 
     const skill = actor.getSkill(skillLabel, {byLabel: true});
 
-    if (!skill) return ui.notifications.warn(game.i18n.localize('SR5.Warnings.MissingSkillOnActor'))
+    if (!skill) return ui.notifications.warn(game.i18n.localize('SR6.Warnings.MissingSkillOnActor'))
 
     await actor.rollSkill(skill);
 }

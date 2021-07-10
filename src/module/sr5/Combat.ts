@@ -16,7 +16,7 @@ export class CombatRules {
         return CombatRules.reduceIniResultAfterPass(score) > 0;
     }
     /**
-     * Reduce the given initiative score according to @PDF SR5#159
+     * Reduce the given initiative score according to @PDF SR6#159
      * @param score This given score can't be reduced under zero.
      */
     static reduceIniResultAfterPass(score: number): number {
@@ -24,7 +24,7 @@ export class CombatRules {
     }
 
     /**
-     * Reduce the initiative score according to the current initiative pass @PDF SR5#160.
+     * Reduce the initiative score according to the current initiative pass @PDF SR6#160.
      * @param score
      * @param pass The current initiative pass. Each combat round starts at the initiative pass of 1.
      */

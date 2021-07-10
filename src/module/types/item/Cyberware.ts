@@ -1,6 +1,6 @@
 /// <reference path="../Shadowrun.ts" />
 declare namespace Shadowrun {
-    export type Cyberware = SR5ItemData<CyberwareData> & {
+    export type Cyberware = SR6ItemData<CyberwareData> & {
         type: 'cyberware';
     };
 

@@ -1,10 +1,10 @@
 import {SYSTEM_NAME} from "../constants";
 import {Helpers} from "../helpers";
-import {SR5Actor} from "../actor/SR5Actor";
-import {Modifiers} from "../sr5/Modifiers";
+import {SR6Actor} from "../actor/SR6Actor";
+import {Modifiers} from "../sr6/Modifiers";
 import EnvironmentalModifierCategories = Shadowrun.EnvironmentalModifierCategories;
 
-export type EnvModifiersTarget = Scene | SR5Actor;
+export type EnvModifiersTarget = Scene | SR6Actor;
 
 /** Helper window for easy overview and selection of environmental modifiers and their calculated total.
  *
@@ -20,14 +20,14 @@ export class EnvModifiersApplication extends Application {
     }
 
     get template() {
-        return 'systems/shadowrun5e/dist/templates/apps/env-modifiers.html';
+        return 'systems/shadowrun6e/dist/templates/apps/env-modifiers.html';
     }
 
     static get defaultOptions() {
         const options = super.defaultOptions;
-        options.classes = ['sr5', 'form-dialog'];
+        options.classes = ['sr6', 'form-dialog'];
         options.id = 'env-modifiers-application';
-        options.title = game.i18n.localize('SR5.EnvModifiersApplication.Title');
+        options.title = game.i18n.localize('SR6.EnvModifiersApplication.Title');
         // @ts-ignore
         options.width = 'auto'; // auto is important for differing i18n text length.
         options.height = 'auto';
@@ -84,7 +84,7 @@ export class EnvModifiersApplication extends Application {
      * Doing it this way is just easier as relying on any update / hook workflow.
      */
     _updateTokenHUDTotalDisplay() {
-        if (this.target instanceof SR5Actor) {
+        if (this.target instanceof SR6Actor) {
             $('.modifier-value-environmental').each((index, element) => {
                 $(element).html(this.modifiers.environmental.total.toString());
             });
@@ -112,7 +112,7 @@ export class EnvModifiersApplication extends Application {
     async _getModifiers(): Promise<Modifiers> {
         // Actor targets might have no personal modifiers, but still see the scene modifiers then, and use those
         // as a template for their local modifiers.
-        if (this.target instanceof SR5Actor) {
+        if (this.target instanceof SR6Actor) {
             return await this.target.getModifiers();
         }
         // All other types are handled without special cases.
@@ -146,7 +146,7 @@ export class EnvModifiersApplication extends Application {
         if (this.target instanceof Scene) {
             return game.i18n.localize('ENTITY.Scene');
         }
-        if (this.target instanceof SR5Actor) {
+        if (this.target instanceof SR6Actor) {
             return game.i18n.localize('ENTITY.Actor');
         }
 
@@ -157,7 +157,7 @@ export class EnvModifiersApplication extends Application {
      *
      */
     _disableInputsForUser(): boolean {
-        const entity = this.target instanceof SR5Actor ? this.target : this.target;
+        const entity = this.target instanceof SR6Actor ? this.target : this.target;
         return !(game.user?.isGM || entity.owner);
     }
 
@@ -188,7 +188,7 @@ export class EnvModifiersApplication extends Application {
     static getControl() {
         return {
             name: 'environmental-modifiers-application',
-            title: 'CONTROLS.SR5.EnvironmentalModifiers',
+            title: 'CONTROLS.SR6.EnvironmentalModifiers',
             icon: 'fas fa-list',
             onClick: EnvModifiersApplication.openForCurrentScene,
             button: true
@@ -204,7 +204,7 @@ export class EnvModifiersApplication extends Application {
         const token = Helpers.getToken(data._id);
         if (!token) return;
 
-        const actor = token.actor as SR5Actor;
+        const actor = token.actor as SR6Actor;
         const modifiers = await actor.getModifiers();
 
         // Setup and connect tokenHUD elements.
@@ -212,7 +212,7 @@ export class EnvModifiersApplication extends Application {
         const column = $('<div class="col modifier-column"></div>');
         const modifier = $('<div class="modifier-row"></div>');
         const modifierValue = $(`<div class="modifier-value modifier-value-environmental">${modifiers.environmental.total}</div>`);
-        const modifierDescription = $(`<div class="modifier-description open-environmental-modifier">${game.i18n.localize("SR5.EnvironmentModifier")}</div>`);
+        const modifierDescription = $(`<div class="modifier-description open-environmental-modifier">${game.i18n.localize("SR6.EnvironmentModifier")}</div>`);
         modifierDescription.on('click', EnvModifiersApplication.openForTokenHUD(data._id));
 
         container.append(column);

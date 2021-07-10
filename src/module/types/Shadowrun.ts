@@ -1,4 +1,4 @@
-declare const SR5CONFIG: any;
+declare const SR6CONFIG: any;
 
 declare namespace Shadowrun {
     export type PhysicalAttribute = 'body' | 'agility' | 'reaction' | 'strength';

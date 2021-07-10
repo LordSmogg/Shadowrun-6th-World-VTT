@@ -1,6 +1,6 @@
 import { PartsList } from '../parts/PartsList';
 import ModList = Shadowrun.ModList;
-import {SR5Actor} from "../actor/SR5Actor";
+import {SR6Actor} from "../actor/SR6Actor";
 import {FLAGS, SYSTEM_NAME} from "../constants";
 import {Helpers} from "../helpers";
 import {SafeString} from "handlebars";

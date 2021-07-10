@@ -1,8 +1,8 @@
 import { Helpers } from '../helpers';
 import DeviceData = Shadowrun.DeviceData;
-import { SR5Item } from './SR5Item';
+import { SR6Item } from './SR6Item';
 import AmmoData = Shadowrun.AmmoData;
-import {SR5} from "../config";
+import {SR6} from "../config";
 
 export const ChatData = {
     action: (data, labels, props) => {
@@ -18,7 +18,7 @@ export const ChatData = {
                 labelStringList.push(Helpers.label(data.action.attribute));
             }
             if (data.action.mod) {
-                labelStringList.push(`${game.i18n.localize('SR5.ItemMod')} (${data.action.mod})`);
+                labelStringList.push(`${game.i18n.localize('SR6.ItemMod')} (${data.action.mod})`);
                 // TODO when all mods are modlists
                 // Object.entries(data.action.mod).forEach(([key, value]) =>
                 //     labelStringList.push(`${game.i18n.localize(key)} (${value})`)
@@ -44,7 +44,7 @@ export const ChatData = {
             }
             if (data.action.limit) {
                 const { limit } = data.action;
-                const attribute = limit.attribute ? `${game.i18n.localize(SR5.limits[limit.attribute])}` : '';
+                const attribute = limit.attribute ? `${game.i18n.localize(SR6.limits[limit.attribute])}` : '';
                 const limitVal = limit.value ? limit.value : '';
                 let limitStr = '';
                 if (attribute) {
@@ -65,7 +65,7 @@ export const ChatData = {
                 const { damage } = data.action;
                 let damageString = '';
                 let elementString = '';
-                const attribute = damage.attribute ? `${game.i18n.localize(SR5.attributes[damage.attribute])} + ` : '';
+                const attribute = damage.attribute ? `${game.i18n.localize(SR6.attributes[damage.attribute])} + ` : '';
                 if (damage.value || attribute) {
                     const type = damage.type.value ? damage.type.value.toUpperCase().charAt(0) : '';
                     damageString = `DV ${attribute}${damage.value}${type}`;
@@ -97,13 +97,13 @@ export const ChatData = {
 
     contact: (data, labels, props) => {
         props.push(data.type);
-        props.push(`${game.i18n.localize('SR5.Connection')} ${data.connection}`);
-        props.push(`${game.i18n.localize('SR5.Loyalty')} ${data.loyalty}`);
+        props.push(`${game.i18n.localize('SR6.Connection')} ${data.connection}`);
+        props.push(`${game.i18n.localize('SR6.Loyalty')} ${data.loyalty}`);
         if (data.blackmail) {
-            props.push(`${game.i18n.localize('SR5.Blackmail')}`);
+            props.push(`${game.i18n.localize('SR6.Blackmail')}`);
         }
         if (data.family) {
-            props.push(game.i18n.localize('SR5.Family'));
+            props.push(game.i18n.localize('SR6.Family'));
         }
     },
 
@@ -134,16 +134,16 @@ export const ChatData = {
     },
 
     ammo: (data, labels, props) => {
-        if (data.damageType) props.push(`${game.i18n.localize("SR5.DamageType")} ${data.damageType}`);
-        if (data.damage) props.push(`${game.i18n.localize("SR5.DamageValue")} ${data.damage}`);
-        if (data.element) props.push(`${game.i18n.localize("SR5.Element")} ${data.element}`);
-        if (data.ap) props.push(`${game.i18n.localize("SR5.AP")} ${data.ap}`);
-        if (data.blast.radius) props.push(`${game.i18n.localize('SR5.BlastRadius')} ${data.blast.radius}m`);
-        if (data.blast.dropoff) props.push(`${game.i18n.localize('SR5.Dropoff')} ${data.blast.dropoff}/m`);
+        if (data.damageType) props.push(`${game.i18n.localize("SR6.DamageType")} ${data.damageType}`);
+        if (data.damage) props.push(`${game.i18n.localize("SR6.DamageValue")} ${data.damage}`);
+        if (data.element) props.push(`${game.i18n.localize("SR6.Element")} ${data.element}`);
+        if (data.ap) props.push(`${game.i18n.localize("SR6.AP")} ${data.ap}`);
+        if (data.blast.radius) props.push(`${game.i18n.localize('SR6.BlastRadius')} ${data.blast.radius}m`);
+        if (data.blast.dropoff) props.push(`${game.i18n.localize('SR6.Dropoff')} ${data.blast.dropoff}/m`);
     },
 
     program: (data, labels, props) => {
-        props.push(game.i18n.localize(SR5.programTypes[data.type]));
+        props.push(game.i18n.localize(SR6.programTypes[data.type]));
     },
 
     complex_form: (data, labels, props) => {
@@ -192,11 +192,11 @@ export const ChatData = {
 
     critter_power: (data, labels, props) => {
         // power type
-        props.push(game.i18n.localize(SR5.critterPower.types[data.powerType]));
+        props.push(game.i18n.localize(SR6.critterPower.types[data.powerType]));
         // duration
-        props.push(game.i18n.localize(SR5.critterPower.durations[data.duration]));
+        props.push(game.i18n.localize(SR6.critterPower.durations[data.duration]));
         // range
-        props.push(game.i18n.localize(SR5.critterPower.ranges[data.range]));
+        props.push(game.i18n.localize(SR6.critterPower.ranges[data.range]));
 
         // add action data
         ChatData.action(data, labels, props);
@@ -242,7 +242,7 @@ export const ChatData = {
         labels.roll = 'Cast';
     },
 
-    weapon: (data, labels, props, item: SR5Item) => {
+    weapon: (data, labels, props, item: SR6Item) => {
         ChatData.action(data, labels, props);
         for (let i = 0; i < props.length; i++) {
             const prop = props[i];
@@ -257,37 +257,37 @@ export const ChatData = {
                 const ammoData = equippedAmmo.data.data as AmmoData;
                 const { current, spare_clips } = data.ammo;
                 if (equippedAmmo.name) props.push(`${equippedAmmo.name} (${current.value}/${current.max})`);
-                if (ammoData.blast.radius) props.push(`${game.i18n.localize('SR5.BlastRadius')} ${ammoData.blast.radius}m`);
-                if (ammoData.blast.dropoff) props.push(`${game.i18n.localize('SR5.Dropoff')} $ammoData.blast.dropoff}/m`);
-                if (spare_clips && spare_clips.max) props.push(`${game.i18n.localize('SR5.SpareClips')} (${spare_clips.value}/${spare_clips.max})`);
+                if (ammoData.blast.radius) props.push(`${game.i18n.localize('SR6.BlastRadius')} ${ammoData.blast.radius}m`);
+                if (ammoData.blast.dropoff) props.push(`${game.i18n.localize('SR6.Dropoff')} $ammoData.blast.dropoff}/m`);
+                if (spare_clips && spare_clips.max) props.push(`${game.i18n.localize('SR6.SpareClips')} (${spare_clips.value}/${spare_clips.max})`);
             }
         }
 
         if (data.technology?.conceal?.value) {
-            props.push(`${game.i18n.localize('SR5.Conceal')} ${data.technology.conceal.value}`);
+            props.push(`${game.i18n.localize('SR6.Conceal')} ${data.technology.conceal.value}`);
         }
 
         if (data.category === 'range') {
             if (data.range.rc) {
-                let rcString = `${game.i18n.localize('SR5.RecoilCompensation')} ${data.range.rc.value}`;
+                let rcString = `${game.i18n.localize('SR6.RecoilCompensation')} ${data.range.rc.value}`;
                 if (item?.actor) {
-                    rcString += ` (${game.i18n.localize('SR5.Total')} ${item.actor.getRecoilCompensation()})`;
+                    rcString += ` (${game.i18n.localize('SR6.Total')} ${item.actor.getRecoilCompensation()})`;
                 }
                 props.push(rcString);
             }
             if (data.range.modes) {
                 const newModes: string[] = [];
                 const { modes } = data.range;
-                if (modes.single_shot) newModes.push('SR5.WeaponModeSingleShotShort');
-                if (modes.semi_auto) newModes.push('SR5.WeaponModeSemiAutoShort');
-                if (modes.burst_fire) newModes.push('SR5.WeaponModeBurstFireShort');
-                if (modes.full_auto) newModes.push('SR5.WeaponModeFullAutoShort');
+                if (modes.single_shot) newModes.push('SR6.WeaponModeSingleShotShort');
+                if (modes.semi_auto) newModes.push('SR6.WeaponModeSemiAutoShort');
+                if (modes.burst_fire) newModes.push('SR6.WeaponModeBurstFireShort');
+                if (modes.full_auto) newModes.push('SR6.WeaponModeFullAutoShort');
                 props.push(newModes.map((m) => game.i18n.localize(m)).join('/'));
             }
             if (data.range.ranges) props.push(Array.from(Object.values(data.range.ranges)).join('/'));
         } else if (data.category === 'melee') {
             if (data.melee.reach) {
-                const reachString = `${game.i18n.localize('SR5.Reach')} ${data.melee.reach}`;
+                const reachString = `${game.i18n.localize('SR6.Reach')} ${data.melee.reach}`;
                 // find accuracy in props and insert ourselves after it
                 const accIndex = props.findIndex((p) => p.includes('Accuracy'));
                 if (accIndex > -1) {
@@ -298,8 +298,8 @@ export const ChatData = {
             }
         } else if (data.category === 'thrown') {
             const { blast } = data.thrown;
-            if (blast?.radius) props.push(`${game.i18n.localize('SR5.BlastRadius')} ${blast.radius}m`);
-            if (blast?.dropoff) props.push(`${game.i18n.localize('SR5.Dropoff')} ${blast.dropoff}/m`);
+            if (blast?.radius) props.push(`${game.i18n.localize('SR6.BlastRadius')} ${blast.radius}m`);
+            if (blast?.dropoff) props.push(`${game.i18n.localize('SR6.Dropoff')} ${blast.dropoff}/m`);
 
             if (data.thrown.ranges) {
                 const mult = data.thrown.ranges.attribute && item?.actor ? item.actor.data.data.attributes[data.thrown.ranges.attribute].value : 1;

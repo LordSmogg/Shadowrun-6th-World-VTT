@@ -1,9 +1,9 @@
-import SR5ActorData = Shadowrun.SR5ActorData;
-import { SR5ItemDataWrapper } from '../../../item/SR5ItemDataWrapper';
+import SR6ActorData = Shadowrun.SR6ActorData;
+import { SR6ItemDataWrapper } from '../../../item/SR6ItemDataWrapper';
 import { Helpers } from '../../../helpers';
 import { PartsList } from '../../../parts/PartsList';
 import ArmorActorData = Shadowrun.ArmorActorData;
-import {SR5} from "../../../config";
+import {SR6} from "../../../config";
 
 export class ItemPrep {
     /**
@@ -11,12 +11,12 @@ export class ItemPrep {
      * - will only allow one "Base" armor item to be used (automatically takes the best one if multiple are equipped)
      * - all "accessories" will be added to the armor
      */
-    static prepareArmor(data: SR5ActorData & ArmorActorData, items: SR5ItemDataWrapper[]) {
+    static prepareArmor(data: SR6ActorData & ArmorActorData, items: SR6ItemDataWrapper[]) {
         const { armor } = data;
         armor.base = 0;
         armor.value = 0;
         armor.mod = [];
-        for (const element of Object.keys(SR5.elementTypes)) {
+        for (const element of Object.keys(SR6.elementTypes)) {
             armor[element] = 0;
         }
 
@@ -38,13 +38,13 @@ export class ItemPrep {
                 }
             }
 
-            // Apply elemental modifiers of all worn armor and clothing SR5#169.
-            for (const element of Object.keys(SR5.elementTypes)) {
+            // Apply elemental modifiers of all worn armor and clothing SR6#169.
+            for (const element of Object.keys(SR6.elementTypes)) {
                 armor[element] += item.getArmorElements()[element];
             }
         });
 
-        if (data.modifiers['armor']) armorModParts.addUniquePart(game.i18n.localize('SR5.Bonus'), data.modifiers['armor']);
+        if (data.modifiers['armor']) armorModParts.addUniquePart(game.i18n.localize('SR6.Bonus'), data.modifiers['armor']);
         // SET ARMOR
         armor.value = Helpers.calcTotal(armor);
     }
@@ -52,7 +52,7 @@ export class ItemPrep {
      * Prepare actor data for ware changes
      * - this calculates the actors essence
      */
-    static prepareBodyware(data: SR5ActorData, items: SR5ItemDataWrapper[]) {
+    static prepareBodyware(data: SR6ActorData, items: SR6ItemDataWrapper[]) {
         const { attributes } = data;
         const parts = new PartsList<number>();
         // add Items as values to lower the total value of essence
@@ -66,7 +66,7 @@ export class ItemPrep {
         // add the bonus from the misc tab if applied
         const essenceMod = data.modifiers['essence'];
         if (essenceMod && !Number.isNaN(essenceMod)) {
-            parts.addUniquePart('SR5.Bonus', Number(essenceMod));
+            parts.addUniquePart('SR6.Bonus', Number(essenceMod));
         }
 
         attributes.essence.base = 6;

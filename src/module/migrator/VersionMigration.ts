@@ -1,4 +1,4 @@
-import { SR5Actor } from '../actor/SR5Actor';
+import { SR6Actor } from '../actor/SR6Actor';
 
 /**
  * Converts a game's data model from source version to a target version.
@@ -6,7 +6,7 @@ import { SR5Actor } from '../actor/SR5Actor';
  *  other methods are implementable purely for convenience and atomicity.
  */
 export abstract class VersionMigration {
-    static readonly MODULE_NAME = 'shadowrun5e';
+    static readonly MODULE_NAME = 'shadowrun6e';
     static readonly KEY_DATA_VERSION = 'systemMigrationVersion';
     static readonly NO_VERSION = '0';
 
@@ -47,9 +47,9 @@ export abstract class VersionMigration {
      */
     public async Migrate(game: Game) {
         // @ts-ignore TODO Unignore when Foundry Types updates
-        ui.notifications?.info(`${game.i18n.localize('SR5.MIGRATION.BeginNotification')} ${this.SourceVersionFriendlyName} -> ${this.TargetVersionFriendlyName}.`);
+        ui.notifications?.info(`${game.i18n.localize('SR6.MIGRATION.BeginNotification')} ${this.SourceVersionFriendlyName} -> ${this.TargetVersionFriendlyName}.`);
         // @ts-ignore TODO Unignore when Foundry Types updates
-        ui.notifications?.warn(game.i18n.localize('SR5.MIGRATION.DoNotCloseNotification'), {
+        ui.notifications?.warn(game.i18n.localize('SR6.MIGRATION.DoNotCloseNotification'), {
             permanent: true,
         });
 
@@ -95,7 +95,7 @@ export abstract class VersionMigration {
 
         await game.settings.set(VersionMigration.MODULE_NAME, VersionMigration.KEY_DATA_VERSION, this.TargetVersion);
         // @ts-ignore TODO Unignore when Foundry Types updates
-        ui.notifications?.info(`${game.i18n.localize('SR5.MIGRATION.SuccessNotification')} ${this.TargetVersion}.`, { permanent: true });
+        ui.notifications?.info(`${game.i18n.localize('SR6.MIGRATION.SuccessNotification')} ${this.TargetVersion}.`, { permanent: true });
     }
 
     /**
@@ -105,7 +105,7 @@ export abstract class VersionMigration {
     protected async Apply(entityUpdates: Map<Entity, EntityUpdate>) {
         for (const [entity, { updateData, embeddedItems }] of entityUpdates) {
             if (embeddedItems !== null) {
-                const actor = entity as SR5Actor;
+                const actor = entity as SR6Actor;
                 await actor.updateOwnedItem(embeddedItems);
             }
             await entity.update(updateData, { enforceTypes: false });

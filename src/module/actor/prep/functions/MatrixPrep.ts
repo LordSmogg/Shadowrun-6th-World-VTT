@@ -1,9 +1,9 @@
-import SR5ActorData = Shadowrun.SR5ActorData;
+import SR6ActorData = Shadowrun.SR6ActorData;
 import MatrixActorData = Shadowrun.MatrixActorData;
 import { Helpers } from '../../../helpers';
-import { SR5ItemDataWrapper } from '../../../item/SR5ItemDataWrapper';
+import { SR6ItemDataWrapper } from '../../../item/SR6ItemDataWrapper';
 import { PartsList } from '../../../parts/PartsList';
-import {SR5} from "../../../config";
+import {SR6} from "../../../config";
 
 export class MatrixPrep {
     /**
@@ -11,7 +11,7 @@ export class MatrixPrep {
      * - if an item is equipped, it will use that data
      * - if it isn't and player is technomancer, it will use that data
      */
-    static prepareMatrix(actorData: SR5ActorData & MatrixActorData, items: SR5ItemDataWrapper[]) {
+    static prepareMatrix(actorData: SR6ActorData & MatrixActorData, items: SR6ItemDataWrapper[]) {
         const { matrix, attributes } = actorData;
 
         const MatrixList = ['firewall', 'sleaze', 'data_processing', 'attack'];
@@ -19,7 +19,7 @@ export class MatrixPrep {
         // clear matrix data to defaults
         MatrixList.forEach((key) => {
             const parts = new PartsList(matrix[key].mod);
-            parts.addUniquePart('SR5.Temporary', matrix[key].temp);
+            parts.addUniquePart('SR6.Temporary', matrix[key].temp);
             // TODO LEGACY from when the sheet used 'mod.Temporary'
             parts.removePart('Temporary');
             matrix[key].mod = parts.list;
@@ -29,7 +29,7 @@ export class MatrixPrep {
         matrix.rating = 0;
         matrix.name = '';
         matrix.device = '';
-        matrix.condition_monitor.label = 'SR5.ConditionMonitor';
+        matrix.condition_monitor.label = 'SR6.ConditionMonitor';
 
         // get the first equipped device, we don't care if they have more equipped -- it shouldn't happen
         const device = items.find((item) => item.isEquipped() && item.isDevice());
@@ -60,7 +60,7 @@ export class MatrixPrep {
             matrix.rating = Helpers.calcTotal(attributes.resonance);
             matrix.attack.base = Helpers.calcTotal(attributes.charisma);
             matrix.sleaze.base = Helpers.calcTotal(attributes.intuition);
-            matrix.name = game.i18n.localize('SR5.LivingPersona');
+            matrix.name = game.i18n.localize('SR6.LivingPersona');
         }
 
         // set matrix condition monitor to max if greater than
@@ -73,7 +73,7 @@ export class MatrixPrep {
      * Add Matrix Attributes to Limits and Attributes
      * @param data
      */
-    static prepareMatrixToLimitsAndAttributes(data: SR5ActorData & MatrixActorData) {
+    static prepareMatrixToLimitsAndAttributes(data: SR6ActorData & MatrixActorData) {
         const { matrix, attributes, limits } = data;
         const MatrixList = ['firewall', 'sleaze', 'data_processing', 'attack'];
 
@@ -81,7 +81,7 @@ export class MatrixPrep {
         MatrixList.forEach((key) => {
             Helpers.calcTotal(matrix[key]);
             if (matrix[key]) {
-                const label = SR5.matrixAttributes[key];
+                const label = SR6.matrixAttributes[key];
                 const { value, base, mod } = matrix[key];
                 const hidden = true;
 
@@ -107,7 +107,7 @@ export class MatrixPrep {
      * Prepare the mental attributes for a sheet that just has a device rating
      * @param data
      */
-    static prepareAttributesForDevice(data: SR5ActorData & MatrixActorData) {
+    static prepareAttributesForDevice(data: SR6ActorData & MatrixActorData) {
         const { matrix, attributes } = data;
         const rating = matrix.rating || 0;
         const mentalAttributes = ['intuition', 'logic', 'charisma', 'willpower'];

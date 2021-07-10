@@ -1,11 +1,11 @@
-{{> 'systems/shadowrun5e/dist/templates/common/List/ListHeader.html'
-        name=(localize 'SR5.Powers')
+{{> 'systems/shadowrun6e/dist/templates/common/List/ListHeader.html'
+        name=(localize 'SR6.Powers')
         itemId='adept_power'
         icons=(ItemHeaderIcons 'adept_power')
         rightSide=(ItemHeaderRightSide 'adept_power')
 }}
 {{#each magic.powers as |item i|}}
-    {{> 'systems/shadowrun5e/dist/templates/common/List/ListItem.html'
+    {{> 'systems/shadowrun6e/dist/templates/common/List/ListItem.html'
             img=item.img
             name=item.name
             itemId=item._id

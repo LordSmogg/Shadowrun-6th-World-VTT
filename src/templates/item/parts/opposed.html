@@ -4,17 +4,17 @@
     </div>
     <div class="form-line">
         <div class="label">
-            {{localize "SR5.OpposedType"}}
+            {{localize "SR6.OpposedType"}}
         </div>
         <div class="inputs">
             <select name="data.action.opposed.type">
                 {{#select data.action.opposed.type}}
                 <option value=""></option>
-                <option value="defense">{{localize "SR5.RollDefense"}}</option>
-                <option value="soak">{{localize "SR5.RollSoak"}}</option>
-                <option value="armor">{{localize "SR5.RollArmor"}}</option>
+                <option value="defense">{{localize "SR6.RollDefense"}}</option>
+                <option value="soak">{{localize "SR6.RollSoak"}}</option>
+                <option value="armor">{{localize "SR6.RollArmor"}}</option>
                 <option disabled>-----</option>
-                <option value="custom">{{localize "SR5.RollCustom"}}</option>
+                <option value="custom">{{localize "SR6.RollCustom"}}</option>
                 {{/select}}
             </select>
         </div>
@@ -22,7 +22,7 @@
     {{#ife data.action.opposed.type "custom"}}
     <div class="form-line">
         <div class="label">
-            {{localize "SR5.Skill"}}
+            {{localize "SR6.Skill"}}
         </div>
         <div class="inputs">
             <select name="data.action.opposed.skill">
@@ -36,7 +36,7 @@
     </div>
     <div class="form-line">
         <div class="label">
-            {{localize "SR5.Attribute"}}
+            {{localize "SR6.Attribute"}}
         </div>
         <div class="inputs">
             <select name="data.action.opposed.attribute">

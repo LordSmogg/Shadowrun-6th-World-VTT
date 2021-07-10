@@ -1,13 +1,13 @@
-import {SR5Item} from '../../item/SR5Item';
+import {SR6Item} from '../../item/SR6Item';
 import {Helpers} from '../../helpers';
 import {LENGTH_UNIT, SR} from "../../constants";
-import {SR5Actor} from "../../actor/SR5Actor";
+import {SR6Actor} from "../../actor/SR6Actor";
 import FireModeData = Shadowrun.FireModeData;
 import RangesTemplateData = Shadowrun.RangesTemplateData;
 import RangeData = Shadowrun.RangeData;
 import {FormDialog} from "./FormDialog";
 import WeaponData = Shadowrun.WeaponData;
-import {SR5} from "../../config";
+import {SR6} from "../../config";
 
 type ItemDialogData = {
     dialogData: Dialog.Data | undefined,
@@ -40,7 +40,7 @@ export type ActionTestData = {
 
 
 export class ShadowrunItemDialog {
-    static async create(item: SR5Item, event?: MouseEvent): Promise<FormDialog|undefined> {
+    static async create(item: SR6Item, event?: MouseEvent): Promise<FormDialog|undefined> {
 
         if (item.isRangedWeapon()) {
             return ShadowrunItemDialog.createRangedWeaponDialog(item, event);
@@ -55,12 +55,12 @@ export class ShadowrunItemDialog {
         }
     }
 
-    static async createRangedWeaponDialog(item: SR5Item, event?: MouseEvent): Promise<FormDialog> {
+    static async createRangedWeaponDialog(item: SR6Item, event?: MouseEvent): Promise<FormDialog> {
         const dialogData = {title: item.name,
                             event,
         } as unknown as Dialog.Data;
 
-        const templatePath = 'systems/shadowrun5e/dist/templates/rolls/range-weapon-roll.html';
+        const templatePath = 'systems/shadowrun6e/dist/templates/rolls/range-weapon-roll.html';
 
         // Prepare template data for display.
         const modifiers = await item.actor.getModifiers();
@@ -83,12 +83,12 @@ export class ShadowrunItemDialog {
         return new FormDialog(dialogData);
     }
 
-    static async createSpellDialog(item: SR5Item, event?: MouseEvent): Promise<FormDialog> {
+    static async createSpellDialog(item: SR6Item, event?: MouseEvent): Promise<FormDialog> {
         const dialogData = {title: item.name,
                             event,
         } as unknown as Dialog.Data;
 
-        const templatePath = 'systems/shadowrun5e/dist/templates/rolls/roll-spell.html';
+        const templatePath = 'systems/shadowrun6e/dist/templates/rolls/roll-spell.html';
         const templateData = {};
         const onAfterClose = ShadowrunItemDialog.addSpellData(templateData, dialogData, item);
 
@@ -100,12 +100,12 @@ export class ShadowrunItemDialog {
         return new FormDialog(dialogData);
     }
 
-    static async createComplexFormDialog(item: SR5Item, event?: MouseEvent): Promise<FormDialog> {
+    static async createComplexFormDialog(item: SR6Item, event?: MouseEvent): Promise<FormDialog> {
         const dialogData = {title: item.name,
                             event,
         } as unknown as Dialog.Data;
 
-        const templatePath = 'systems/shadowrun5e/dist/templates/rolls/roll-complex-form.html';
+        const templatePath = 'systems/shadowrun6e/dist/templates/rolls/roll-complex-form.html';
         const templateData = {};
         const onAfterClose = ShadowrunItemDialog.addComplexFormData(templateData, dialogData, item);
 
@@ -117,7 +117,7 @@ export class ShadowrunItemDialog {
         return new FormDialog(dialogData);
     }
 
-    static addComplexFormData(templateData: object, dialogData: Dialog.Data, item: SR5Item): Function {
+    static addComplexFormData(templateData: object, dialogData: Dialog.Data, item: SR6Item): Function {
         const fade = item.getFade();
         const title = `${Helpers.label(item.name)} Level`;
 
@@ -155,7 +155,7 @@ export class ShadowrunItemDialog {
         return {level};
     }
 
-    static addSpellData(templateData: object, dialogData: Dialog.Data, item: SR5Item): Function {
+    static addSpellData(templateData: object, dialogData: Dialog.Data, item: SR6Item): Function {
         const title = `${Helpers.label(item.name)} Force`;
         const drain = item.getDrain();
 
@@ -170,11 +170,11 @@ export class ShadowrunItemDialog {
         let reckless = false;
         dialogData.buttons = {
             normal: {
-                label: game.i18n.localize('SR5.NormalSpellButton'),
+                label: game.i18n.localize('SR6.NormalSpellButton'),
                 callback: () => (cancel = false),
             },
             reckless: {
-                label: game.i18n.localize('SR5.RecklessSpellButton'),
+                label: game.i18n.localize('SR6.RecklessSpellButton'),
                 callback: () => {
                     reckless = true;
                     cancel = false;
@@ -206,7 +206,7 @@ export class ShadowrunItemDialog {
         return {reckless}
     }
 
-    static addRangedWeaponData(templateData: object, dialogData: Dialog.Data, item: SR5Item): Function {
+    static addRangedWeaponData(templateData: object, dialogData: Dialog.Data, item: SR6Item): Function {
         let title = dialogData.title || item.name;
 
         const itemData = item.data.data as WeaponData;
@@ -216,20 +216,20 @@ export class ShadowrunItemDialog {
         const {ammo} = itemData;
         // TODO: This should be moved into constants or some kind of 'rulesData'
         if (modes.single_shot) {
-            fireModes['1'] = game.i18n.localize("SR5.WeaponModeSingleShotShort");
+            fireModes['1'] = game.i18n.localize("SR6.WeaponModeSingleShotShort");
         }
         if (modes.semi_auto) {
-            fireModes['1'] = game.i18n.localize("SR5.WeaponModeSemiAutoShort");
-            fireModes['3'] = game.i18n.localize("SR5.WeaponModeSemiAutoBurst");
+            fireModes['1'] = game.i18n.localize("SR6.WeaponModeSemiAutoShort");
+            fireModes['3'] = game.i18n.localize("SR6.WeaponModeSemiAutoBurst");
         }
         if (modes.burst_fire) {
-            fireModes['3'] = `${modes.semi_auto ? `${game.i18n.localize("SR5.WeaponModeSemiAutoBurst")}/` : ''}${game.i18n.localize("SR5.WeaponModeBurstFireShort")}`;
-            fireModes['6'] = game.i18n.localize("SR5.WeaponModeBurstFireLong");
+            fireModes['3'] = `${modes.semi_auto ? `${game.i18n.localize("SR6.WeaponModeSemiAutoBurst")}/` : ''}${game.i18n.localize("SR6.WeaponModeBurstFireShort")}`;
+            fireModes['6'] = game.i18n.localize("SR6.WeaponModeBurstFireLong");
         }
         if (modes.full_auto) {
-            fireModes['6'] = `${modes.burst_fire ? 'LB/' : ''}${game.i18n.localize("SR5.WeaponModeFullAutoShort")}(s)`;
-            fireModes['10'] = `${game.i18n.localize("SR5.WeaponModeFullAutoShort")}(c)`;
-            fireModes['20'] = game.i18n.localize('SR5.Suppressing');
+            fireModes['6'] = `${modes.burst_fire ? 'LB/' : ''}${game.i18n.localize("SR6.WeaponModeFullAutoShort")}(s)`;
+            fireModes['10'] = `${game.i18n.localize("SR6.WeaponModeFullAutoShort")}(c)`;
+            fireModes['20'] = game.i18n.localize('SR6.Suppressing');
         }
 
         const templateRanges = this._getRangeWeaponTemplateData(ranges);
@@ -247,13 +247,13 @@ export class ShadowrunItemDialog {
             templateData['targets'] = ShadowrunItemDialog._getTargetRangeTemplateData(item.actor, templateRanges);
         } else if (!item.actor.getToken() && Helpers.userHasTargets()) {
             // Inform user about usage of actors without tokens!
-            ui.notifications?.warn(game.i18n.localize('SR5.TargetingNeedsActorWithToken'));
+            ui.notifications?.warn(game.i18n.localize('SR6.TargetingNeedsActorWithToken'));
         }
 
         let cancel = true;
         dialogData.buttons = {
             continue: {
-                label: game.i18n.localize('SR5.Continue'),
+                label: game.i18n.localize('SR6.Continue'),
                 callback: () => (cancel = false),
             },
         };
@@ -304,7 +304,7 @@ export class ShadowrunItemDialog {
         const newRanges = {} as RangesTemplateData;
         for (const [key, value] of Object.entries(ranges)) {
             const distance = value as number;
-            newRanges[key] = Helpers.createRangeDescription(SR5.weaponRanges[key], distance, range_modifiers[key]);
+            newRanges[key] = Helpers.createRangeDescription(SR6.weaponRanges[key], distance, range_modifiers[key]);
         }
         return newRanges;
     }
@@ -315,11 +315,11 @@ export class ShadowrunItemDialog {
      * so distance measurements can be taken.
      *
      */
-    static _getTargetRangeTemplateData(actor: SR5Actor, ranges) {
+    static _getTargetRangeTemplateData(actor: SR6Actor, ranges) {
         const attacker = actor.getToken();
 
         if (!attacker || !Helpers.userHasTargets()) {
-            ui.notifications?.warn(game.i18n.localize('SR5.TargetingNeedsActorWithToken'));
+            ui.notifications?.warn(game.i18n.localize('SR6.TargetingNeedsActorWithToken'));
             return [];
         }
 

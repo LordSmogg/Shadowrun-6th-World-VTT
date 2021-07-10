@@ -1,11 +1,11 @@
 import {Helpers} from '../helpers';
-import {SR5Actor} from '../actor/SR5Actor';
+import {SR6Actor} from '../actor/SR6Actor';
 import {ActionTestData, ShadowrunItemDialog} from '../apps/dialogs/ShadowrunItemDialog';
 import {ChatData} from './ChatData';
 import {ShadowrunRoll, ShadowrunRoller, Test} from '../rolls/ShadowrunRoller';
 import {createItemChatMessage} from '../chat';
 import {DEFAULT_ROLL_NAME, FLAGS, SYSTEM_NAME} from '../constants';
-import {SR5ItemDataWrapper} from './SR5ItemDataWrapper';
+import {SR6ItemDataWrapper} from './SR6ItemDataWrapper';
 import {PartsList} from '../parts/PartsList';
 import ModList = Shadowrun.ModList;
 import AttackData = Shadowrun.AttackData;
@@ -18,7 +18,7 @@ import ComplexFormLevelData = Shadowrun.ComplexFormLevelData;
 import FireRangeData = Shadowrun.FireRangeData;
 import BlastData = Shadowrun.BlastData;
 import ConditionData = Shadowrun.ConditionData;
-import SR5ItemType = Shadowrun.SR5ItemType;
+import SR6ItemType = Shadowrun.SR6ItemType;
 import ActionRollData = Shadowrun.ActionRollData;
 import DamageData = Shadowrun.DamageData;
 import DefenseRollOptions = Shadowrun.DefenseRollOptions;
@@ -51,39 +51,39 @@ import Spell = Shadowrun.Spell;
 import SpritePower = Shadowrun.SpritePower;
 import {ItemAction} from "./ItemAction";
 import {SkillFlow} from "../actor/SkillFlow";
-import {SR5} from "../config";
+import {SR6} from "../config";
 
 /**
- * Implementation of Shadowrun5e items (owned, unowned and embedded).
+ * Implementation of Shadowrun6e items (owned, unowned and embedded).
  *
  *       tamIf here: The current legacy embedded items approach has been cleaned up a bit but is still causing some issues
  *       with typing and ease of use.
  *
- *       SR5Item.items currently overwrites foundries internal DocumentCollection mechanism of embedded documents. Partially
- *       due to legacy reasons and since Foundry 0.8 SR5Item.update can't be used for embedded items in items anymore.
+ *       SR6Item.items currently overwrites foundries internal DocumentCollection mechanism of embedded documents. Partially
+ *       due to legacy reasons and since Foundry 0.8 SR6Item.update can't be used for embedded items in items anymore.
  *
- *        At the moment this means, that this.actor can actually be an SR5Actor as well as an SR5Item, depending on who
+ *        At the moment this means, that this.actor can actually be an SR6Actor as well as an SR6Item, depending on who
  *       'owns' the embedded item as they are created using Item.createOwned during the embedded item prep phase.
  *
- *       For this reason SR5Item.actorOwner has been introduced to allow access to the actual owning actor, no matter
+ *       For this reason SR6Item.actorOwner has been introduced to allow access to the actual owning actor, no matter
  *       how deep embedded into other items an item is.
  *
- *       Be wary of SR5Item.actor for this reason!
+ *       Be wary of SR6Item.actor for this reason!
  */
-export class SR5Item extends Item {
-    // TODO: TYPE: In contrast to SR5Actor we can only type Item.data as the typing structure for ItemData doesn't have
-    //       monolithic Item.data.data typing (SR5ActorData) but only one for each Item type. Therefore we can't
-    //       do extends Item<SR5ItemData> as we can with the SR5Actor class.
-    // data: SR5ItemType;
-    items: SR5Item[];
+export class SR6Item extends Item {
+    // TODO: TYPE: In contrast to SR6Actor we can only type Item.data as the typing structure for ItemData doesn't have
+    //       monolithic Item.data.data typing (SR6ActorData) but only one for each Item type. Therefore we can't
+    //       do extends Item<SR6ItemData> as we can with the SR6Actor class.
+    // data: SR6ItemType;
+    items: SR6Item[];
 
     labels: {} = {};
 
 
     // @ts-ignore // TODO: TYPE: Check foundry-vtt-types systems for how Items and Actors type.
-    get actor(): SR5Actor {
+    get actor(): SR6Actor {
         this.data.data.skills
-        return super.actor as unknown as SR5Actor;
+        return super.actor as unknown as SR6Actor;
     }
 
     /**
@@ -92,13 +92,13 @@ export class SR5Item extends Item {
      *
      * NOTE: This helper is necessary since we have setup embedded items with an item owner, due to the current embedding
      *       workflow using item.update.isOwned condition within Item.update (foundry Item) to NOT trigger a global item
-     *       update within the ItemCollection but instead have this.actor.updateEmbeddedEntities actually trigger SR5Item.updateEmbeddedEntities
+     *       update within the ItemCollection but instead have this.actor.updateEmbeddedEntities actually trigger SR6Item.updateEmbeddedEntities
      */
-    get actorOwner(): SR5Actor | undefined {
+    get actorOwner(): SR6Actor | undefined {
         // An unowned item won't have an actor.
         if (!this.actor) return;
         // An owned item will have an actor.
-        if (this.actor instanceof SR5Actor) return this.actor;
+        if (this.actor instanceof SR6Actor) return this.actor;
         // An embedded item will have an item as an actor, which might have an actor owner.
         // NOTE: This is very likely wrong and should be fixed during embedded item prep / creation. this.actor will only
         //       check what is set in the items options.actor during it's construction.
@@ -106,9 +106,9 @@ export class SR5Item extends Item {
         return this.actor.actorOwner;
     }
 
-    private get wrapper(): SR5ItemDataWrapper {
+    private get wrapper(): SR6ItemDataWrapper {
         // we need to cast here to unknown first to make ts happy
-        return new SR5ItemDataWrapper((this.data as unknown) as SR5ItemType);
+        return new SR6ItemDataWrapper((this.data as unknown) as SR6ItemType);
     }
 
     // Flag Functions
@@ -251,7 +251,7 @@ export class SR5Item extends Item {
                 action.damage.base_formula_operator = 'add';
             }
 
-            // Item.prepareData is called once (first) with an empty SR5Actor instance without .data and once (second) with .data.
+            // Item.prepareData is called once (first) with an empty SR6Actor instance without .data and once (second) with .data.
             if (this.actor?.data) {
                 action.damage.source = {
                     actorId: this.actor.id,
@@ -365,7 +365,7 @@ export class SR5Item extends Item {
         const data = duplicate(this.data.data);
         const { labels } = this;
         //@ts-ignore // This is a hacky monkey patch solution to add a property to the item data
-        //              that's not actually defined in any SR5Item typing.
+        //              that's not actually defined in any SR6Item typing.
         if (!data.description) data.description = {};
         // TextEditor.enrichHTML will return null as a string, making later handling difficult.
         if (!data.description.value) data.description.value = '';
@@ -377,7 +377,7 @@ export class SR5Item extends Item {
         if (func) func(duplicate(data), labels, props, this);
 
         //@ts-ignore // This is a hacky monkey patch solution to add a property to the item data
-        //              that's not actually defined in any SR5Item typing.
+        //              that's not actually defined in any SR6Item typing.
         data.properties = props.filter((p) => !!p);
 
         return data;
@@ -385,7 +385,7 @@ export class SR5Item extends Item {
 
     getActionTestName(): string {
         const testName = this.getRollName();
-        return testName ? testName :  game.i18n.localize('SR5.Action');
+        return testName ? testName :  game.i18n.localize('SR6.Action');
     }
 
     getOpposedTestName(): string {
@@ -413,14 +413,14 @@ export class SR5Item extends Item {
         const parts = new PartsList<number>();
         if (this.hasDefenseTest()) {
             if (this.isAreaOfEffect()) {
-                parts.addUniquePart('SR5.Aoe', -2);
+                parts.addUniquePart('SR6.Aoe', -2);
             }
             if (this.isRangedWeapon()) {
                 const fireModeData = this.getLastFireMode();
                 if (fireModeData?.defense) {
-                    if (fireModeData.defense !== 'SR5.DuckOrCover') {
+                    if (fireModeData.defense !== 'SR6.DuckOrCover') {
                         const fireMode = +fireModeData.defense;
-                        parts.addUniquePart('SR5.FireMode', fireMode);
+                        parts.addUniquePart('SR6.FireMode', fireMode);
                     }
                 }
             }
@@ -436,8 +436,8 @@ export class SR5Item extends Item {
             if (this.isRangedWeapon()) {
                 const fireModeData = this.getLastFireMode();
                 if (fireModeData?.defense) {
-                    if (fireModeData.defense === 'SR5.DuckOrCover') {
-                        return game.i18n.localize('SR5.DuckOrCover');
+                    if (fireModeData.defense === 'SR6.DuckOrCover') {
+                        return game.i18n.localize('SR6.DuckOrCover');
                     }
                 }
             }
@@ -492,7 +492,7 @@ export class SR5Item extends Item {
         }
     }
 
-    getEquippedAmmo(): SR5Item {
+    getEquippedAmmo(): SR6Item {
         const equippedAmmos = (this.items || []).filter((item) =>
             item.isAmmo() &&
             item.isEquipped());
@@ -501,7 +501,7 @@ export class SR5Item extends Item {
         return equippedAmmos[0];
     }
 
-    getEquippedMods(): SR5Item[] {
+    getEquippedMods(): SR6Item[] {
         return (this.items || []).filter((item) =>
             item.isWeaponModification() &&
             item.isEquipped());
@@ -639,7 +639,7 @@ export class SR5Item extends Item {
 
         //@ts-ignore parseInt does allow for number type parameter.
         const mod = parseInt(this.data.data.action.mod || 0);
-        if (mod) parts.addUniquePart('SR5.ItemMod', mod);
+        if (mod) parts.addUniquePart('SR6.ItemMod', mod);
 
         const atts: (AttributeField | SkillField)[] | boolean = [];
         if (attribute !== undefined) atts.push(attribute);
@@ -663,7 +663,7 @@ export class SR5Item extends Item {
     _addWeaponParts(parts: PartsList<number>) {
         if (this.isRangedWeapon()) {
             const recoil = this.calculateRecoil();
-            if (recoil) parts.addUniquePart('SR5.Recoil', recoil);
+            if (recoil) parts.addUniquePart('SR6.Recoil', recoil);
         }
     }
 
@@ -764,7 +764,7 @@ export class SR5Item extends Item {
 
 
 
-    async rollOpposedTest(target: SR5Actor, attack: AttackData, event):  Promise<ShadowrunRoll | undefined> {
+    async rollOpposedTest(target: SR6Actor, attack: AttackData, event):  Promise<ShadowrunRoll | undefined> {
         const options = {
             event,
             fireModeDefense: 0,
@@ -793,7 +793,7 @@ export class SR5Item extends Item {
             const skill = target.getSkill(opposed.skill);
 
             if (!skill) {
-                ui.notifications?.error(game.i18n.localize("SR5.Errors.MissingSkill"));
+                ui.notifications?.error(game.i18n.localize("SR6.Errors.MissingSkill"));
                 return;
             }
 
@@ -811,7 +811,7 @@ export class SR5Item extends Item {
         }
     }
 
-    async rollTestType(type: string, attack: AttackData, event, target: SR5Actor) {
+    async rollTestType(type: string, attack: AttackData, event, target: SR6Actor) {
         if (type === 'opposed') {
             await this.rollOpposedTest(target, attack, event);
         }
@@ -844,7 +844,7 @@ export class SR5Item extends Item {
      *
      * @param html
      */
-    static getItemFromMessage(html): SR5Item | undefined {
+    static getItemFromMessage(html): SR6Item | undefined {
         if (!game || !game.scenes || !game.ready || !canvas || !canvas.ready || !canvas.scene) return;
 
         const card = html.find('.chat-card');
@@ -948,7 +948,7 @@ export class SR5Item extends Item {
                 } else {
                     // NOTE: createdOwned expects an Actor instance as the second parameter.
                     //       HOWEVER the legacy approach for embeddedItems in other items relies upon this.actor
-                    //       returning an SR5Item instance to call .updateEmbeddedEntities, when Foundry expects an actor
+                    //       returning an SR6Item instance to call .updateEmbeddedEntities, when Foundry expects an actor
                     //@ts-ignore
                     return Item.createOwned(item, this);
                 }
@@ -956,7 +956,7 @@ export class SR5Item extends Item {
         }
     }
 
-    getOwnedItem(itemId): SR5Item | undefined {
+    getOwnedItem(itemId): SR6Item | undefined {
         const items = this.items;
         if (!items) return;
         return items.find((item) => item.id === itemId);
@@ -1013,7 +1013,7 @@ export class SR5Item extends Item {
         if (!items) return;
 
         const idx = items.findIndex((i) => i._id === deleted || Number(i._id) === deleted);
-        if (idx === -1) throw new Error(`Shadowrun5e | Couldn't find owned item ${deleted}`);
+        if (idx === -1) throw new Error(`Shadowrun6e | Couldn't find owned item ${deleted}`);
         items.splice(idx, 1);
         // we need to clear the items when one is deleted or it won't actually be deleted
         await this.clearEmbeddedItems();
@@ -1027,14 +1027,14 @@ export class SR5Item extends Item {
     async openPdfSource() {
         // Check for PDFoundry module hook: https://github.com/Djphoenix719/PDFoundry
         if (!ui['PDFoundry']) {
-            ui.notifications?.warn(game.i18n.localize('SR5.DIALOG.MissingModuleContent'));
+            ui.notifications?.warn(game.i18n.localize('SR6.DIALOG.MissingModuleContent'));
             return;
         }
 
         const source = this.getBookSource();
         if (source === '') {
             // @ts-ignore
-            ui.notifications?.error(game.i18n.localize('SR5.SourceFieldEmptyError'));
+            ui.notifications?.error(game.i18n.localize('SR6.SourceFieldEmptyError'));
         }
         // TODO open PDF to correct location
         // parse however you need, all "buttons" will lead to this function
@@ -1126,16 +1126,16 @@ export class SR5Item extends Item {
 
     getRollName(): string {
         if (this.isRangedWeapon()) {
-            return game.i18n.localize('SR5.RangeWeaponAttack');
+            return game.i18n.localize('SR6.RangeWeaponAttack');
         }
         if (this.isMeleeWeapon()) {
-            return game.i18n.localize('SR5.MeleeWeaponAttack');
+            return game.i18n.localize('SR6.MeleeWeaponAttack');
         }
         if (this.isCombatSpell()) {
-            return game.i18n.localize('SR5.SpellAttack');
+            return game.i18n.localize('SR6.SpellAttack');
         }
         if (this.isSpell()) {
-            return game.i18n.localize('SR5.SpellCast');
+            return game.i18n.localize('SR6.SpellCast');
         }
         if (this.hasRoll) {
             return this.name
@@ -1150,17 +1150,17 @@ export class SR5Item extends Item {
         if (!limit) return undefined;
         // go through and set the label correctly
         if (this.data.type === 'weapon') {
-            limit.label = 'SR5.Accuracy';
+            limit.label = 'SR6.Accuracy';
         } else if (limit?.attribute) {
-            limit.label = SR5.limits[limit.attribute];
+            limit.label = SR6.limits[limit.attribute];
         } else if (this.isSpell()) {
             limit.value = this.getLastSpellForce().value;
-            limit.label = 'SR5.Force';
+            limit.label = 'SR6.Force';
         } else if (this.isComplexForm()) {
             limit.value = this.getLastComplexFormLevel().value;
-            limit.label = 'SR5.Level';
+            limit.label = 'SR6.Level';
         } else {
-            limit.label = 'SR5.Limit';
+            limit.label = 'SR6.Limit';
         }
 
         // adjust limit value for actor data
@@ -1176,7 +1176,7 @@ export class SR5Item extends Item {
     }
 
     /**
-     * Override setFlag to remove the 'SR5.' from keys in modlists, otherwise it handles them as embedded keys
+     * Override setFlag to remove the 'SR6.' from keys in modlists, otherwise it handles them as embedded keys
      * @param scope
      * @param key
      * @param value
@@ -1187,7 +1187,7 @@ export class SR5Item extends Item {
     }
 
     /**
-     * Override getFlag to add back the 'SR5.' keys correctly to be handled
+     * Override getFlag to add back the 'SR6.' keys correctly to be handled
      * @param scope
      * @param key
      */
@@ -1481,7 +1481,7 @@ export class SR5Item extends Item {
     }
 
     // TODO: Move into a rule section.
-    async rollDefense(target: SR5Actor, options: DefenseRollOptions): Promise<ShadowrunRoll | undefined> {
+    async rollDefense(target: SR6Actor, options: DefenseRollOptions): Promise<ShadowrunRoll | undefined> {
         if (!target) {
             console.error("The targeted actor couldn't be fetched.");
             return;
@@ -1519,13 +1519,13 @@ export class SR5Item extends Item {
 
     get _isEmbeddedItem(): boolean {
         // @ts-ignore // TODO: foundry-vtt-types Document hasn't be implemented yet
-        return this.hasOwnProperty('parent') && this.parent instanceof SR5Item;
+        return this.hasOwnProperty('parent') && this.parent instanceof SR6Item;
     }
 
     /**
      * Hook into the Item.update process for embedded items.
      *
-     * @param data changes made to the SR5ItemData
+     * @param data changes made to the SR6ItemData
      */
     async updateEmbeddedItem(data) {
         // Inform the parent item about changes to one of it's embedded items.

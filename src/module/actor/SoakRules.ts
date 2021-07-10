@@ -1,5 +1,5 @@
-import { SR5Actor } from './SR5Actor';
-import { SR5 } from '../config';
+import { SR6Actor } from './SR6Actor';
+import { SR6 } from '../config';
 import { Helpers } from '../helpers';
 import { PartsList } from '../parts/PartsList';
 import DamageData = Shadowrun.DamageData;
@@ -20,7 +20,7 @@ export class SoakRules {
      * @param actor The actor affected by the damage
      * @param damageData The damage
      */
-    static applyAllSoakParts(soakParts: PartsList<number>, actor: SR5Actor, damageData: DamageData) {
+    static applyAllSoakParts(soakParts: PartsList<number>, actor: SR6Actor, damageData: DamageData) {
         if (damageData.type.base !== 'matrix') {
             SoakRules.applyPhysicalAndStunSoakParts(soakParts, actor, damageData);
         } else {
@@ -28,7 +28,7 @@ export class SoakRules {
         }
     }
 
-    private static applyPhysicalAndStunSoakParts(soakParts: PartsList<number>, actor: SR5Actor, damageData: DamageData) {
+    private static applyPhysicalAndStunSoakParts(soakParts: PartsList<number>, actor: SR6Actor, damageData: DamageData) {
         // Apply special rules for direct combat spells
         const damageSourceItem = Helpers.findDamageSource(damageData);
         if (damageSourceItem && damageSourceItem.isDirectCombatSpell()) {
@@ -42,27 +42,27 @@ export class SoakRules {
         SoakRules.applyElementalArmor(soakParts, armor, damageData.element.base);
     }
 
-    private static applyDirectCombatSpellParts(spellItem: Spell, soakParts: PartsList<number>, actor: SR5Actor) {
+    private static applyDirectCombatSpellParts(spellItem: Spell, soakParts: PartsList<number>, actor: SR6Actor) {
         if (spellItem.data.type === 'mana') {
-            SoakRules.addUniquePart(soakParts, actor.getAttribute('willpower'), SR5.attributes.willpower);
+            SoakRules.addUniquePart(soakParts, actor.getAttribute('willpower'), SR6.attributes.willpower);
         }
 
         else {
-            SoakRules.addUniquePart(soakParts, actor.getAttribute('body'), SR5.attributes.body);
+            SoakRules.addUniquePart(soakParts, actor.getAttribute('body'), SR6.attributes.body);
         }
 
         return;
     }
 
-    private static applyBodyAndArmorParts(soakParts: PartsList<number>, actor: SR5Actor) {
+    private static applyBodyAndArmorParts(soakParts: PartsList<number>, actor: SR6Actor) {
         const body = actor.findAttribute('body');
         if (body) {
-            soakParts.addUniquePart(body.label || 'SR5.Body', body.value);
+            soakParts.addUniquePart(body.label || 'SR6.Body', body.value);
         }
 
         const mod = actor.getModifier('soak');
         if (mod) {
-            soakParts.addUniquePart('SR5.Bonus', mod);
+            soakParts.addUniquePart('SR6.Bonus', mod);
         }
 
         actor._addArmorParts(soakParts);
@@ -73,17 +73,17 @@ export class SoakRules {
         const totalArmor = armor.value + bonusArmor;
         const ap = Helpers.calcTotal(damageData.ap);
 
-        soakParts.addUniquePart('SR5.AP', Math.max(ap, -totalArmor));
+        soakParts.addUniquePart('SR6.AP', Math.max(ap, -totalArmor));
     }
 
     private static applyElementalArmor(soakParts: PartsList<number>, armor: ActorArmorData, element: string) {
         const bonusArmor = armor[element] ?? 0;
         if (bonusArmor) {
-            soakParts.addUniquePart(SR5.elementTypes[element], bonusArmor);
+            soakParts.addUniquePart(SR6.elementTypes[element], bonusArmor);
         }
     }
 
-    private static applyMatrixSoakParts(soakParts: PartsList<number>, actor: SR5Actor) {
+    private static applyMatrixSoakParts(soakParts: PartsList<number>, actor: SR6Actor) {
         const actorData = actor.data.data as CharacterActorData;
 
         // All actors have the same soak rules when they are not active in the matrix
@@ -103,14 +103,14 @@ export class SoakRules {
         }
     }
 
-    private static applyBiofeedbackParts(soakParts: PartsList<number>, actor: SR5Actor, actorData: CharacterActorData) {
-        SoakRules.addUniquePart(soakParts, actor.getAttribute('willpower'), SR5.attributes.willpower);
+    private static applyBiofeedbackParts(soakParts: PartsList<number>, actor: SR6Actor, actorData: CharacterActorData) {
+        SoakRules.addUniquePart(soakParts, actor.getAttribute('willpower'), SR6.attributes.willpower);
 
         if (!actorData.matrix) {
             return;
         }
 
-        SoakRules.addUniquePart(soakParts, actorData.matrix.firewall, SR5.matrixAttributes.firewall);
+        SoakRules.addUniquePart(soakParts, actorData.matrix.firewall, SR6.matrixAttributes.firewall);
     }
 
     private static applyRatingAndFirewallParts(actorData: CharacterActorData, soakParts: PartsList<number>) {
@@ -120,10 +120,10 @@ export class SoakRules {
 
         const deviceRating = actorData.matrix.rating;
         if (deviceRating) {
-            soakParts.addUniquePart('SR5.Labels.ActorSheet.DeviceRating', deviceRating);
+            soakParts.addUniquePart('SR6.Labels.ActorSheet.DeviceRating', deviceRating);
         }
 
-        this.addUniquePart(soakParts, actorData.matrix.firewall, SR5.matrixAttributes.firewall);
+        this.addUniquePart(soakParts, actorData.matrix.firewall, SR6.matrixAttributes.firewall);
     }
 
     private static addUniquePart(partsList: PartsList<number>, modifiableValue : ModifiableValue, label : string) {
@@ -142,17 +142,17 @@ export class SoakRules {
      * @param hits The number of hits on the soak tests
      * @returns The updated damage data
      */
-    static reduceDamage(actor : SR5Actor, damageData: DamageData, hits: number): ModifiedDamageData {
+    static reduceDamage(actor : SR6Actor, damageData: DamageData, hits: number): ModifiedDamageData {
 
         // Vehicles are immune to stun damage (electricity stun damage is handled in a different place)
         // Note: This also takes care of the vehicle immunity, since physical damage that does not exceed armor
         // will be converted to stun damage and then reduced to 0. This does not work with drones wearing armor
         // but we do not support this.
         if (damageData.type.value === 'stun' && actor.isVehicle()) {
-            return Helpers.reduceDamageByHits(damageData, damageData.value, 'SR5.VehicleStunImmunity');
+            return Helpers.reduceDamageByHits(damageData, damageData.value, 'SR6.VehicleStunImmunity');
         }
 
-        return Helpers.reduceDamageByHits(damageData, hits, 'SR5.SoakTest');
+        return Helpers.reduceDamageByHits(damageData, hits, 'SR6.SoakTest');
     }
 
     /**
@@ -161,7 +161,7 @@ export class SoakRules {
      * @param actor The actor affected by the damage
      * @returns The updated damage data
      */
-    static modifyDamageType(damage: DamageData, actor : SR5Actor) : DamageData {
+    static modifyDamageType(damage: DamageData, actor : SR6Actor) : DamageData {
         // Careful, order of damage conversion is very important
         // Electricity stun damage is considered physical for vehicles
         let updatedDamage = duplicate(damage) as DamageData;
@@ -185,7 +185,7 @@ export class SoakRules {
      * @param actor The actor affected by the damage
      * @returns The updated damage data
      */
-     static modifyPhysicalDamageForArmor(damage: DamageData, actor : SR5Actor): DamageData {
+     static modifyPhysicalDamageForArmor(damage: DamageData, actor : SR6Actor): DamageData {
         const updatedDamage = duplicate(damage) as DamageData;
 
         if (damage.type.value === 'physical') {
@@ -213,7 +213,7 @@ export class SoakRules {
      * @param actor The actor affected by the damage
      * @returns The updated damage data
      */
-    static modifyMatrixDamageForBiofeedback(damage: DamageData, actor : SR5Actor): DamageData {
+    static modifyMatrixDamageForBiofeedback(damage: DamageData, actor : SR6Actor): DamageData {
         const updatedDamage = duplicate(damage) as DamageData;
 
         if (damage.type.value === 'matrix') {

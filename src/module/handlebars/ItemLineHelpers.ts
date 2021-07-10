@@ -1,77 +1,77 @@
-import SR5ItemType = Shadowrun.SR5ItemType;
-import { SR5ItemDataWrapper } from '../item/SR5ItemDataWrapper';
-import {SR5} from "../config";
+import SR6ItemType = Shadowrun.SR6ItemType;
+import { SR6ItemDataWrapper } from '../item/SR6ItemDataWrapper';
+import {SR6} from "../config";
 
 export const registerItemLineHelpers = () => {
     Handlebars.registerHelper('ItemHeaderIcons', function (id) {
         const PlusIcon = 'fas fa-plus';
-        const AddText = game.i18n.localize('SR5.Add');
+        const AddText = game.i18n.localize('SR6.Add');
         const addIcon = {
             icon: PlusIcon,
             text: AddText,
-            title: game.i18n.localize('SR5.CreateItem'),
+            title: game.i18n.localize('SR6.CreateItem'),
             cssClass: 'item-create',
         };
         switch (id) {
             case 'lifestyle':
-                addIcon.title = game.i18n.localize('SR5.CreateItemLifestyle');
+                addIcon.title = game.i18n.localize('SR6.CreateItemLifestyle');
                 return [addIcon];
             case 'contact':
-                addIcon.title = game.i18n.localize('SR5.CreateItemContact');
+                addIcon.title = game.i18n.localize('SR6.CreateItemContact');
                 return [addIcon];
             case 'sin':
-                addIcon.title = game.i18n.localize('SR5.CreateItemSIN');
+                addIcon.title = game.i18n.localize('SR6.CreateItemSIN');
                 return [addIcon];
             case 'license':
-                addIcon.title = game.i18n.localize('SR5.CreateItemLicense');
+                addIcon.title = game.i18n.localize('SR6.CreateItemLicense');
                 return [addIcon];
             case 'quality':
-                addIcon.title = game.i18n.localize('SR5.CreateItemQuality');
+                addIcon.title = game.i18n.localize('SR6.CreateItemQuality');
                 return [addIcon];
             case 'adept_power':
-                addIcon.title = game.i18n.localize('SR5.CreateItemAdeptPower');
+                addIcon.title = game.i18n.localize('SR6.CreateItemAdeptPower');
                 return [addIcon];
             case 'action':
-                addIcon.title = game.i18n.localize('SR5.CreateItemAction');
+                addIcon.title = game.i18n.localize('SR6.CreateItemAction');
                 return [addIcon];
             case 'spell':
-                addIcon.title = game.i18n.localize('SR5.CreateItemSpell');
+                addIcon.title = game.i18n.localize('SR6.CreateItemSpell');
                 return [addIcon];
             case 'gear':
-                addIcon.title = game.i18n.localize('SR5.CreateItemGear');
+                addIcon.title = game.i18n.localize('SR6.CreateItemGear');
                 return [addIcon];
             case 'complex_form':
-                addIcon.title = game.i18n.localize('SR5.CreateItemComplexForm');
+                addIcon.title = game.i18n.localize('SR6.CreateItemComplexForm');
                 return [addIcon];
             case 'program':
-                addIcon.title = game.i18n.localize('SR5.CreateItemProgram');
+                addIcon.title = game.i18n.localize('SR6.CreateItemProgram');
                 return [addIcon];
             case 'weapon':
-                addIcon.title = game.i18n.localize('SR5.CreateItemWeapon');
+                addIcon.title = game.i18n.localize('SR6.CreateItemWeapon');
                 return [addIcon];
             case 'armor':
-                addIcon.title = game.i18n.localize('SR5.CreateItemArmor');
+                addIcon.title = game.i18n.localize('SR6.CreateItemArmor');
                 return [addIcon];
             case 'ammo':
-                addIcon.title = game.i18n.localize('SR5.CreateItemAmmo');
+                addIcon.title = game.i18n.localize('SR6.CreateItemAmmo');
                 return [addIcon];
             case 'device':
-                addIcon.title = game.i18n.localize('SR5.CreateItemDevice');
+                addIcon.title = game.i18n.localize('SR6.CreateItemDevice');
                 return [addIcon];
             case 'equipment':
-                addIcon.title = game.i18n.localize('SR5.CreateItemEquipment');
+                addIcon.title = game.i18n.localize('SR6.CreateItemEquipment');
                 return [addIcon];
             case 'cyberware':
-                addIcon.title = game.i18n.localize('SR5.CreateItemCyberware');
+                addIcon.title = game.i18n.localize('SR6.CreateItemCyberware');
                 return [addIcon];
             case 'bioware':
-                addIcon.title = game.i18n.localize('SR5.CreateItemBioware');
+                addIcon.title = game.i18n.localize('SR6.CreateItemBioware');
                 return [addIcon];
             case 'critter_power':
-                addIcon.title = game.i18n.localize('SR5.CreateItemCritterPower');
+                addIcon.title = game.i18n.localize('SR6.CreateItemCritterPower');
                 return [addIcon];
             case 'sprite_power':
-                addIcon.title = game.i18n.localize('SR5.CreateItemSpritePower');
+                addIcon.title = game.i18n.localize('SR6.CreateItemSpritePower');
                 return [addIcon];
             default:
                 return [];
@@ -84,31 +84,31 @@ export const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Skill'),
+                            text: game.i18n.localize('SR6.Skill'),
                             cssClass: 'six',
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Attribute'),
+                            text: game.i18n.localize('SR6.Attribute'),
                             cssClass: 'six',
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Attribute'),
+                            text: game.i18n.localize('SR6.Attribute'),
                             cssClass: 'six',
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Limit'),
+                            text: game.i18n.localize('SR6.Limit'),
                             cssClass: 'six',
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Modifier'),
+                            text: game.i18n.localize('SR6.Modifier'),
                             cssClass: 'six',
                         },
                     },
@@ -123,7 +123,7 @@ export const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Qty'),
+                            text: game.i18n.localize('SR6.Qty'),
                         },
                     },
                 ];
@@ -131,17 +131,17 @@ export const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Target'),
+                            text: game.i18n.localize('SR6.Target'),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Duration'),
+                            text: game.i18n.localize('SR6.Duration'),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Fade'),
+                            text: game.i18n.localize('SR6.Fade'),
                         },
                     },
                 ];
@@ -149,7 +149,7 @@ export const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize('SR5.PowerType'),
+                            text: game.i18n.localize('SR6.PowerType'),
                         },
                     },
                 ];
@@ -157,22 +157,22 @@ export const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize('SR5.SpellType'),
+                            text: game.i18n.localize('SR6.SpellType'),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.SpellRange'),
+                            text: game.i18n.localize('SR6.SpellRange'),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Duration'),
+                            text: game.i18n.localize('SR6.Duration'),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Drain'),
+                            text: game.i18n.localize('SR6.Drain'),
                         },
                     },
                 ];
@@ -180,17 +180,17 @@ export const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize('SR5.CritterPower.Type'),
+                            text: game.i18n.localize('SR6.CritterPower.Type'),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.CritterPower.Range'),
+                            text: game.i18n.localize('SR6.CritterPower.Range'),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.CritterPower.Duration'),
+                            text: game.i18n.localize('SR6.CritterPower.Duration'),
                         },
                     },
                 ];
@@ -198,7 +198,7 @@ export const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize('SR5.QualityType'),
+                            text: game.i18n.localize('SR6.QualityType'),
                         },
                     },
                 ];
@@ -207,8 +207,8 @@ export const registerItemLineHelpers = () => {
         }
     });
 
-    Handlebars.registerHelper('ItemRightSide', function (item: SR5ItemType) {
-        const wrapper = new SR5ItemDataWrapper(item);
+    Handlebars.registerHelper('ItemRightSide', function (item: SR6ItemType) {
+        const wrapper = new SR6ItemDataWrapper(item);
         const qtyInput = {
             input: {
                 type: 'number',
@@ -221,26 +221,26 @@ export const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize(SR5.activeSkills[wrapper.getActionSkill() ?? '']),
+                            text: game.i18n.localize(SR6.activeSkills[wrapper.getActionSkill() ?? '']),
                             cssClass: 'six',
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize(SR5.attributes[wrapper.getActionAttribute() ?? '']),
+                            text: game.i18n.localize(SR6.attributes[wrapper.getActionAttribute() ?? '']),
                             cssClass: 'six',
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize(SR5.attributes[wrapper.getActionAttribute2() ?? '']),
+                            text: game.i18n.localize(SR6.attributes[wrapper.getActionAttribute2() ?? '']),
                             cssClass: 'six',
                         },
                     },
                     {
                         text: {
                             text: wrapper.getLimitAttribute()
-                                ? game.i18n.localize(SR5.attributes[wrapper.getLimitAttribute() ?? ''])
+                                ? game.i18n.localize(SR6.attributes[wrapper.getLimitAttribute() ?? ''])
                                 : wrapper.getActionLimit(),
                             cssClass: 'six',
                         },
@@ -263,12 +263,12 @@ export const registerItemLineHelpers = () => {
                 if (wrapper.isRangedWeapon()) {
                     const count = wrapper.getAmmo()?.current.value ?? 0;
                     const max = wrapper.getAmmo()?.current.max ?? 0;
-                    const text = count < max ? `${game.i18n.localize('SR5.WeaponReload')} (${count}/${max})` : game.i18n.localize('SR5.AmmoFull');
+                    const text = count < max ? `${game.i18n.localize('SR6.WeaponReload')} (${count}/${max})` : game.i18n.localize('SR6.AmmoFull');
                     const cssClass = 'no-break' + (count < max ? ' reload-ammo roll' : 'faded');
                     return [
                         {
                             text: {
-                                title: `${game.i18n.localize('SR5.WeaponAmmoCount')}: ${count}`,
+                                title: `${game.i18n.localize('SR6.WeaponAmmoCount')}: ${count}`,
                                 text,
                                 cssClass,
                             },
@@ -288,7 +288,7 @@ export const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize(SR5.qualityTypes[item.data.type ?? '']),
+                            text: game.i18n.localize(SR6.qualityTypes[item.data.type ?? '']),
                         },
                     },
                 ];
@@ -297,7 +297,7 @@ export const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize(SR5.adeptPower.types[item.data.type ?? '']),
+                            text: game.i18n.localize(SR6.adeptPower.types[item.data.type ?? '']),
                         },
                     },
                 ];
@@ -305,17 +305,17 @@ export const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize(SR5.spellTypes[item.data.type ?? '']),
+                            text: game.i18n.localize(SR6.spellTypes[item.data.type ?? '']),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize(SR5.spellRanges[item.data.range ?? '']),
+                            text: game.i18n.localize(SR6.spellRanges[item.data.range ?? '']),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize(SR5.durations[item.data.duration ?? '']),
+                            text: game.i18n.localize(SR6.durations[item.data.duration ?? '']),
                         },
                     },
                     {
@@ -328,17 +328,17 @@ export const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize(SR5.critterPower.types[item.data.powerType ?? '']),
+                            text: game.i18n.localize(SR6.critterPower.types[item.data.powerType ?? '']),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize(SR5.critterPower.ranges[item.data.range ?? '']),
+                            text: game.i18n.localize(SR6.critterPower.ranges[item.data.range ?? '']),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize(SR5.critterPower.durations[item.data.duration ?? '']),
+                            text: game.i18n.localize(SR6.critterPower.durations[item.data.duration ?? '']),
                         },
                     },
                 ];
@@ -347,12 +347,12 @@ export const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize(SR5.matrixTargets[item.data.target ?? '']),
+                            text: game.i18n.localize(SR6.matrixTargets[item.data.target ?? '']),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize(SR5.durations[item.data.duration ?? '']),
+                            text: game.i18n.localize(SR6.durations[item.data.duration ?? '']),
                         },
                     },
                     {
@@ -367,7 +367,7 @@ export const registerItemLineHelpers = () => {
                         button: {
                             cssClass: `item-equip-toggle ${wrapper.isEquipped() ? 'light' : ''}`,
                             short: true,
-                            text: wrapper.isEquipped() ? game.i18n.localize('SR5.Loaded') : game.i18n.localize('SR5.Load') + ' >>',
+                            text: wrapper.isEquipped() ? game.i18n.localize('SR6.Loaded') : game.i18n.localize('SR6.Load') + ' >>',
                         },
                     },
                 ];
@@ -376,23 +376,23 @@ export const registerItemLineHelpers = () => {
         }
     });
 
-    Handlebars.registerHelper('ItemIcons', function (item: SR5ItemType) {
-        const wrapper = new SR5ItemDataWrapper(item);
+    Handlebars.registerHelper('ItemIcons', function (item: SR6ItemType) {
+        const wrapper = new SR6ItemDataWrapper(item);
         const editIcon = {
             icon: 'fas fa-edit item-edit',
-            title: game.i18n.localize('SR5.EditItem'),
+            title: game.i18n.localize('SR6.EditItem'),
         };
         const removeIcon = {
             icon: 'fas fa-trash item-delete',
-            title: game.i18n.localize('SR5.DeleteItem'),
+            title: game.i18n.localize('SR6.DeleteItem'),
         };
         const equipIcon = {
             icon: `${wrapper.isEquipped() ? 'fas fa-check-circle' : 'far fa-circle'} item-equip-toggle`,
-            title: game.i18n.localize('SR5.ToggleEquip'),
+            title: game.i18n.localize('SR6.ToggleEquip'),
         };
         const pdfIcon = {
             icon: 'fas fa-file open-source-pdf',
-            title: game.i18n.localize('SR5.OpenSourcePdf'),
+            title: game.i18n.localize('SR6.OpenSourcePdf'),
         };
 
         const icons = [editIcon, removeIcon];

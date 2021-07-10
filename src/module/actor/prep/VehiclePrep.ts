@@ -1,5 +1,5 @@
 import { BaseActorPrep } from './BaseActorPrep';
-import SR5VehicleType = Shadowrun.SR5VehicleType;
+import SR6VehicleType = Shadowrun.SR6VehicleType;
 import VehicleActorData = Shadowrun.VehicleActorData;
 import { SkillsPrep } from './functions/SkillsPrep';
 import { ModifiersPrep } from './functions/ModifiersPrep';
@@ -9,9 +9,9 @@ import { LimitsPrep } from './functions/LimitsPrep';
 import { MatrixPrep } from './functions/MatrixPrep';
 import { Helpers } from '../../helpers';
 import { PartsList } from '../../parts/PartsList';
-import {SR5} from "../../config";
+import {SR6} from "../../config";
 
-export class VehiclePrep extends BaseActorPrep<SR5VehicleType, VehicleActorData> {
+export class VehiclePrep extends BaseActorPrep<SR6VehicleType, VehicleActorData> {
     prepare() {
         ModifiersPrep.prepareModifiers(this.data);
         ModifiersPrep.clearAttributeMods(this.data);
@@ -48,12 +48,12 @@ export class VehiclePrep extends BaseActorPrep<SR5VehicleType, VehicleActorData>
             }
             const parts = new PartsList(stat.mod);
 
-            parts.addUniquePart('SR5.Temporary', stat.temp ?? 0);
+            parts.addUniquePart('SR6.Temporary', stat.temp ?? 0);
 
             stat.mod = parts.list;
             Helpers.calcTotal(stat);
             // add labels
-            stat.label = SR5.vehicle.stats[key];
+            stat.label = SR6.vehicle.stats[key];
         }
 
         // hide certain stats depending on if we're offroad
@@ -107,7 +107,7 @@ export class VehiclePrep extends BaseActorPrep<SR5VehicleType, VehicleActorData>
             track.physical.base = 12 + halfBody;
             track.physical.max =  track.physical.base + (Number(modifiers['physical_track']) || 0);
         }
-        track.physical.label = SR5.damageTypes.physical;
+        track.physical.label = SR6.damageTypes.physical;
 
         const rating = matrix.rating || 0;
         matrix.condition_monitor.max = 8 + Math.ceil(rating / 2);
@@ -139,7 +139,7 @@ export class VehiclePrep extends BaseActorPrep<SR5VehicleType, VehicleActorData>
 
     static prepareArmor(data: VehicleActorData) {
         const { armor } = data;
-        armor.mod = PartsList.AddUniquePart(armor.mod, 'SR5.Temporary', armor['temp']);
+        armor.mod = PartsList.AddUniquePart(armor.mod, 'SR6.Temporary', armor['temp']);
         Helpers.calcTotal(armor);
     }
 }

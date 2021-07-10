@@ -1,7 +1,7 @@
 import { Helpers } from '../helpers';
 import {SafeString} from "handlebars";
 import SkillField = Shadowrun.SkillField;
-import {SR5} from "../config";
+import {SR6} from "../config";
 import {FLAGS, SR, SYSTEM_NAME} from "../constants";
 
 export const registerBasicHelpers = () => {
@@ -18,7 +18,7 @@ export const registerBasicHelpers = () => {
         //     return translatedSkill;
         //
         // // Try showing the first three letters, or less.
-        // const translatedAttribute = game.i18n.localize(SR5.attributes[skill.attribute]);
+        // const translatedAttribute = game.i18n.localize(SR6.attributes[skill.attribute]);
         // if (!translatedAttribute) return translatedSkill;
         //
         // const cutToIndex = translatedAttribute.length < SR.attributes.SHORT_NAME_LENGTH ?

@@ -9,13 +9,13 @@ import { ConditionMonitorsPrep } from './functions/ConditionMonitorsPrep';
 import { MovementPrep } from './functions/MovementPrep';
 import { WoundsPrep } from './functions/WoundsPrep';
 import { AttributesPrep } from './functions/AttributesPrep';
-import SR5CritterType = Shadowrun.SR5CritterType;
+import SR6CritterType = Shadowrun.SR6CritterType;
 import CritterActorData = Shadowrun.CritterActorData;
-import SR5ActorData = Shadowrun.SR5ActorData;
+import SR6ActorData = Shadowrun.SR6ActorData;
 import TwoTrackActorData = Shadowrun.TwoTrackActorData;
 import {CharacterPrep} from "./CharacterPrep";
 
-export class CritterPrep extends BaseActorPrep<SR5CritterType, CritterActorData> {
+export class CritterPrep extends BaseActorPrep<SR6CritterType, CritterActorData> {
     prepare() {
         ModifiersPrep.prepareModifiers(this.data);
         ModifiersPrep.clearAttributeMods(this.data);

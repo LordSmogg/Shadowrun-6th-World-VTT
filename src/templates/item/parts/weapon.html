@@ -4,7 +4,7 @@
     </div>
     <div class="form-line">
         <div class="label">
-            {{localize "SR5.WeaponType"}}
+            {{localize "SR6.WeaponType"}}
         </div>
         <div class="inputs">
             <select name="data.category">
@@ -18,7 +18,7 @@
     </div>
     <div class="form-line">
         <div class="label">
-            {{localize "SR5.WeaponAmmoCount"}}
+            {{localize "SR6.WeaponAmmoCount"}}
         </div>
         <div class="inputs">
             <input
@@ -36,14 +36,14 @@
                     name="data.ammo.current.max"
                     value="{{data.ammo.current.max}}"
                     data-dtype="Number"
-                    placeholder="{{localize SR5.Max}}"
+                    placeholder="{{localize SR6.Max}}"
             />
         </div>
     </div>
     {{#if data.category}} {{#ife data.category "range"}}
     <div class="form-line">
         <div class="label">
-            {{localize "SR5.SpareClips"}}
+            {{localize "SR6.SpareClips"}}
         </div>
         <div class="inputs">
             <input
@@ -61,17 +61,17 @@
                     name="data.ammo.spare_clips.max"
                     value="{{data.ammo.spare_clips.max}}"
                     data-dtype="Number"
-                    placeholder="{{localize SR5.Max}}"
+                    placeholder="{{localize SR6.Max}}"
             />
         </div>
     </div>
     <div class="form-line">
         <div class="label">
-            {{localize "SR5.WeaponModes"}}
+            {{localize "SR6.WeaponModes"}}
         </div>
         <div class="inputs">
             <label>
-                {{localize "SR5.WeaponModeSingleShot"}}<input
+                {{localize "SR6.WeaponModeSingleShot"}}<input
                     type="checkbox"
                     name="data.range.modes.single_shot"
                     {{checked
@@ -79,7 +79,7 @@
                 />
             </label>
             <label>
-                {{localize "SR5.WeaponModeSemiAuto"}}<input
+                {{localize "SR6.WeaponModeSemiAuto"}}<input
                     type="checkbox"
                     name="data.range.modes.semi_auto"
                     {{checked
@@ -87,7 +87,7 @@
                 />
             </label>
             <label>
-                {{localize "SR5.WeaponModeBurstFire"}}<input
+                {{localize "SR6.WeaponModeBurstFire"}}<input
                     type="checkbox"
                     name="data.range.modes.burst_fire"
                     {{checked
@@ -95,7 +95,7 @@
                 />
             </label>
             <label>
-                {{localize "SR5.WeaponModeFullAuto"}}<input
+                {{localize "SR6.WeaponModeFullAuto"}}<input
                     type="checkbox"
                     name="data.range.modes.full_auto"
                     {{checked
@@ -107,7 +107,7 @@
     {{/ife}} {{#ife data.category "range"}}
     <div class="form-line">
         <div class="label">
-            {{localize "SR5.WeaponRanges"}}
+            {{localize "SR6.WeaponRanges"}}
         </div>
         <div class="inputs">
             <input
@@ -145,7 +145,7 @@
     </div>
     <div class="form-line">
         <div class="label">
-            {{localize "SR5.RecoilCompensation"}}
+            {{localize "SR6.RecoilCompensation"}}
         </div>
         <div class="inputs">
             <input
@@ -161,7 +161,7 @@
     {{/ife}} {{#ife data.category "thrown"}}
     <div class="form-line">
         <div class="label">
-            {{localize "SR5.WeaponRanges"}}
+            {{localize "SR6.WeaponRanges"}}
         </div>
         <div class="inputs">
             <input
@@ -208,7 +208,7 @@
     {{/ife}} {{#ife data.category "melee"}}
     <div class="form-line">
         <div class="label">
-            {{localize "SR5.WeaponReach"}}
+            {{localize "SR6.WeaponReach"}}
         </div>
         <div class="inputs">
             <input
@@ -224,7 +224,7 @@
     {{/ife}} {{#ife data.category "thrown"}}
     <div class="form-line">
         <div class="label">
-            {{localize "SR5.Radius"}}
+            {{localize "SR6.Radius"}}
         </div>
         <div class="inputs">
             <input
@@ -240,7 +240,7 @@
     </div>
     <div class="form-line">
         <div class="label">
-            {{localize "SR5.Dropoff"}}
+            {{localize "SR6.Dropoff"}}
         </div>
         <div class="inputs">
             <input

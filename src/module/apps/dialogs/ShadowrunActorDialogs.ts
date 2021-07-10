@@ -1,5 +1,5 @@
 import {FormDialog, FormDialogData} from "./FormDialog";
-import {SR5Actor} from "../../actor/SR5Actor";
+import {SR6Actor} from "../../actor/SR6Actor";
 import {PartsList} from "../../parts/PartsList";
 import {Helpers} from "../../helpers";
 import {SkillFlow} from "../../actor/SkillFlow";
@@ -9,10 +9,10 @@ import SoakRollOptions = Shadowrun.SoakRollOptions;
 import SkillDialogOptions = Shadowrun.SkillDialogOptions;
 import CombatData = Shadowrun.CombatData;
 import DamageType = Shadowrun.DamageType;
-import {SR5} from "../../config";
+import {SR6} from "../../config";
 
 export class ShadowrunActorDialogs {
-    static async createDefenseDialog(actor: SR5Actor, options: DefenseRollOptions, partsProps: ModList<number>): Promise<FormDialog> {
+    static async createDefenseDialog(actor: SR6Actor, options: DefenseRollOptions, partsProps: ModList<number>): Promise<FormDialog> {
         const defenseDialogData = ShadowrunActorDialogs.getDefenseDialogData(actor, options, partsProps);
 
         return new FormDialog(defenseDialogData);
@@ -23,28 +23,28 @@ export class ShadowrunActorDialogs {
         return new FormDialog(soakDialogData);
     }
 
-    static async createSkillDialog(actor: SR5Actor, options: SkillDialogOptions, partsProps: PartsList<number>): Promise<FormDialog> {
+    static async createSkillDialog(actor: SR6Actor, options: SkillDialogOptions, partsProps: PartsList<number>): Promise<FormDialog> {
         const skillDialogData = ShadowrunActorDialogs.getSkillDialogData(actor, options, partsProps);
 
         return new FormDialog(skillDialogData);
     }
 
-    static getDefenseDialogData(actor: SR5Actor,  options: DefenseRollOptions, partsProps: ModList<number>): FormDialogData {
-        const title = game.i18n.localize('SR5.Defense');
+    static getDefenseDialogData(actor: SR6Actor,  options: DefenseRollOptions, partsProps: ModList<number>): FormDialogData {
+        const title = game.i18n.localize('SR6.Defense');
 
         const activeDefenses = {
             full_defense: {
-                label: 'SR5.FullDefense',
+                label: 'SR6.FullDefense',
                 value: actor.getFullDefenseAttribute()?.value,
                 initMod: -10,
             },
             dodge: {
-                label: 'SR5.Dodge',
+                label: 'SR6.Dodge',
                 value: actor.findActiveSkill('gymnastics')?.value,
                 initMod: -5,
             },
             block: {
-                label: 'SR5.Block',
+                label: 'SR6.Block',
                 value: actor.findActiveSkill('unarmed_combat')?.value,
                 initMod: -5,
             },
@@ -54,7 +54,7 @@ export class ShadowrunActorDialogs {
         let defenseReach = 0;
         equippedMeleeWeapons.forEach((weapon) => {
             activeDefenses[`parry-${weapon.name}`] = {
-                label: 'SR5.Parry',
+                label: 'SR6.Parry',
                 weapon: weapon.name,
                 value: actor.findActiveSkill(weapon.getActionSkill())?.value,
                 init: -5,
@@ -70,13 +70,13 @@ export class ShadowrunActorDialogs {
             const incomingReach = options.attack.reach;
             const netReach = defenseReach - incomingReach;
             if (netReach !== 0) {
-                parts.addUniquePart('SR5.Reach', netReach);
+                parts.addUniquePart('SR6.Reach', netReach);
             }
         }
 
         const buttons = {
             continue: {
-                label: game.i18n.localize('SR5.Continue'),
+                label: game.i18n.localize('SR6.Continue'),
                 callback: () => {},
             },
         };
@@ -88,7 +88,7 @@ export class ShadowrunActorDialogs {
             const combat: CombatData = {};
 
             if (cover) {
-                parts.addUniquePart('SR5.Cover', cover)
+                parts.addUniquePart('SR6.Cover', cover)
             }
             if (special) {
                 // Defense pool modifier
@@ -102,7 +102,7 @@ export class ShadowrunActorDialogs {
             return {cover, special, parts, combat};
         }
 
-        const templatePath = 'systems/shadowrun5e/dist/templates/rolls/roll-defense.html';
+        const templatePath = 'systems/shadowrun6e/dist/templates/rolls/roll-defense.html';
         const templateData = {
             parts: parts.getMessageOutput(),
             cover: options.cover,
@@ -120,19 +120,19 @@ export class ShadowrunActorDialogs {
 
 
     static getSoakDialogData(soakRollOptions: SoakRollOptions, soakParts : PartsList<number>): FormDialogData {
-        const title = game.i18n.localize('SR5.DamageResistanceTest');
+        const title = game.i18n.localize('SR6.DamageResistanceTest');
 
-        const templatePath = 'systems/shadowrun5e/dist/templates/rolls/roll-soak.html';
+        const templatePath = 'systems/shadowrun6e/dist/templates/rolls/roll-soak.html';
         const templateData = {
             damage: soakRollOptions?.damage,
             parts: soakParts.getMessageOutput(),
-            elementTypes: SR5.elementTypes,
-            damageTypes: SR5.damageTypes
+            elementTypes: SR6.elementTypes,
+            damageTypes: SR6.damageTypes
         };
 
         const buttons =  {
             continue: {
-                label: game.i18n.localize('SR5.Continue'),
+                label: game.i18n.localize('SR6.Continue'),
                 callback: () => {},
             },
         };
@@ -155,9 +155,9 @@ export class ShadowrunActorDialogs {
         }
     }
 
-    static getSkillDialogData(actor: SR5Actor, options: SkillDialogOptions, partsProps: PartsList<number>): FormDialogData {
+    static getSkillDialogData(actor: SR6Actor, options: SkillDialogOptions, partsProps: PartsList<number>): FormDialogData {
         const title = game.i18n.localize(options.skill.label || options.skill.name);
-        const templatePath = 'systems/shadowrun5e/dist/templates/rolls/skill-roll.html';
+        const templatePath = 'systems/shadowrun6e/dist/templates/rolls/skill-roll.html';
 
         const attributes = actor.getAttributes();
         const attribute = actor.getAttribute(options.attribute ? options.attribute : options.skill.attribute);
@@ -173,7 +173,7 @@ export class ShadowrunActorDialogs {
 
         const buttons = {
             roll: {
-                label: game.i18n.localize('SR5.NormalSkillButton'),
+                label: game.i18n.localize('SR6.NormalSkillButton'),
                 callback: () => {},
             },
         };
@@ -195,8 +195,8 @@ export class ShadowrunActorDialogs {
             const limit = actor.getLimit(newLimit);
             // Legacy skills have a label, but no name. Custom skills have a name but no label.
             const skillLabel = game.i18n.localize(options.skill.label || options.skill.name);
-            const attributeLabel = game.i18n.localize(SR5.attributes[newAtt]);
-            const testLabel = game.i18n.localize('SR5.Test')
+            const attributeLabel = game.i18n.localize(SR6.attributes[newAtt]);
+            const testLabel = game.i18n.localize('SR6.Test')
 
             const skillTestTitle = `${skillLabel} + ${attributeLabel} ${testLabel}`;
 
@@ -207,7 +207,7 @@ export class ShadowrunActorDialogs {
             // Possible specialization based on button label.
             const isSpecialization = options.skill.specs.includes(selectedButton);
             if (isSpecialization) {
-                partsProps.addUniquePart('SR5.Specialization', 2);
+                partsProps.addUniquePart('SR6.Specialization', 2);
             }
 
             return {

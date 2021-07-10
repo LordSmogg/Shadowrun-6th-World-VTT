@@ -1,8 +1,8 @@
 import { DataWrapper } from '../dataWrappers/DataWrapper';
-import SR5ItemType = Shadowrun.SR5ItemType;
+import SR6ItemType = Shadowrun.SR6ItemType;
 import ConditionData = Shadowrun.ConditionData;
 import ModList = Shadowrun.ModList;
-import SR5ItemDataPartial = Shadowrun.SR5ItemDataPartial;
+import SR6ItemDataPartial = Shadowrun.SR6ItemDataPartial;
 import ActionRollData = Shadowrun.ActionRollData;
 import SpellData = Shadowrun.SpellData;
 import Modification = Shadowrun.Modification;
@@ -11,12 +11,12 @@ import CritterPowerRange = Shadowrun.CritterPowerRange;
 import SpellRange = Shadowrun.SpellRange;
 import RangeWeaponData = Shadowrun.RangeWeaponData;
 
-export class SR5ItemDataWrapper extends DataWrapper<SR5ItemType> {
+export class SR6ItemDataWrapper extends DataWrapper<SR6ItemType> {
     getType() {
         return this.data.type;
     }
-    getData(): SR5ItemDataPartial {
-        return (this.data.data as unknown) as SR5ItemDataPartial;
+    getData(): SR6ItemDataPartial {
+        return (this.data.data as unknown) as SR6ItemDataPartial;
     }
 
     isAreaOfEffect(): boolean {
@@ -306,7 +306,7 @@ export class SR5ItemDataWrapper extends DataWrapper<SR5ItemType> {
     }
 
     getActionSpecialization(): string | undefined {
-        if (this.getData().action?.spec) return 'SR5.Specialization';
+        if (this.getData().action?.spec) return 'SR6.Specialization';
         return undefined;
     }
 

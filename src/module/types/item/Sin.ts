@@ -1,5 +1,5 @@
 declare namespace Shadowrun {
-    export type Sin = SR5ItemData<SinData> & {
+    export type Sin = SR6ItemData<SinData> & {
         type: 'sin';
     };
 

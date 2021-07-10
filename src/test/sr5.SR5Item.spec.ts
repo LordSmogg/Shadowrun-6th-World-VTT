@@ -1,15 +1,15 @@
-import {SR5Item} from "../module/item/SR5Item";
+import {SR6Item} from "../module/item/SR6Item";
 import {Test} from "../module/rolls/ShadowrunRoller";
 
-export const shadowrunSR5Item = context => {
+export const shadowrunSR6Item = context => {
     /**
      * Setup handling for all items within this test.
      */
     class TestingItems {
-        items: Record<string, SR5Item> = {};
+        items: Record<string, SR6Item> = {};
         async create(data) {
             // @ts-ignore
-            const item = await Item.create({name: '#QUENCH_TEST_ITEM_SHOULD_HAVE_BEEN_DELETED', ...data}) as SR5Item;
+            const item = await Item.create({name: '#QUENCH_TEST_ITEM_SHOULD_HAVE_BEEN_DELETED', ...data}) as SR6Item;
             this.items[item.id] = item;
             return item;
         }
@@ -37,7 +37,7 @@ export const shadowrunSR5Item = context => {
         await testing.teardown();
     })
 
-    describe('SR5Items', () => {
+    describe('SR6Items', () => {
         it('Should create a naked item of any type', async () => {
             const item = await testing.create({type: 'action'});
 
@@ -92,7 +92,7 @@ export const shadowrunSR5Item = context => {
             const embeddedAmmo = weapon.getOwnedItem(embeddedAmmoData._id);
 
             assert.notStrictEqual(embeddedAmmo, undefined);
-            assert.instanceOf(embeddedAmmo, SR5Item);
+            assert.instanceOf(embeddedAmmo, SR6Item);
             if (!embeddedAmmo) return; //type script gate...
 
             // Set an testing property.

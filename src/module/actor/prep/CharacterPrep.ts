@@ -10,10 +10,10 @@ import { MovementPrep } from './functions/MovementPrep';
 import { WoundsPrep } from './functions/WoundsPrep';
 import { AttributesPrep } from './functions/AttributesPrep';
 import { NPCPrep } from './functions/NPCPrep';
-import SR5CharacterType = Shadowrun.SR5CharacterType;
+import SR6CharacterType = Shadowrun.SR6CharacterType;
 import CharacterActorData = Shadowrun.CharacterActorData;
 
-export class CharacterPrep extends BaseActorPrep<SR5CharacterType, CharacterActorData> {
+export class CharacterPrep extends BaseActorPrep<SR6CharacterType, CharacterActorData> {
     prepare() {
         ModifiersPrep.prepareModifiers(this.data);
         ModifiersPrep.clearAttributeMods(this.data);

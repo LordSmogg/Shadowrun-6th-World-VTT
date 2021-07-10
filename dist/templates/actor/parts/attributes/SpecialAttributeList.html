@@ -1,20 +1,20 @@
 <div class="flexcol">
-    {{> "systems/shadowrun5e/dist/templates/common/HeaderBlock.html"
-            name=(localize "SR5.SpecialAttributes")
+    {{> "systems/shadowrun6e/dist/templates/common/HeaderBlock.html"
+            name=(localize "SR6.SpecialAttributes")
     }}
     <div class="attributes center">
-        {{> "systems/shadowrun5e/dist/templates/actor/parts/attributes/Attribute.html"
+        {{> "systems/shadowrun6e/dist/templates/actor/parts/attributes/Attribute.html"
                 cssClass='no-grow'
                 attributeId='edge'
                 attribute=data.attributes.edge
         }}
-        {{> "systems/shadowrun5e/dist/templates/actor/parts/attributes/Attribute.html"
+        {{> "systems/shadowrun6e/dist/templates/actor/parts/attributes/Attribute.html"
                 cssClass='no-grow'
                 attributeId='essence'
                 attribute=data.attributes.essence
         }}
             {{#if awakened}}
-        {{> "systems/shadowrun5e/dist/templates/actor/parts/attributes/Attribute.html"
+        {{> "systems/shadowrun6e/dist/templates/actor/parts/attributes/Attribute.html"
                 cssClass='no-grow'
                 attributeId='magic'
                 attribute=data.attributes.magic
@@ -23,7 +23,7 @@
         }}
             {{/if}}
             {{#if emerged}}
-        {{> "systems/shadowrun5e/dist/templates/actor/parts/attributes/Attribute.html"
+        {{> "systems/shadowrun6e/dist/templates/actor/parts/attributes/Attribute.html"
                 cssClass='no-grow'
                 attributeId='resonance'
                 attribute=data.attributes.resonance

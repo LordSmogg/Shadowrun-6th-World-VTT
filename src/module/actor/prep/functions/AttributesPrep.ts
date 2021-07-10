@@ -1,15 +1,15 @@
-import SR5ActorData = Shadowrun.SR5ActorData;
+import SR6ActorData = Shadowrun.SR6ActorData;
 import { PartsList } from '../../../parts/PartsList';
 import { Helpers } from '../../../helpers';
 import {SR} from "../../../constants";
-import {SR5} from "../../../config";
+import {SR6} from "../../../config";
 import AttributeField = Shadowrun.AttributeField;
 
 export class AttributesPrep {
     /**
      * Prepare actor data for attributes
      */
-    static prepareAttributes(data: SR5ActorData) {
+    static prepareAttributes(data: SR6ActorData) {
         const {attributes} = data;
 
         // always have special attributes set to hidden
@@ -30,7 +30,7 @@ export class AttributesPrep {
             AttributesPrep.calculateAttribute(name, attribute);
 
             // add i18n labels.
-            attribute.label = SR5.attributes[name];
+            attribute.label = SR6.attributes[name];
         }
     }
 

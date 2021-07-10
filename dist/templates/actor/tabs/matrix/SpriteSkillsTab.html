@@ -1,18 +1,18 @@
-{{#> 'systems/shadowrun5e/dist/templates/common/TabWrapper.html' tabId='skills'}}
+{{#> 'systems/shadowrun6e/dist/templates/common/TabWrapper.html' tabId='skills'}}
     <div>
-        {{> "systems/shadowrun5e/dist/templates/common/HeaderBlock.html"
-                name=(localize "SR5.Matrix")
+        {{> "systems/shadowrun6e/dist/templates/common/HeaderBlock.html"
+                name=(localize "SR6.Matrix")
         }}
         <div class="attributes">
             {{#each config.matrixAttributes as |label key|}}
-                {{> "systems/shadowrun5e/dist/templates/actor/parts/matrix/MatrixAttribute.html"
+                {{> "systems/shadowrun6e/dist/templates/actor/parts/matrix/MatrixAttribute.html"
                         matrixAtt=(lookup ../data.matrix key)
                         key=key
                         label=label
                         matrixAttributes=../config/matrixAttributes
                 }}
             {{/each}}
-            {{> "systems/shadowrun5e/dist/templates/actor/parts/attributes/Attribute.html"
+            {{> "systems/shadowrun6e/dist/templates/actor/parts/attributes/Attribute.html"
                     attributeId='resonance'
                     attribute=data.attributes.resonance
             }}
@@ -20,7 +20,7 @@
                 <div class="list-item">
                     <div class="item-left">
                         <div class="item-text item-name">
-                            {{localize "SR5.Sprite.Type"}}
+                            {{localize "SR6.Sprite.Type"}}
                         </div>
                     </div>
                     <div class="item-right">
@@ -36,12 +36,12 @@
                 <div class="list-item">
                     <div class="item-left">
                         <div class="item-text item-name">
-                            {{localize "SR5.Sprite.Level"}}
+                            {{localize "SR6.Sprite.Level"}}
                         </div>
                     </div>
                     <div class="item-right">
                         <div class="item-text">
-                            {{> 'systems/shadowrun5e/dist/templates/common/ValueInput.html'
+                            {{> 'systems/shadowrun6e/dist/templates/common/ValueInput.html'
                                     cssClass="attribute-input"
                                     size="2"
                                     maxLength="2"
@@ -54,7 +54,7 @@
                 <div class="list-item">
                     <div class="item-left">
                         <div class="item-text item-name">
-                            {{localize "SR5.Sprite.Registered"}}
+                            {{localize "SR6.Sprite.Registered"}}
                         </div>
                     </div>
                     <div class="item-right">
@@ -69,8 +69,8 @@
     </div>
     <div class="inventory">
         <div class="split-container">
-            {{> 'systems/shadowrun5e/dist/templates/actor/parts/skills/ActiveSkillList.html' }}
-            {{> 'systems/shadowrun5e/dist/templates/actor/parts/matrix/SpritePowerList.html' }}
+            {{> 'systems/shadowrun6e/dist/templates/actor/parts/skills/ActiveSkillList.html' }}
+            {{> 'systems/shadowrun6e/dist/templates/actor/parts/matrix/SpritePowerList.html' }}
         </div>
     </div>
-{{/ 'systems/shadowrun5e/dist/templates/common/TabWrapper.html'}}
+{{/ 'systems/shadowrun6e/dist/templates/common/TabWrapper.html'}}

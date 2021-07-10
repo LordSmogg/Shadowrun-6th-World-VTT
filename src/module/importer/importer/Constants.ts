@@ -213,5 +213,5 @@ export class Constants {
         },
     };
 
-    public static readonly ROOT_IMPORT_FOLDER_NAME = 'SR5e';
+    public static readonly ROOT_IMPORT_FOLDER_NAME = 'SR6e';
 }

@@ -29,16 +29,16 @@
     "packs": [
         {
             "name": "Roles",
-            "label": "SR5e NPCs",
+            "label": "SR6e NPCs",
             "system": "shadowrun6e",
-            "path": "./packs/sr5e-npcs.db",
+            "path": "./packs/sr6e-npcs.db",
             "entity": "Actor"
         },
         {
             "name": "Matrix Actions",
-            "label": "SR5e Matrix Actions",
+            "label": "SR6e Matrix Actions",
             "system": "shadowrun6e",
-            "path": "./packs/sr5e-matrix-actions.db",
+            "path": "./packs/sr6e-matrix-actions.db",
             "entity": "Item"
         }
     ],
@@ -50,7 +50,7 @@
     "socket": true,
     "manifest": "https://raw.githubusercontent.com/LordSmogg/Shadowrun-6th-World-VTT/master/system.json",
     "url": "https://github.com/LordSmogg/Shadowrun-6th-World-VTT",
-    "download": "https://github.com/LordSmogg/Shadowrun-6th-World-VTT/archive/refs/tags/v0.4.zip",
+    "download": "https://github.com/LordSmogg/Shadowrun-6th-World-VTT/archive/refs/tags/v0.5.zip",
     "allowBugReporter": true,
     "bugs": "https://github.com/LordSmogg/Shadowrun-6th-World-VTT/issues"
 }

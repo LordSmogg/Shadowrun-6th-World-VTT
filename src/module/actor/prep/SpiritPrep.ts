@@ -1,6 +1,6 @@
 import { BaseActorPrep } from './BaseActorPrep';
 import SpiritActorData = Shadowrun.SpiritActorData;
-import SR5SpiritType = Shadowrun.SR5SpiritType;
+import SR6SpiritType = Shadowrun.SR6SpiritType;
 import { SkillsPrep } from './functions/SkillsPrep';
 import { AttributesPrep } from './functions/AttributesPrep';
 import { LimitsPrep } from './functions/LimitsPrep';
@@ -13,7 +13,7 @@ import SpiritType = Shadowrun.SpiritType;
 import { Helpers } from '../../helpers';
 import {PartsList} from "../../parts/PartsList";
 
-export class SpiritPrep extends BaseActorPrep<SR5SpiritType, SpiritActorData> {
+export class SpiritPrep extends BaseActorPrep<SR6SpiritType, SpiritActorData> {
     prepare() {
         ModifiersPrep.prepareModifiers(this.data);
         ModifiersPrep.clearAttributeMods(this.data);
@@ -61,14 +61,14 @@ export class SpiritPrep extends BaseActorPrep<SR5SpiritType, SpiritActorData> {
 
             // prepare initiative data
             initiative.meatspace.base.base = force * 2 + overrides.init + Number(modifiers['astral_initiative']);
-            initiative.meatspace.base.mod = PartsList.AddUniquePart(initiative.meatspace.base.mod, "SR5.Bonus", Number(modifiers['meat_initiative']));
+            initiative.meatspace.base.mod = PartsList.AddUniquePart(initiative.meatspace.base.mod, "SR6.Bonus", Number(modifiers['meat_initiative']));
             initiative.meatspace.dice.base = 2;
-            initiative.meatspace.dice.mod = PartsList.AddUniquePart(initiative.meatspace.dice.mod, "SR5.Bonus", Number(modifiers['meat_initiative_dice']));
+            initiative.meatspace.dice.mod = PartsList.AddUniquePart(initiative.meatspace.dice.mod, "SR6.Bonus", Number(modifiers['meat_initiative_dice']));
 
             initiative.astral.base.base = force * 2 + overrides.astral_init + Number(modifiers['astral_initiative_dice']);
-            initiative.astral.base.mod = PartsList.AddUniquePart(initiative.astral.base.mod, "SR5.Bonus", Number(modifiers['astral_initiative']));
+            initiative.astral.base.mod = PartsList.AddUniquePart(initiative.astral.base.mod, "SR6.Bonus", Number(modifiers['astral_initiative']));
             initiative.astral.dice.base = 3;
-            initiative.astral.dice.mod = PartsList.AddUniquePart(initiative.astral.dice.mod, "SR5.Bonus", Number(modifiers['astral_initiative_dice']));
+            initiative.astral.dice.mod = PartsList.AddUniquePart(initiative.astral.dice.mod, "SR6.Bonus", Number(modifiers['astral_initiative_dice']));
         }
     }
 

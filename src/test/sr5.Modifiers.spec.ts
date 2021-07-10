@@ -1,4 +1,4 @@
-import {Modifiers} from "../module/sr5/Modifiers";
+import {Modifiers} from "../module/sr6/Modifiers";
 
 
 export const shadowrunRulesModifiers = context => {
@@ -22,7 +22,7 @@ export const shadowrunRulesModifiers = context => {
         }
     };
 
-    describe('SR5 Modifiers', () => {
+    describe('SR6 Modifiers', () => {
         it('should create default modifier values', () => {
             const modifiers = Modifiers.getDefaultModifiers();
 
@@ -81,7 +81,7 @@ export const shadowrunRulesModifiers = context => {
             });
             assert.equal(modifiersInactive.hasActiveEnvironmental, false);
         })
-        it('should calculate the total according to sr5 rules', () => {
+        it('should calculate the total according to sr6 rules', () => {
             const modifiers = new Modifiers(defaultModifiers);
 
             assert.equal(modifiers.environmental.total, 0);

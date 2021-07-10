@@ -1,12 +1,12 @@
 import SkillEditFormData = Shadowrun.SkillEditFormData;
-import {SR5Actor} from "../../actor/SR5Actor";
-import {SR5} from "../../config";
+import {SR6Actor} from "../../actor/SR6Actor";
+import {SR6} from "../../config";
 
 // @ts-ignore // TODO: foundry-vtt-types 0.8.2 doesn't know about DocumentSheet.
 export class SkillEditSheet extends DocumentSheet {
     skillId: string;
 
-    get document(): SR5Actor {
+    get document(): SR6Actor {
         return super.document;
     }
 
@@ -24,8 +24,8 @@ export class SkillEditSheet extends DocumentSheet {
         // @ts-ignore
         return mergeObject(options, {
             id: 'skill-editor',
-            classes: ['sr5', 'sheet', 'skill-edit-window'],
-            template: 'systems/shadowrun5e/dist/templates/apps/skill-edit.html',
+            classes: ['sr6', 'sheet', 'skill-edit-window'],
+            template: 'systems/shadowrun6e/dist/templates/apps/skill-edit.html',
             width: 300,
             submitOnClose: true,
             submitOnChange: true,
@@ -36,7 +36,7 @@ export class SkillEditSheet extends DocumentSheet {
 
     get title(): string {
         const label = this.document.getSkillLabel(this.skillId);
-        return `${game.i18n.localize('SR5.EditSkill')} - ${game.i18n.localize(label)}`;
+        return `${game.i18n.localize('SR6.EditSkill')} - ${game.i18n.localize(label)}`;
     }
 
     _onUpdateObject(event, formData, updateData) {
@@ -167,7 +167,7 @@ export class SkillEditSheet extends DocumentSheet {
     /** Enhance attribute selection by an empty option to allow newly created skills to have no attribute selected.
      */
     _getSkillAttributesForSelect() {
-        return {...SR5.attributes, '': ''};
+        return {...SR6.attributes, '': ''};
     }
 
     _allowSkillNameEditing(): boolean {

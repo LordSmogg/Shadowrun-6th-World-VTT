@@ -1,8 +1,8 @@
-import SR5ActorData = Shadowrun.SR5ActorData;
+import SR6ActorData = Shadowrun.SR6ActorData;
 import MovementActorData = Shadowrun.MovementActorData;
 
 export class MovementPrep {
-    static prepareMovement(data: SR5ActorData & MovementActorData) {
+    static prepareMovement(data: SR6ActorData & MovementActorData) {
         const { attributes, modifiers } = data;
         const movement = data.movement;
         // default movement: WALK = AGI * 2, RUN = AGI * 4

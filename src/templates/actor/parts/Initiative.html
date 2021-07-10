@@ -1,20 +1,20 @@
-{{#> "systems/shadowrun5e/dist/templates/common/Attribute.html" cssClass="no-grow"}}
+{{#> "systems/shadowrun6e/dist/templates/common/Attribute.html" cssClass="no-grow"}}
     <div class="track">
         <div class="attribute-name">
             <select name="data.initiative.perception" class="display">
                 {{#select data.initiative.perception}}
                     <option value="meatspace"
-                    >{{localize "SR5.InitCatMeatspace"}}</option
+                    >{{localize "SR6.InitCatMeatspace"}}</option
                     >
-                    <option value="matrix">{{localize "SR5.InitCatMatrix"}}</option>
+                    <option value="matrix">{{localize "SR6.InitCatMatrix"}}</option>
                     {{#ife data.special 'magic'}}
-                        <option value="astral">{{localize "SR5.InitCatAstral"}}</option>
+                        <option value="astral">{{localize "SR6.InitCatAstral"}}</option>
                     {{/ife}} {{/select}}
             </select>
         </div>
         <div class="attribute-name">
             <label
-                    title="{{localize SR5.UseEdgeForInitiativeRoll}}"
+                    title="{{localize SR6.UseEdgeForInitiativeRoll}}"
                     class="checkbox init-edge-label"
             >
                 <input
@@ -48,4 +48,4 @@
             />
         </div>
     </div>
-{{/"systems/shadowrun5e/dist/templates/common/Attribute.html"}}
+{{/"systems/shadowrun6e/dist/templates/common/Attribute.html"}}

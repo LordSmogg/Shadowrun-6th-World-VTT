@@ -1,10 +1,10 @@
-import SR5ActorData = Shadowrun.SR5ActorData;
+import SR6ActorData = Shadowrun.SR6ActorData;
 
 export class ModifiersPrep {
     /**
      * Prepare the modifiers that are displayed in the Misc. tab
      */
-    static prepareModifiers(data: SR5ActorData) {
+    static prepareModifiers(data: SR6ActorData) {
         if (!data.modifiers) data.modifiers = {};
         const modifiers = {};
         let miscTabModifiers = [
@@ -44,7 +44,7 @@ export class ModifiersPrep {
         data.modifiers = modifiers;
     }
 
-    static clearAttributeMods(data: SR5ActorData) {
+    static clearAttributeMods(data: SR6ActorData) {
         const { attributes } = data;
         for (const [, attribute] of Object.entries(attributes)) {
             attribute.mod = [];

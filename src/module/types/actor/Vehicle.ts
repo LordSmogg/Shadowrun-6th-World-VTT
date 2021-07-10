@@ -1,7 +1,7 @@
 /// <reference path="../Shadowrun.ts" />
 
 declare namespace Shadowrun {
-    export type SR5VehicleType = SR5ActorBase & {
+    export type SR6VehicleType = SR6ActorBase & {
         data: VehicleActorData;
         type: 'vehicle';
     };

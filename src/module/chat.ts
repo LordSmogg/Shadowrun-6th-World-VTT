@@ -1,5 +1,5 @@
-import {SR5Actor} from './actor/SR5Actor';
-import {SR5Item} from './item/SR5Item';
+import {SR6Actor} from './actor/SR6Actor';
+import {SR6Item} from './item/SR6Item';
 import Template from './template';
 import {CORE_FLAGS, CORE_NAME, FLAGS, SYSTEM_NAME} from './constants';
 import {ShadowrunRoll, Test} from "./rolls/ShadowrunRoller";
@@ -13,10 +13,10 @@ import DamageElement = Shadowrun.DamageElement;
 import CombatData = Shadowrun.CombatData;
 
 export interface RollTargetChatMessage {
-    actor: SR5Actor
+    actor: SR6Actor
     target?: Token | undefined
     targets?: Token[]
-    item: SR5Item
+    item: SR6Item
     tests: Test[]
     roll: ShadowrunRoll
     attack?: AttackData
@@ -29,8 +29,8 @@ export interface TargetChatMessageOptions extends RollTargetChatMessage {
 
 // Simple card text messages
 export interface ItemChatMessageOptions {
-    actor: SR5Actor
-    item: SR5Item
+    actor: SR6Actor
+    item: SR6Item
     description: object
     tests?: Test[]
 }
@@ -38,11 +38,11 @@ export interface ItemChatMessageOptions {
 export interface RollChatMessageOptions {
     title: string
     roll: ShadowrunRoll
-    actor?: SR5Actor
+    actor?: SR6Actor
     target?: Token
     targets?: Token[]
 
-    item?: SR5Item
+    item?: SR6Item
 
     description?: object
 
@@ -62,9 +62,9 @@ export interface RollChatMessageOptions {
 
 interface ItemChatTemplateData {
     title: string
-    actor: SR5Actor
+    actor: SR6Actor
     tokenId?: string
-    item: SR5Item
+    item: SR6Item
     description: object
     tests?: Test[]
 }
@@ -107,7 +107,7 @@ interface ChatDataOptions {
 // templateData has no datatype to pipe through whatever it's given.
 // Clean up your data within templateData creation functions!
 const createChatData = async (templateData, options?: ChatDataOptions) => {
-    const template = `systems/shadowrun5e/dist/templates/rolls/roll-card.html`;
+    const template = `systems/shadowrun6e/dist/templates/rolls/roll-card.html`;
     const actor = templateData.actor;
     const token = actor?.getToken();
 
@@ -136,7 +136,7 @@ const createChatData = async (templateData, options?: ChatDataOptions) => {
             alias: game.user?.name
         },
         flags: {
-            shadowrun5e: {
+            shadowrun6e: {
                 customRoll: true,
             },
         }
@@ -197,7 +197,7 @@ function createChatTemplateData(options: ItemChatMessageOptions): ItemChatTempla
 
     const token = actor?.getToken();
     const tokenId = getTokenSceneId(token);
-    const title = game.i18n.localize("SR5.Description");
+    const title = game.i18n.localize("SR6.Description");
 
     return {
         title,
@@ -265,14 +265,14 @@ export const addChatMessageContextOptions = (html, options) => {
 
     options.push(
         {
-            name: game.i18n.localize('SR5.PushTheLimit'),
-            callback: (li) => SR5Actor.pushTheLimit(li),
+            name: game.i18n.localize('SR6.PushTheLimit'),
+            callback: (li) => SR6Actor.pushTheLimit(li),
             condition: canRoll,
             icon: '<i class="fas fa-meteor"></i>',
         },
         {
-            name: game.i18n.localize('SR5.SecondChange'),
-            callback: (li) => SR5Actor.secondChance(li),
+            name: game.i18n.localize('SR6.SecondChange'),
+            callback: (li) => SR6Actor.secondChance(li),
             condition: canRoll,
             icon: '<i class="fas fa-dice-d6"></i>',
         }
@@ -293,11 +293,11 @@ export const addRollListeners = (app: ChatMessage, html) => {
         const message = game.messages?.get(messageId);
         if (!message) return;
         const attack = message.getFlag(SYSTEM_NAME, FLAGS.Attack) as AttackData;
-        const item = SR5Item.getItemFromMessage(html);
+        const item = SR6Item.getItemFromMessage(html);
 
         const type = event.currentTarget.dataset.action;
         if (!item) {
-            ui.notifications?.error(game.i18n.localize('SR5.MissingItemForOpposedTest'));
+            ui.notifications?.error(game.i18n.localize('SR6.MissingItemForOpposedTest'));
             return;
         }
 
@@ -324,7 +324,7 @@ export const addRollListeners = (app: ChatMessage, html) => {
     });
     html.on('click', '.place-template', (event) => {
         event.preventDefault();
-        const item = SR5Item.getItemFromMessage(html);
+        const item = SR6Item.getItemFromMessage(html);
 
         if (item) {
             const template = Template.fromItem(item);
@@ -392,7 +392,7 @@ export const addRollListeners = (app: ChatMessage, html) => {
         if (token) {
             token.control();
         } else {
-            ui.notifications?.warn(game.i18n.localize('SR5.NoSelectableToken'))
+            ui.notifications?.warn(game.i18n.localize('SR6.NoSelectableToken'))
         }
     });
 
@@ -435,7 +435,7 @@ export const addRollListeners = (app: ChatMessage, html) => {
             }
 
             if (actors.length === 0) {
-                ui.notifications?.warn(game.i18n.localize("SR5.Warnings.TokenSelectionNeeded"));
+                ui.notifications?.warn(game.i18n.localize("SR6.Warnings.TokenSelectionNeeded"));
                 return;
             }
         }

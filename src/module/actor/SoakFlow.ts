@@ -1,5 +1,5 @@
 import {ShadowrunRoll, ShadowrunRoller} from '../rolls/ShadowrunRoller';
-import {SR5Actor} from "./SR5Actor";
+import {SR6Actor} from "./SR6Actor";
 import {SoakRules} from "./SoakRules";
 import { Helpers } from '../helpers';
 import SoakRollOptions = Shadowrun.SoakRollOptions;
@@ -11,7 +11,7 @@ import DamageType = Shadowrun.DamageType;
 import {PartsList} from "../parts/PartsList";
 import {DefaultValues} from "../dataTemplates";
 import { ShadowrunActorDialogs } from '../apps/dialogs/ShadowrunActorDialogs';
-import {SR5Item} from '../item/SR5Item';
+import {SR6Item} from '../item/SR6Item';
 
 export class SoakFlow {
 
@@ -21,7 +21,7 @@ export class SoakFlow {
      * @param soakRollOptions Information about the incoming damage (if it is already known)
      * @param partsProps Optional modifiers for the soak test
      */
-    async runSoakTest(actor: SR5Actor, soakRollOptions: SoakRollOptions, partsProps: ModList<number> = []): Promise<ShadowrunRoll|undefined> {
+    async runSoakTest(actor: SR6Actor, soakRollOptions: SoakRollOptions, partsProps: ModList<number> = []): Promise<ShadowrunRoll|undefined> {
         const initialDamageData = soakRollOptions.damage ? soakRollOptions.damage : DefaultValues.damageData();
         const previewSoakDefenseParts = new PartsList<number>(duplicate(partsProps) as ModList<number>);
         SoakRules.applyAllSoakParts(previewSoakDefenseParts, actor, initialDamageData);
@@ -37,7 +37,7 @@ export class SoakFlow {
         SoakRules.applyAllSoakParts(finalSoakDefenseParts, actor, damageData);
 
         // Query user for roll options and do the actual soak test.
-        const title = game.i18n.localize('SR5.SoakTest');
+        const title = game.i18n.localize('SR6.SoakTest');
         const roll = await ShadowrunRoller.advancedRoll({
             event: soakRollOptions?.event,
             extended: false,
@@ -65,13 +65,13 @@ export class SoakFlow {
         return roll;
     }
 
-    private knocksDown(damage: DamageData, actor:SR5Actor) {
-        // TODO: SR5 195 Called Shot Knock Down (Melee Only), requires attacker STR and actually announcing that called shot.
-        const gelRoundsEffect = this.isDamageFromGelRounds(damage) ? -2 : 0;  // SR5 434
+    private knocksDown(damage: DamageData, actor:SR6Actor) {
+        // TODO: SR6 195 Called Shot Knock Down (Melee Only), requires attacker STR and actually announcing that called shot.
+        const gelRoundsEffect = this.isDamageFromGelRounds(damage) ? -2 : 0;  // SR6 434
         const impactDispersionEffect = this.isDamageFromImpactDispersion(damage) ? -2 : 0  // FA 52
         const limit = actor.getLimit('physical');
         const effectiveLimit = limit.value + gelRoundsEffect + impactDispersionEffect
-        // SR5 194
+        // SR6 194
         return damage.value > effectiveLimit || damage.value >= 10;
     }
 
@@ -79,12 +79,12 @@ export class SoakFlow {
         if (damage.source && damage.source.actorId && damage.source.itemId) {
             const attacker = game.actors.find(actor => actor.id == damage.source?.actorId);
             if (attacker) {
-                // TODO: foundry-vtt-types Resolve attacker.items not matching with SR5Item[].
-                const item = attacker.items.find(item => item.id == damage.source?.itemId) as unknown as SR5Item;
+                // TODO: foundry-vtt-types Resolve attacker.items not matching with SR6Item[].
+                const item = attacker.items.find(item => item.id == damage.source?.itemId) as unknown as SR6Item;
                 if (item) {
                     return item.items
                         .filter(mod => mod.getTechnology()?.equipped)
-                        .filter(tech => tech.name == game.i18n.localize("SR5.AmmoGelRounds")).length > 0;
+                        .filter(tech => tech.name == game.i18n.localize("SR6.AmmoGelRounds")).length > 0;
                 }
             }
         }
@@ -119,7 +119,7 @@ export class SoakFlow {
         const totalDamage = Helpers.calcTotal(damageData);
         if (totalDamage !== incomingDamage) {
             const diff = incomingDamage - totalDamage;
-            damageData.mod = PartsList.AddUniquePart(damageData.mod, 'SR5.UserInput', diff);
+            damageData.mod = PartsList.AddUniquePart(damageData.mod, 'SR6.UserInput', diff);
             damageData.value = Helpers.calcTotal(damageData);
         }
 
@@ -132,7 +132,7 @@ export class SoakFlow {
         const totalAp = Helpers.calcTotal(damageData.ap);
         if (totalAp !== ap) {
             const diff = ap - totalAp;
-            damageData.ap.mod = PartsList.AddUniquePart(damageData.ap.mod, 'SR5.UserInput', diff);
+            damageData.ap.mod = PartsList.AddUniquePart(damageData.ap.mod, 'SR6.UserInput', diff);
             damageData.ap.value = Helpers.calcTotal(damageData.ap);
         }
 

@@ -1,13 +1,13 @@
 /**
  * Handle all things related to the action template (template.json)
  */
-import {SR5Actor} from "../actor/SR5Actor";
+import {SR6Actor} from "../actor/SR6Actor";
 import DamageData = Shadowrun.DamageData;
 import {Helpers} from "../helpers";
 import FormulaOperator = Shadowrun.FormulaOperator;
 
 export class ItemAction {
-    static calcDamage(damage: DamageData, actor: SR5Actor): DamageData {
+    static calcDamage(damage: DamageData, actor: SR6Actor): DamageData {
         // Avoid manipulation on original data, which might come from database values.
         damage = duplicate(damage) as DamageData;
 

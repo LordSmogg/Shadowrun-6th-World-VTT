@@ -2,7 +2,7 @@
     <div class="technology">
         {{#hasprop data 'grade'}}
         <div class="flexrow nowrap">
-            <label>{{localize "SR5.CyberwareGrade"}}</label>
+            <label>{{localize "SR6.CyberwareGrade"}}</label>
             <select name="data.grade" class="display">
                 {{#select data.grade}} {{#each config.cyberwareGrades as |name type|}}
                 <option value="{{type}}">{{localize name}}</option>
@@ -11,7 +11,7 @@
         </div>
         {{/hasprop}} {{#hasprop data 'essence'}}
         <div class="flexrow nowrap">
-            <label>{{localize "SR5.EssenceCost"}}</label>
+            <label>{{localize "SR6.EssenceCost"}}</label>
             <input
                 class="display attribute-input"
                 type="text"
@@ -24,7 +24,7 @@
         </div>
         {{/hasprop}} {{#hasprop data 'capacity'}}
         <div class="flexrow nowrap">
-            <label>{{localize "SR5.Capacity"}}</label>
+            <label>{{localize "SR6.Capacity"}}</label>
             <input
                 class="display attribute-input"
                 type="text"
@@ -37,7 +37,7 @@
         </div>
         {{/hasprop}}
         <div class="flexrow nowrap">
-            <label>{{localize "SR5.Rating"}}</label>
+            <label>{{localize "SR6.Rating"}}</label>
             <input
                 class="display"
                 type="text"
@@ -50,7 +50,7 @@
             />
         </div>
         <div class="flexrow nowrap">
-            <label>{{localize "SR5.Qty"}}</label>
+            <label>{{localize "SR6.Qty"}}</label>
             <input
                 class="display"
                 type="text"
@@ -64,7 +64,7 @@
         </div>
         {{#unless hideConceal}}
         <div class="flexrow nowrap">
-            <label>{{localize "SR5.Conceal"}}</label>
+            <label>{{localize "SR6.Conceal"}}</label>
             <input
                 class="display"
                 type="text"
@@ -77,7 +77,7 @@
         </div>
         {{/unless}}
         <div class="flexrow nowrap">
-            <label>{{localize "SR5.Cost"}}</label>
+            <label>{{localize "SR6.Cost"}}</label>
             <div class="input">
                 <input
                     class="display"
@@ -93,7 +93,7 @@
             </div>
         </div>
         <div class="flexrow nowrap">
-            <label>{{localize "SR5.Availability"}}</label>
+            <label>{{localize "SR6.Availability"}}</label>
             <input
                 class="display"
                 type="text"
@@ -104,7 +104,7 @@
         </div>
         {{#unless hideConditionMonitor}}
         <div class="flexrow nowrap">
-            <label>{{localize "SR5.ConditionMonitor"}}</label>
+            <label>{{localize "SR6.ConditionMonitor"}}</label>
             <div class="flexrow">
                 <input
                     class="display"
@@ -128,7 +128,7 @@
         </div>
         {{/unless}}
         <div class="flexrow nowrap">
-            {{localize "SR5.Equipped"}}<input
+            {{localize "SR6.Equipped"}}<input
                 class="checkbox"
                 type="checkbox"
                 name="data.technology.equipped"
@@ -137,7 +137,7 @@
             />
         </div>
         <div class="flexrow nowrap">
-            {{localize "SR5.Wireless"}}<input
+            {{localize "SR6.Wireless"}}<input
                 class="checkbox"
                 type="checkbox"
                 name="data.technology.wireless"

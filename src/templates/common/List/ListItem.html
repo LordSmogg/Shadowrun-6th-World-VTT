@@ -35,9 +35,9 @@
             {{#if option.input}}
                 {{#ife option.input.type 'number'}}
                     <div class="item-text {{option.cssClass}}">
-                        {{> "systems/shadowrun5e/dist/templates/common/ValueInput.html"
+                        {{> "systems/shadowrun6e/dist/templates/common/ValueInput.html"
                                 cssClass=(concatStrings "short " option.input.cssClass)
-                                title=(localize 'SR5.Quantity')
+                                title=(localize 'SR6.Quantity')
                                 size="5"
                                 maxLength="5"
                                 value=option.input.value

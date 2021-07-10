@@ -1,11 +1,11 @@
 <form class="{{cssClass}} wholesheet" autocomplete="off">
-   {{> 'systems/shadowrun5e/dist/templates/actor-limited/parts/Header.html' }}
+   {{> 'systems/shadowrun6e/dist/templates/actor-limited/parts/Header.html' }}
     <section class="sheetbody">
         <div class="inventory">
             <div class="split-container">
             <div>
-                {{> 'systems/shadowrun5e/dist/templates/common/List/ListHeader.html'
-                        name=(localize 'SR5.Biography')
+                {{> 'systems/shadowrun6e/dist/templates/common/List/ListHeader.html'
+                        name=(localize 'SR6.Biography')
                         itemId='biography'
                         icons=(ItemHeaderIcons 'biography')
                 }}
@@ -13,7 +13,7 @@
                          editable=false}}
             </div>
             <div class="scroll-area">
-                {{> 'systems/shadowrun5e/dist/templates/actor-limited/parts/MiscCharacter.html' }}
+                {{> 'systems/shadowrun6e/dist/templates/actor-limited/parts/MiscCharacter.html' }}
             </div>
         </div>
         </div>

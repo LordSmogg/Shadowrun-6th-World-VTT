@@ -8,9 +8,9 @@ export class OverwatchScoreTracker extends Application {
     static get defaultOptions() {
         const options = super.defaultOptions;
         options.id = 'overwatch-score-tracker';
-        options.classes = ['sr5'];
-        options.title = game.i18n.localize('SR5.OverwatchScoreTrackerTitle');
-        options.template = 'systems/shadowrun5e/dist/templates/apps/gmtools/overwatch-score-tracker.html';
+        options.classes = ['sr6'];
+        options.title = game.i18n.localize('SR6.OverwatchScoreTrackerTitle');
+        options.template = 'systems/shadowrun6e/dist/templates/apps/gmtools/overwatch-score-tracker.html';
         options.width = 450;
         options.height = 'auto';
         options.resizable = true;
@@ -58,7 +58,7 @@ export class OverwatchScoreTracker extends Application {
         event.preventDefault();
         const tokens = Helpers.getControlledTokens();
         if (tokens.length === 0) {
-            ui.notifications?.warn(game.i18n.localize('SR5.OverwatchScoreTracker.NotifyNoSelectedTokens'));
+            ui.notifications?.warn(game.i18n.localize('SR6.OverwatchScoreTracker.NotifyNoSelectedTokens'));
             return;
         }
         tokens.forEach((token) => {

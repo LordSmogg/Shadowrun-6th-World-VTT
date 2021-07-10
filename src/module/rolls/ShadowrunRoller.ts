@@ -5,8 +5,8 @@ import LabelField = Shadowrun.LabelField;
 import AttackData = Shadowrun.AttackData;
 import DamageData = Shadowrun.DamageData;
 import { Helpers } from '../helpers';
-import { SR5Actor } from '../actor/SR5Actor';
-import { SR5Item } from '../item/SR5Item';
+import { SR6Actor } from '../actor/SR6Actor';
+import { SR6Item } from '../item/SR6Item';
 import {
     createRollChatMessage, createTargetChatMessage, RollTargetChatMessage,
     TargetChatMessageOptions
@@ -48,9 +48,9 @@ export interface BasicRollProps {
     limit?: LimitField;
     explodeSixes?: boolean;
     title?: string;
-    actor?: SR5Actor;
+    actor?: SR6Actor;
     target?: Token;
-    item?: SR5Item;
+    item?: SR6Item;
     // Personal attack
     attack?: AttackData
     // Incoming attack for a defense test
@@ -175,7 +175,7 @@ export class ShadowrunRoll extends Roll {
 }
 
 export class ShadowrunRoller {
-    static async itemRoll(event, item: SR5Item, actionTestData?: ActionTestData): Promise<ShadowrunRoll | undefined> {
+    static async itemRoll(event, item: SR6Item, actionTestData?: ActionTestData): Promise<ShadowrunRoll | undefined> {
         // Create common data for all item types.
         const title = item.getRollName();
         const actor = item.actor;
@@ -240,7 +240,7 @@ export class ShadowrunRoller {
         return roll;
     }
 
-    static async resultingItemRolls(event, item: SR5Item, actionTestData? : ActionTestData) {
+    static async resultingItemRolls(event, item: SR6Item, actionTestData? : ActionTestData) {
         // Cast resulting tests from above Success Test depending on item type.
         if (item.isComplexForm() && actionTestData?.complexForm) {
             const level = actionTestData.complexForm.level;
@@ -284,7 +284,7 @@ export class ShadowrunRoller {
         const parts = new PartsList(partsProps);
         const count = parts.total;
         if (count <= 0) {
-            ui.notifications?.warn(game.i18n.localize('SR5.RollOneDie'));
+            ui.notifications?.warn(game.i18n.localize('SR6.RollOneDie'));
             return '0d6cs>=5';
         }
         let formula = `${count}d6`;
@@ -359,8 +359,8 @@ export class ShadowrunRoller {
      */
     static promptRoll(): Promise<ShadowrunRoll | undefined> {
         const value = game.user?.getFlag(SYSTEM_NAME, FLAGS.LastRollPromptValue) || 0;
-        const parts = [{ name: 'SR5.LastRoll', value }];
-        const advancedRollProps = { parts, title: game.i18n.localize("SR5.Test")} as AdvancedRollProps;
+        const parts = [{ name: 'SR6.LastRoll', value }];
+        const advancedRollProps = { parts, title: game.i18n.localize("SR6.Test")} as AdvancedRollProps;
         const dialogOptions = { pool: true }
         return ShadowrunRoller.advancedRoll(advancedRollProps, dialogOptions);
     }
@@ -456,7 +456,7 @@ export class ShadowrunRoller {
         const rollMode = options.rollMode ?? game.settings.get(CORE_NAME, CORE_FLAGS.RollMode);
         if (rollMode === 'roll') return;
 
-        // @ts-ignore // Token.actor is of type Actor instead of SR5Actor
+        // @ts-ignore // Token.actor is of type Actor instead of SR6Actor
         const users = options.target.actor.getActivePlayerOwners();
 
         for (const user of users) {
@@ -483,7 +483,7 @@ export class ShadowrunRoller {
         if (!game.settings.get(SYSTEM_NAME, FLAGS.WhisperOpposedTestsToTargetedPlayers)) return;
 
         targets.forEach(target => {
-            // @ts-ignore // Token.actor is of type Actor instead of SR5Actor
+            // @ts-ignore // Token.actor is of type Actor instead of SR6Actor
             if (!target.actor.hasActivePlayerOwner()) return;
 
             options = {...options, target};
@@ -493,13 +493,13 @@ export class ShadowrunRoller {
 
     static _errorOnInvalidLimit(limit?: LimitField) {
         if (limit && limit.value < 0) {
-            ui.notifications?.error(game.i18n.localize('SR5.Warnings.NegativeLimitValue'));
+            ui.notifications?.error(game.i18n.localize('SR6.Warnings.NegativeLimitValue'));
         }
     }
 
     static handleExtendedRoll(advancedProps: AdvancedRollPropsDefaulted, testData: TestDialogData) {
-        const currentExtended = testData.parts.getPartValue('SR5.Extended') ?? 0;
-        testData.parts.addUniquePart('SR5.Extended', currentExtended - 1);
+        const currentExtended = testData.parts.getPartValue('SR6.Extended') ?? 0;
+        testData.parts.addUniquePart('SR6.Extended', currentExtended - 1);
 
         // Prepare the next, extended test roll.
         advancedProps.parts = testData.parts.list;
@@ -508,10 +508,10 @@ export class ShadowrunRoller {
         setTimeout(() => this.advancedRoll(advancedProps), delayInMs);
     }
 
-    static async handleExplodingSixes(actor: SR5Actor, basicProps: BasicRollProps, testData: TestDialogData) {
+    static async handleExplodingSixes(actor: SR6Actor, basicProps: BasicRollProps, testData: TestDialogData) {
         basicProps.explodeSixes = true;
         delete basicProps.limit;
-        testData.parts.addUniquePart('SR5.PushTheLimit', actor.getEdge().value);
+        testData.parts.addUniquePart('SR6.PushTheLimit', actor.getEdge().value);
 
         await actor.useEdge();
     }

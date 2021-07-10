@@ -6,7 +6,7 @@ import {_mergeWithMissingSkillFields} from "../../actor/prep/functions/SkillsPre
 export class CharacterInfoUpdater {
 
     /**
-     *  Maps the chummer attribute name to our sr5-foundry attribute name
+     *  Maps the chummer attribute name to our sr6-foundry attribute name
      *  @param attName name of the chummer attribute
      */
     parseAttName = (attName) =>  {
@@ -51,7 +51,7 @@ export class CharacterInfoUpdater {
 
 
     /**
-     *  Converts the chummer attribute value to our sr5-foundry attribute value
+     *  Converts the chummer attribute value to our sr6-foundry attribute value
      *  @param att the chummer attribute
      */
     parseAttBaseValue = (att) => {

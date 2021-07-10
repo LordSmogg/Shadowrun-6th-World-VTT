@@ -1,5 +1,5 @@
 declare namespace Shadowrun {
-    export type Spell = SR5ItemData<SpellData> & {
+    export type Spell = SR6ItemData<SpellData> & {
         type: 'spell';
     };
 

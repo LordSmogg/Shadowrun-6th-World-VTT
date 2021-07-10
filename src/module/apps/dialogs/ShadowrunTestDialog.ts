@@ -1,7 +1,7 @@
 import {FormDialog, FormDialogData} from "./FormDialog";
 import {RollDialogOptions} from "../../rolls/ShadowrunRoller";
 import {PartsList} from "../../parts/PartsList";
-import {SR5Actor} from "../../actor/SR5Actor";
+import {SR6Actor} from "../../actor/SR6Actor";
 import {CORE_FLAGS, CORE_NAME, FLAGS, SYSTEM_NAME} from "../../constants";
 import {Helpers} from "../../helpers";
 import ModList = Shadowrun.ModList;
@@ -17,7 +17,7 @@ interface AdvancedTestRollOptions {
 }
 
 export class ShadowrunTestDialog {
-    static async create(actor: SR5Actor|undefined, options: AdvancedTestRollOptions, partsProps: ModList<number>): Promise<FormDialog> {
+    static async create(actor: SR6Actor|undefined, options: AdvancedTestRollOptions, partsProps: ModList<number>): Promise<FormDialog> {
         const testDialogData = ShadowrunTestDialog.getAdvancedTestData(actor, options, partsProps);
 
         return new FormDialog(testDialogData);
@@ -39,12 +39,12 @@ export class ShadowrunTestDialog {
             rollModes: CONFIG.Dice.rollModes
         }
 
-        let templatePath = 'systems/shadowrun5e/dist/templates/rolls/roll-dialog.html';
+        let templatePath = 'systems/shadowrun6e/dist/templates/rolls/roll-dialog.html';
 
         const rollButtonName = 'roll'
         const buttons = {
             [rollButtonName]: {
-                label: game.i18n.localize('SR5.Roll'),
+                label: game.i18n.localize('SR6.Roll'),
                 icon: '<i class="fas fa-dice-six"></i>',
                 callback: () => {
                 },
@@ -52,7 +52,7 @@ export class ShadowrunTestDialog {
         };
         if (actor) {
             buttons['edge'] = {
-                label: `${game.i18n.localize('SR5.PushTheLimit')} (+${actor.getEdge().value})`,
+                label: `${game.i18n.localize('SR6.PushTheLimit')} (+${actor.getEdge().value})`,
                 icon: '<i class="fas fa-bomb"></i>',
                 callback: () => {
                 },
@@ -65,7 +65,7 @@ export class ShadowrunTestDialog {
             if (options.dialogOptions?.pool) {
                 parts.clear();
                 await game.user?.setFlag(SYSTEM_NAME, FLAGS.LastRollPromptValue, dicePoolValue);
-                parts.addUniquePart('SR5.Base', dicePoolValue);
+                parts.addUniquePart('SR6.Base', dicePoolValue);
             }
 
             const limitValue = Helpers.parseInputToNumber($(html).find('[name="limitValue"]').val());
@@ -74,7 +74,7 @@ export class ShadowrunTestDialog {
             if (limit && limit.value !== limitValue) {
                 limit.value = limitValue;
                 limit.base = limitValue;
-                limit.label = 'SR5.Override';
+                limit.label = 'SR6.Override';
             }
 
             const woundValue = Helpers.parseInputToNumber($(html).find('[name="wounds"]').val());
@@ -83,14 +83,14 @@ export class ShadowrunTestDialog {
 
             let {wounds} = options;
             if (wounds && woundValue !== 0) {
-                parts.addUniquePart('SR5.Wounds', woundValue);
+                parts.addUniquePart('SR6.Wounds', woundValue);
                 wounds = true;
             }
             if (situationMod) {
-                parts.addUniquePart('SR5.SituationalModifier', situationMod);
+                parts.addUniquePart('SR6.SituationalModifier', situationMod);
             }
             if (environmentMod) {
-                parts.addUniquePart('SR5.EnvironmentModifier', environmentMod);
+                parts.addUniquePart('SR6.EnvironmentModifier', environmentMod);
             }
 
             const extendedString = Helpers.parseInputToString($(html).find('[name="extended"]').val());

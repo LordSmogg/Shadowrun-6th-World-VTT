@@ -1,22 +1,22 @@
-<form class="sr5">
-    {{> "systems/shadowrun5e/dist/templates/rolls/parts/parts-list.html" }}
+<form class="sr6">
+    {{> "systems/shadowrun6e/dist/templates/rolls/parts/parts-list.html" }}
     <div class="form-group">
-        <label>{{localize 'SR5.Cover'}}</label>
+        <label>{{localize 'SR6.Cover'}}</label>
         <select name="cover">
             {{#select cover}}
-            <option value="0">{{localize 'SR5.NoCover'}}</option>
-            <option value="1">(+1) {{localize 'SR5.PartialCover'}}</option>
-            <option value="2">(+2) {{localize 'SR5.PartialCover'}}</option>
-            <option value="3">(+3) {{localize 'SR5.GoodCover'}}</option>
-            <option value="4">(+4) {{localize 'SR5.GoodCover'}}</option>
+            <option value="0">{{localize 'SR6.NoCover'}}</option>
+            <option value="1">(+1) {{localize 'SR6.PartialCover'}}</option>
+            <option value="2">(+2) {{localize 'SR6.PartialCover'}}</option>
+            <option value="3">(+3) {{localize 'SR6.GoodCover'}}</option>
+            <option value="4">(+4) {{localize 'SR6.GoodCover'}}</option>
             {{/select}}
         </select>
     </div>
     <div class="form-group">
-        <label>{{localize 'SR5.ActiveDefense'}}</label>
+        <label>{{localize 'SR6.ActiveDefense'}}</label>
         <select name="activeDefense">
             {{#select activeDefense}}
-            <option value="">{{localize 'SR5.None'}}</option>
+            <option value="">{{localize 'SR6.None'}}</option>
             {{#each activeDefenses as |val key|}}
             <option value="{{key}}">(+{{val.value}}) {{localize val.label}}{{#if val.weapon}} - {{val.weapon}}{{/if}}</option>
             {{/each}}

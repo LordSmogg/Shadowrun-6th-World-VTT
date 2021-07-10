@@ -1,14 +1,14 @@
-{{#> 'systems/shadowrun5e/dist/templates/common/TabWrapper.html' tabId='matrix'}}
+{{#> 'systems/shadowrun6e/dist/templates/common/TabWrapper.html' tabId='matrix'}}
     <div>
-        {{> "systems/shadowrun5e/dist/templates/common/HeaderBlock.html"
-                name=(localize "SR5.Matrix")
+        {{> "systems/shadowrun6e/dist/templates/common/HeaderBlock.html"
+                name=(localize "SR6.Matrix")
         }}
         <div class="attributes">
-            {{> "systems/shadowrun5e/dist/templates/actor/parts/matrix/DeviceRating.html" }}
+            {{> "systems/shadowrun6e/dist/templates/actor/parts/matrix/DeviceRating.html" }}
             <div class="block">
                 <div class="block-line gap-4 border-bottom center">
                     <label>
-                        {{localize "SR5.HotSim"}}
+                        {{localize "SR6.HotSim"}}
                         <input
                                 type="checkbox"
                                 class="submit-checkbox"
@@ -17,7 +17,7 @@
                         />
                     </label>
                     <label>
-                        {{localize "SR5.RunningSilent"}}
+                        {{localize "SR6.RunningSilent"}}
                         <input
                                 type="checkbox"
                                 class="submit-checkbox"
@@ -28,9 +28,9 @@
                 </div>
                 <div class="attribute">
                     <div class="attribute-name">
-                        {{localize "SR5.ConditionMonitor"}}
+                        {{localize "SR6.ConditionMonitor"}}
                     </div>
-                    {{> 'systems/shadowrun5e/dist/templates/common/HorizontalCellInput.html'
+                    {{> 'systems/shadowrun6e/dist/templates/common/HorizontalCellInput.html'
                             value=data.matrix.condition_monitor.value
                             max=data.matrix.condition_monitor.max
                             id="matrix"
@@ -38,7 +38,7 @@
                 </div>
             </div>
             {{#each config.matrixAttributes as |label key|}}
-                {{> "systems/shadowrun5e/dist/templates/actor/parts/matrix/MatrixAttribute.html"
+                {{> "systems/shadowrun6e/dist/templates/actor/parts/matrix/MatrixAttribute.html"
                         matrixAtt=(lookup ../data.matrix key)
                         isCyberdeck=../data.matrix.is_cyberdeck
                         key=key
@@ -50,9 +50,9 @@
     </div>
     <div class="inventory">
         {{#if emerged}}
-            {{> 'systems/shadowrun5e/dist/templates/actor/parts/matrix/ComplexFormList.html' }}
+            {{> 'systems/shadowrun6e/dist/templates/actor/parts/matrix/ComplexFormList.html' }}
         {{else}}
-            {{> 'systems/shadowrun5e/dist/templates/actor/parts/matrix/ProgramList.html' }}
+            {{> 'systems/shadowrun6e/dist/templates/actor/parts/matrix/ProgramList.html' }}
         {{/if}}
     </div>
-{{/ 'systems/shadowrun5e/dist/templates/common/TabWrapper.html'}}
+{{/ 'systems/shadowrun6e/dist/templates/common/TabWrapper.html'}}

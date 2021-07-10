@@ -10,7 +10,7 @@
  * Other than this file config.ts exists and only contains mappings between fixed names/ids and translation labels.
  *
  */
-export const SYSTEM_NAME = 'shadowrun5e';
+export const SYSTEM_NAME = 'shadowrun6e';
 export const SYSTEM_SOCKET = `system.${SYSTEM_NAME}`;
 export const FLAGS = {
     ShowGlitchAnimation: 'showGlitchAnimation',
@@ -41,7 +41,7 @@ export const CORE_NAME = 'core';
 export const CORE_FLAGS = {
     RollMode: 'rollMode'
 }
-export const METATYPEMODIFIER = 'SR5.Character.Modifiers.NPCMetatypeAttribute';
+export const METATYPEMODIFIER = 'SR6.Character.Modifiers.NPCMetatypeAttribute';
 
 export const LENGTH_UNIT_TO_METERS_MULTIPLIERS = {
     'm': 1,
@@ -116,7 +116,7 @@ export const SR = {
         SHORT_NAME_LENGTH: 3
     },
     skill: {
-        // @PDF SR5#130
+        // @PDF SR6#130
         DEFAULTING_MODIFIER: -1,
         SPECIALIZATION_MODIFIER: 2
     }

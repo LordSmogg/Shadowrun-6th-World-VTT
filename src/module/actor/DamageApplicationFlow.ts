@@ -1,5 +1,5 @@
 import {DamageApplicationDialog} from "../apps/dialogs/DamageApplicationDialog";
-import {SR5Actor} from "./SR5Actor";
+import {SR6Actor} from "./SR6Actor";
 import DamageData = Shadowrun.DamageData;
 
 export class DamageApplicationFlow {
@@ -10,7 +10,7 @@ export class DamageApplicationFlow {
      * @param actors The actors that are affected
      * @param damage The damage the actors will receive
      */
-    async runApplyDamage(actors: SR5Actor[], damage : DamageData) {
+    async runApplyDamage(actors: SR6Actor[], damage : DamageData) {
         // Show user the affected actors and the damage values
         const damageApplicationDialog = await new DamageApplicationDialog(actors, damage);
         await damageApplicationDialog.select();
@@ -28,7 +28,7 @@ export class DamageApplicationFlow {
      *
      * @param damage The damage to apply. Stun damage will be turned to physical for grunts.
      */
-    async applyDamageToActor(actor : SR5Actor, damage: DamageData) {
+    async applyDamageToActor(actor : SR6Actor, damage: DamageData) {
         if (damage.value <= 0) {
             return;
         }
@@ -57,7 +57,7 @@ export class DamageApplicationFlow {
         // TODO: Handle changes in actor status (death and such)
     }
 
-    private changeStunToPhysicalForGrunts(actor : SR5Actor, damage: DamageData): DamageData {
+    private changeStunToPhysicalForGrunts(actor : SR6Actor, damage: DamageData): DamageData {
         const updatedDamage = duplicate(damage) as DamageData;
         if (!actor.isGrunt()) {
             return updatedDamage;

@@ -1,5 +1,5 @@
 declare namespace Shadowrun {
-    export type Contact = SR5ItemData<ContactData> & {
+    export type Contact = SR6ItemData<ContactData> & {
         type: 'contact';
     };
 

@@ -1,51 +1,51 @@
 <div class="flexcol">
-    {{> "systems/shadowrun5e/dist/templates/common/HeaderBlock.html"
-            name=(localize "SR5.Labels.ActorSheet.VehicleConfiguration")
+    {{> "systems/shadowrun6e/dist/templates/common/HeaderBlock.html"
+            name=(localize "SR6.Labels.ActorSheet.VehicleConfiguration")
     }}
-    {{#> "systems/shadowrun5e/dist/templates/common/NameLineBlock.html" name=(localize "SR5.Vehicle.Driver") }}
+    {{#> "systems/shadowrun6e/dist/templates/common/NameLineBlock.html" name=(localize "SR6.Vehicle.Driver") }}
         <div>
             {{#if vehicle.driver}}
             <a class="entity-link" draggable="true" data-entity="Actor" data-id="{{vehicle.driver.id}}"><i class="fas fa-user">{{vehicle.driver.name}}</i></a>
             <a class="close driver-remove"><i class="fas fa-times"></i></a>
             {{else}}
-            {{localize "SR5.Vehicle.MissingDriver"}}
+            {{localize "SR6.Vehicle.MissingDriver"}}
             {{/if}}
         </div>
-    {{/"systems/shadowrun5e/dist/templates/common/NameLineBlock.html"}}
-    {{#> "systems/shadowrun5e/dist/templates/common/NameLineBlock.html" name=(localize "SR5.Vehicle.Type") }}
+    {{/"systems/shadowrun6e/dist/templates/common/NameLineBlock.html"}}
+    {{#> "systems/shadowrun6e/dist/templates/common/NameLineBlock.html" name=(localize "SR6.Vehicle.Type") }}
         <div>
-            {{> "systems/shadowrun5e/dist/templates/common/Select.html"
+            {{> "systems/shadowrun6e/dist/templates/common/Select.html"
                     options=config.vehicle.types
                     value=data.vehicleType
                     path="data.vehicleType"
             }}
         </div>
-    {{/"systems/shadowrun5e/dist/templates/common/NameLineBlock.html"}}
+    {{/"systems/shadowrun6e/dist/templates/common/NameLineBlock.html"}}
 
-    {{#> "systems/shadowrun5e/dist/templates/common/NameLineBlock.html" name=(localize "SR5.Vehicle.ControlMode") }}
+    {{#> "systems/shadowrun6e/dist/templates/common/NameLineBlock.html" name=(localize "SR6.Vehicle.ControlMode") }}
         <div>
-            {{> "systems/shadowrun5e/dist/templates/common/Select.html"
+            {{> "systems/shadowrun6e/dist/templates/common/Select.html"
                     options=config.vehicle.control_modes
                     value=data.controlMode
                     path="data.controlMode"
             }}
         </div>
-    {{/"systems/shadowrun5e/dist/templates/common/NameLineBlock.html"}}
+    {{/"systems/shadowrun6e/dist/templates/common/NameLineBlock.html"}}
 
-    {{#> "systems/shadowrun5e/dist/templates/common/NameLineBlock.html" name=(localize "SR5.Vehicle.ChaseEnvironment") }}
+    {{#> "systems/shadowrun6e/dist/templates/common/NameLineBlock.html" name=(localize "SR6.Vehicle.ChaseEnvironment") }}
         <div>
-            {{> "systems/shadowrun5e/dist/templates/common/Select.html"
+            {{> "systems/shadowrun6e/dist/templates/common/Select.html"
                     options=config.vehicle.environments
                     value=data.environment
                     path="data.environment"
             }}
         </div>
-    {{/"systems/shadowrun5e/dist/templates/common/NameLineBlock.html"}}
+    {{/"systems/shadowrun6e/dist/templates/common/NameLineBlock.html"}}
 
-    {{#> "systems/shadowrun5e/dist/templates/common/NameLineBlock.html" name=(localize "SR5.Vehicle.IsDrone") }}
+    {{#> "systems/shadowrun6e/dist/templates/common/NameLineBlock.html" name=(localize "SR6.Vehicle.IsDrone") }}
         <input type="checkbox" class="checkbox" name="data.isDrone" {{checked data.isDrone}}/>
-    {{/"systems/shadowrun5e/dist/templates/common/NameLineBlock.html"}}
-    {{#> "systems/shadowrun5e/dist/templates/common/NameLineBlock.html" name=(localize "SR5.Vehicle.IsOffRoad") }}
+    {{/"systems/shadowrun6e/dist/templates/common/NameLineBlock.html"}}
+    {{#> "systems/shadowrun6e/dist/templates/common/NameLineBlock.html" name=(localize "SR6.Vehicle.IsOffRoad") }}
         <input type="checkbox" class="checkbox" name="data.isOffRoad" {{checked data.isOffRoad}}/>
-    {{/"systems/shadowrun5e/dist/templates/common/NameLineBlock.html"}}
+    {{/"systems/shadowrun6e/dist/templates/common/NameLineBlock.html"}}
 </div>

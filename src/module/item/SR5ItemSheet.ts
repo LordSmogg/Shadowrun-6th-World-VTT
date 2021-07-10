@@ -1,15 +1,15 @@
 import { Helpers } from '../helpers';
-import { SR5Item } from './SR5Item';
-import SR5ActorSheetData = Shadowrun.SR5ActorSheetData;
-import {SR5Actor} from "../actor/SR5Actor";
-import SR5ItemType = Shadowrun.SR5ItemType;
-import {SR5} from "../config";
+import { SR6Item } from './SR6Item';
+import SR6ActorSheetData = Shadowrun.SR6ActorSheetData;
+import {SR6Actor} from "../actor/SR6Actor";
+import SR6ItemType = Shadowrun.SR6ItemType;
+import {SR6} from "../config";
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
  */
 // TODO: Check foundry-vtt-types systems for how to do typing...
-export class SR5ItemSheet extends ItemSheet<any, any> {
+export class SR6ItemSheet extends ItemSheet<any, any> {
     private _shownDesc: any[] = [];
     private _scroll: string;
 
@@ -24,7 +24,7 @@ export class SR5ItemSheet extends ItemSheet<any, any> {
     static get defaultOptions() {
         // @ts-ignore // mergeObject breaks TypeScript typing. Should be fine.
         return mergeObject(super.defaultOptions, {
-            classes: ['sr5', 'sheet', 'item'],
+            classes: ['sr6', 'sheet', 'item'],
             width: 650,
             height: 450,
             tabs: [{ navSelector: '.tabs', contentSelector: '.sheetbody' }],
@@ -32,7 +32,7 @@ export class SR5ItemSheet extends ItemSheet<any, any> {
     }
 
     get template() {
-        const path = 'systems/shadowrun5e/dist/templates/item/';
+        const path = 'systems/shadowrun6e/dist/templates/item/';
         return `${path}${this.item.data.type}.html`;
     }
 
@@ -76,10 +76,10 @@ export class SR5ItemSheet extends ItemSheet<any, any> {
             }
         }
 
-        data['config'] = SR5;
+        data['config'] = SR6;
         const items = this.getEmbeddedItems();
         const [ammunition, weaponMods, armorMods] = items.reduce(
-            (parts: [Item.Data[], Item.Data[], Item.Data[]], item: SR5Item) => {
+            (parts: [Item.Data[], Item.Data[], Item.Data[]], item: SR6Item) => {
                 if (item.type === 'ammo') parts[0].push(item.data);
                 if (item.type === 'modification' && "type" in item.data.data && item.data.data.type === 'weapon') parts[1].push(item.data);
                 if (item.type === 'modification' && "type" in item.data.data && item.data.data.type === 'armor') parts[2].push(item.data);
@@ -101,14 +101,14 @@ export class SR5ItemSheet extends ItemSheet<any, any> {
      * Action limits currently contain limits for all action types. Be it matrix, magic or physical.
      */
     _getSortedLimitsForSelect(): Record<string, string> {
-        return Helpers.sortConfigValuesByTranslation(SR5.limits);
+        return Helpers.sortConfigValuesByTranslation(SR6.limits);
     }
 
     /**
      * Sorted (by translation) actor attributes.
      */
     _getSortedAttributesForSelect(): Record<string, string> {
-        return Helpers.sortConfigValuesByTranslation(SR5.attributes);
+        return Helpers.sortConfigValuesByTranslation(SR6.attributes);
     }
 
     /**
@@ -117,7 +117,7 @@ export class SR5ItemSheet extends ItemSheet<any, any> {
     _getSortedActiveSkillsForSelect() {
         // We need the actor owner, instead of the item owner. See actorOwner jsdoc for details.
         const actor = this.item.actorOwner;
-        if (!actor) return Helpers.sortConfigValuesByTranslation(SR5.activeSkills);
+        if (!actor) return Helpers.sortConfigValuesByTranslation(SR6.activeSkills);
 
         const activeSkills = Helpers.sortSkills(actor.getActiveSkills());
 
@@ -190,17 +190,17 @@ export class SR5ItemSheet extends ItemSheet<any, any> {
         try {
             data = JSON.parse(event.dataTransfer.getData('text/plain'));
             if (data.type !== 'Item') {
-                console.log('Shadowrun5e | Can only drop Items');
+                console.log('Shadowrun6e | Can only drop Items');
             }
         } catch (err) {
-            console.log('Shadowrun5e | drop error');
+            console.log('Shadowrun6e | drop error');
         }
         let item;
         // Case 1 - Data explicitly provided
         if (data.data) {
             // TODO test
             if (this.item.isOwned && data.actorId === this.item.actor?._id && data.data._id === this.item._id) {
-                console.log('Shadowrun5e | Cant drop item on itself');
+                console.log('Shadowrun6e | Cant drop item on itself');
                 // @ts-ignore
                 ui.notifications?.error('Are you trying to break the game??');
             }
@@ -328,7 +328,7 @@ export class SR5ItemSheet extends ItemSheet<any, any> {
     private fixStaleRenderedState() {
         if (this._state === Application.RENDER_STATES.RENDERED && ui.windows[this.appId] === undefined) {
             // @ts-ignore // TODO: foundry-vtt-types doesn't know of DocumentSheet.document yet.
-            console.warn(`SR5ItemSheet app for ${this.document.name} is set as RENDERED but has no window registered. Fixing app internal render state. This is a known bug.`);
+            console.warn(`SR6ItemSheet app for ${this.document.name} is set as RENDERED but has no window registered. Fixing app internal render state. This is a known bug.`);
             // Hotfixing instead of this.close() since FormApplication.close() expects form elements, which don't exist anymore.
             this._state = Application.RENDER_STATES.CLOSED;
         }

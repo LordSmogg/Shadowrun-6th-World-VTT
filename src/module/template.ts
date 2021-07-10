@@ -1,14 +1,14 @@
-import { SR5Item } from './item/SR5Item';
+import { SR6Item } from './item/SR6Item';
 
 
 export default // @ts-ignore
 class Template extends MeasuredTemplate {
     x: number;
     y: number;
-    item?: SR5Item;
+    item?: SR6Item;
     onComplete?: () => void;
 
-    static fromItem(item: SR5Item, onComplete?: () => void): Template | undefined {
+    static fromItem(item: SR6Item, onComplete?: () => void): Template | undefined {
         const templateShape = 'circle';
 
         const templateData = {

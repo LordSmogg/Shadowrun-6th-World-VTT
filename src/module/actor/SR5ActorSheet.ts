@@ -3,17 +3,17 @@ import {ChummerImportForm} from '../apps/chummer-import-form';
 import {SkillEditSheet} from '../apps/skills/SkillEditSheet';
 import {KnowledgeSkillEditSheet} from '../apps/skills/KnowledgeSkillEditSheet';
 import {LanguageSkillEditSheet} from '../apps/skills/LanguageSkillEditSheet';
-import {SR5Actor} from './SR5Actor';
-import {SR5} from '../config';
-import {SR5Item} from "../item/SR5Item";
-import SR5ActorSheetData = Shadowrun.SR5ActorSheetData;
-import SR5SheetFilters = Shadowrun.SR5SheetFilters;
+import {SR6Actor} from './SR6Actor';
+import {SR6} from '../config';
+import {SR6Item} from "../item/SR6Item";
+import SR6ActorSheetData = Shadowrun.SR6ActorSheetData;
+import SR6SheetFilters = Shadowrun.SR6SheetFilters;
 import Skills = Shadowrun.Skills;
 import MatrixAttribute = Shadowrun.MatrixAttribute;
 import SkillField = Shadowrun.SkillField;
 import DeviceData = Shadowrun.DeviceData;
 
-// Use SR5ActorSheet._showSkillEditForm to only ever render one SkillEditSheet instance.
+// Use SR6ActorSheet._showSkillEditForm to only ever render one SkillEditSheet instance.
 // Should multiple instances be open, Foundry will cause cross talk between skills and actors,
 // when opened in succession, causing SkillEditSheet to wrongfully overwrite the wrong data.
 let globalSkillAppId: number = -1;
@@ -22,9 +22,9 @@ let globalSkillAppId: number = -1;
  * Extend the basic ActorSheet with some very simple modifications
  *
  */
-export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
+export class SR6ActorSheet extends ActorSheet<{}, SR6Actor> {
     _shownDesc: string[];
-    _filters: SR5SheetFilters;
+    _filters: SR6SheetFilters;
     _scroll: string;
 
     constructor(actor, options?) {
@@ -50,7 +50,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
     static get defaultOptions() {
         // @ts-ignore
         return mergeObject(super.defaultOptions, {
-            classes: ['sr5', 'sheet', 'actor'],
+            classes: ['sr6', 'sheet', 'actor'],
             width: 880,
             height: 690,
             tabs: [
@@ -64,7 +64,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
     }
 
     get template() {
-        const path = 'systems/shadowrun5e/dist/templates';
+        const path = 'systems/shadowrun6e/dist/templates';
 
         if (this.actor.limited) {
             return `${path}/actor-limited/${this.actor.data.type}.html`;
@@ -79,7 +79,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
      */
     getData() {
         // Restructure redesigned Document.getData to contain all new fields, while keeping data.data as system data.
-        let data = super.getData() as unknown as SR5ActorSheetData;
+        let data = super.getData() as unknown as SR6ActorSheetData;
         data = {
             ...data,
             // @ts-ignore
@@ -87,7 +87,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
         }
 
         // General purpose fields...
-        data.config = SR5;
+        data.config = SR6;
         data.filters = this._filters;
 
         this._prepareMatrixAttributes(data);
@@ -129,7 +129,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
         return searchString.toLowerCase().search(text.toLowerCase()) > -1;
     }
 
-    _prepareCharacterFields(data: SR5ActorSheetData) {
+    _prepareCharacterFields(data: SR6ActorSheetData) {
         // Empty zero value modifiers for display purposes.
         const { modifiers: mods } = data.data;
         for (let [key, value] of Object.entries(mods)) {
@@ -141,7 +141,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
         data.woundTolerance = 3 + (Number(mods['wound_tolerance']) || 0);
     }
 
-    _prepareVehicleFields(data: SR5ActorSheetData) {
+    _prepareVehicleFields(data: SR6ActorSheetData) {
         if (!this.actor.isVehicle()) return;
 
         const driver = this.actor.getVehicleDriver();
@@ -151,7 +151,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
         };
     }
 
-    _prepareActorTypeFields(data: SR5ActorSheetData) {
+    _prepareActorTypeFields(data: SR6ActorSheetData) {
         data.isCharacter = this.actor.isCharacter();
         data.isSpirit = this.actor.isSpirit();
         data.isCritter = this.actor.isCritter();
@@ -172,7 +172,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
         }
     }
 
-    _prepareActorAttributes(data: SR5ActorSheetData) {
+    _prepareActorAttributes(data: SR6ActorSheetData) {
         // Clear visible, zero value attributes temporary modifiers so they appear blank.
         const attributes = data.data.attributes;
         for (let [, attribute] of Object.entries(attributes)) {
@@ -184,20 +184,20 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
         }
     }
 
-    _prepareSkillsWithFilters(data: SR5ActorSheetData) {
+    _prepareSkillsWithFilters(data: SR6ActorSheetData) {
         this._filterActiveSkills(data);
         this._filterKnowledgeSkills(data);
         this._filterLanguageSkills(data);
     }
 
-    _filterActiveSkills(data: SR5ActorSheetData) {
+    _filterActiveSkills(data: SR6ActorSheetData) {
         // Handle active skills directly, as it doesn't use sub-categories.
         data.data.skills.active = this._filterSkills(data, data.data.skills.active);
     }
 
-    _filterKnowledgeSkills(data: SR5ActorSheetData) {
+    _filterKnowledgeSkills(data: SR6ActorSheetData) {
         // Knowledge skill have separate sub-categories.
-        Object.keys(SR5.knowledgeSkillCategories).forEach((category) => {
+        Object.keys(SR6.knowledgeSkillCategories).forEach((category) => {
             if (!data.data.skills.knowledge.hasOwnProperty(category)) {
                 console.warn(`Knowledge Skill doesn't provide configured category ${category}`);
                 return;
@@ -206,12 +206,12 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
         });
     }
 
-    _filterLanguageSkills(data: SR5ActorSheetData) {
+    _filterLanguageSkills(data: SR6ActorSheetData) {
         // Language Skills have no sub-categories.
         data.data.skills.language.value = this._filterSkills(data, data.data.skills.language.value);
     }
 
-    _filterSkills(data: SR5ActorSheetData, skills: Skills) {
+    _filterSkills(data: SR6ActorSheetData, skills: Skills) {
         const filteredSkills = {};
         for (let [key, skill] of Object.entries(skills)) {
             // Don't show hidden skills.
@@ -252,11 +252,11 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
         return !this._isSkillMagic(skillId, skill) && !this._isSkillResonance(skill) && this._isSkillFiltered(skillId, skill);
     }
 
-    _showMagicSkills(skillId, skill: SkillField, data: SR5ActorSheetData) {
+    _showMagicSkills(skillId, skill: SkillField, data: SR6ActorSheetData) {
         return this._isSkillMagic(skillId, skill) && data.data.special === 'magic' && this._isSkillFiltered(skillId, skill);
     }
 
-    _showResonanceSkills(skillId, skill: SkillField, data: SR5ActorSheetData) {
+    _showResonanceSkills(skillId, skill: SkillField, data: SR6ActorSheetData) {
         return this._isSkillResonance(skill) && data.data.special === 'resonance' && this._isSkillFiltered(skillId, skill);
     }
 
@@ -265,7 +265,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
 
         // All acting entities should be allowed to carry some protection!
         inventory['weapon'] = {
-            label: game.i18n.localize('SR5.ItemTypes.Weapon'),
+            label: game.i18n.localize('SR6.ItemTypes.Weapon'),
             items: [],
             dataset: {
                 type: 'weapon',
@@ -275,42 +275,42 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
         // Critters are people to... Support your local HMHVV support groups!
         if (this.actor.matchesActorTypes(['character', 'critter', 'vehicle'])) {
             inventory['armor'] = {
-                label: game.i18n.localize('SR5.ItemTypes.Armor'),
+                label: game.i18n.localize('SR6.ItemTypes.Armor'),
                 items: [],
                 dataset: {
                     type: 'armor',
                 },
             };
             inventory['device'] = {
-                label: game.i18n.localize('SR5.ItemTypes.Device'),
+                label: game.i18n.localize('SR6.ItemTypes.Device'),
                 items: [],
                 dataset: {
                     type: 'device',
                 },
             };
             inventory['equipment'] = {
-                label: game.i18n.localize('SR5.ItemTypes.Equipment'),
+                label: game.i18n.localize('SR6.ItemTypes.Equipment'),
                 items: [],
                 dataset: {
                     type: 'equipment',
                 },
             };
             inventory['ammo'] = {
-                label: game.i18n.localize('SR5.ItemTypes.Ammo'),
+                label: game.i18n.localize('SR6.ItemTypes.Ammo'),
                 items: [],
                 dataset: {
                     type: 'ammo',
                 },
             };
             inventory['cyberware'] = {
-                label: game.i18n.localize('SR5.ItemTypes.Cyberware'),
+                label: game.i18n.localize('SR6.ItemTypes.Cyberware'),
                 items: [],
                 dataset: {
                     type: 'cyberware',
                 },
             };
             inventory['bioware'] = {
-                label: game.i18n.localize('SR5.ItemTypes.Bioware'),
+                label: game.i18n.localize('SR6.ItemTypes.Bioware'),
                 items: [],
                 dataset: {
                     type: 'bioware',
@@ -338,7 +338,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
                 item = duplicate(item);
                 // Show item properties and description in the item list overviews.
                 // @ts-ignore // TODO: TYPE: REmove this. Actor typing missing.
-                const actorItem = this.actor.items.get(item._id) as SR5Item;
+                const actorItem = this.actor.items.get(item._id) as SR6Item;
                 const chatData = actorItem.getChatData();
                 item.description = chatData.description;
                 // @ts-ignore // This is a hacky monkey patch solution to pass template data through duplicated item data.
@@ -480,7 +480,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
                 event.preventDefault();
                 const field = $(event.currentTarget).parents('.list-item');
                 const iid = $(field).data().itemId;
-                const item = this.actor.getOwnedSR5Item(iid);
+                const item = this.actor.getOwnedSR6Item(iid);
                 if (item) {
                     await item.openPdfSource();
                 }
@@ -514,7 +514,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
         html.find('.item-edit').click((event) => {
             event.preventDefault();
             const iid = Helpers.listItemId(event);
-            const item = this.actor.getOwnedSR5Item(iid);
+            const item = this.actor.getOwnedSR6Item(iid);
             if (!item) return;
             // @ts-ignore
             item.sheet.render(true);
@@ -760,7 +760,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
     async _onReloadAmmo(event) {
         event.preventDefault();
         const iid = Helpers.listItemId(event);
-        const item = this.actor.getOwnedSR5Item(iid);
+        const item = this.actor.getOwnedSR6Item(iid);
         if (item) return item.reloadAmmo();
     }
 
@@ -768,7 +768,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
         if (!("matrix" in this.actor.data.data)) return;
 
         let iid = this.actor.data.data.matrix.device;
-        let item = this.actor.getOwnedSR5Item(iid);
+        let item = this.actor.getOwnedSR6Item(iid);
         if (!item) {
             console.error('could not find item');
             return;
@@ -872,7 +872,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
 
     async _onChangeRtg(event) {
         const iid = Helpers.listItemId(event);
-        const item = this.actor.getOwnedSR5Item(iid);
+        const item = this.actor.getOwnedSR6Item(iid);
         const rtg = parseInt(event.currentTarget.value);
         if (item && rtg) {
             await item.update({ 'data.technology.rating': rtg });
@@ -881,7 +881,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
 
     async _onChangeQty(event) {
         const iid = Helpers.listItemId(event);
-        const item = this.actor.getOwnedSR5Item(iid);
+        const item = this.actor.getOwnedSR6Item(iid);
         const qty = parseInt(event.currentTarget.value);
         if (item && qty && "technology" in item.data.data) {
             item.data.data.technology.quantity = qty;
@@ -892,13 +892,13 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
     async _onEquipItem(event) {
         event.preventDefault();
         const iid = Helpers.listItemId(event);
-        const item = this.actor.getOwnedSR5Item(iid);
+        const item = this.actor.getOwnedSR6Item(iid);
         if (item) {
             const newItems = [] as any[];
             if (item.isDevice()) {
                 // Only allow one equipped device item. Unequip all other.
                 // @ts-ignore // TODO: TYPE: Remove. Missing Actor Typing.
-                for (const item of this.actor.items.filter((actorItem: SR5Item) => actorItem.isDevice())) {
+                for (const item of this.actor.items.filter((actorItem: SR6Item) => actorItem.isDevice())) {
                     newItems.push({
                         '_id': item.id,
                         'data.technology.equipped': item.id === iid,
@@ -991,7 +991,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
     async _onRollItem(event) {
         event.preventDefault();
         const iid = Helpers.listItemId(event);
-        const item = this.actor.getOwnedSR5Item(iid);
+        const item = this.actor.getOwnedSR6Item(iid);
         if (item) {
             await item.castAction(event);
         }
@@ -1106,7 +1106,7 @@ export class SR5ActorSheet extends ActorSheet<{}, SR5Actor> {
      * @param options
      * @param args Collect arguments of the different renderWithSkill implementations.
      */
-    async _showSkillEditForm(skillEditFormImplementation, actor: SR5Actor, options: object, ...args) {
+    async _showSkillEditForm(skillEditFormImplementation, actor: SR6Actor, options: object, ...args) {
         await this._closeOpenSkillApp();
 
         const skillEditForm = new skillEditFormImplementation(actor, options, ...args);

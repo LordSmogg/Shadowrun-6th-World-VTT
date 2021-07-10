@@ -34,12 +34,12 @@ export class Migrator {
             return;
         }
 
-        const localizedWarningTitle = game.i18n.localize('SR5.MIGRATION.WarningTitle');
-        const localizedWarningHeader = game.i18n.localize('SR5.MIGRATION.WarningHeader');
-        const localizedWarningRequired = game.i18n.localize('SR5.MIGRATION.WarningRequired');
-        const localizedWarningDescription = game.i18n.localize('SR5.MIGRATION.WarningDescription');
-        const localizedWarningBackup = game.i18n.localize('SR5.MIGRATION.WarningBackup');
-        const localizedWarningBegin = game.i18n.localize('SR5.MIGRATION.BeginMigration');
+        const localizedWarningTitle = game.i18n.localize('SR6.MIGRATION.WarningTitle');
+        const localizedWarningHeader = game.i18n.localize('SR6.MIGRATION.WarningHeader');
+        const localizedWarningRequired = game.i18n.localize('SR6.MIGRATION.WarningRequired');
+        const localizedWarningDescription = game.i18n.localize('SR6.MIGRATION.WarningDescription');
+        const localizedWarningBackup = game.i18n.localize('SR6.MIGRATION.WarningBackup');
+        const localizedWarningBegin = game.i18n.localize('SR6.MIGRATION.BeginMigration');
 
         const d = new Dialog({
             title: localizedWarningTitle,
@@ -68,11 +68,11 @@ export class Migrator {
         await this.migrateWorld(game, migrations);
         await this.migrateCompendium(game, migrations);
 
-        const localizedWarningTitle = game.i18n.localize('SR5.MIGRATION.SuccessTitle');
-        const localizedWarningHeader = game.i18n.localize('SR5.MIGRATION.SuccessHeader');
-        const localizedSuccessDescription = game.i18n.localize('SR5.MIGRATION.SuccessDescription');
-        const localizedSuccessPacksInfo = game.i18n.localize('SR5.MIGRATION.SuccessPacksInfo');
-        const localizedSuccessConfirm = game.i18n.localize('SR5.MIGRATION.SuccessConfirm');
+        const localizedWarningTitle = game.i18n.localize('SR6.MIGRATION.SuccessTitle');
+        const localizedWarningHeader = game.i18n.localize('SR6.MIGRATION.SuccessHeader');
+        const localizedSuccessDescription = game.i18n.localize('SR6.MIGRATION.SuccessDescription');
+        const localizedSuccessPacksInfo = game.i18n.localize('SR6.MIGRATION.SuccessPacksInfo');
+        const localizedSuccessConfirm = game.i18n.localize('SR6.MIGRATION.SuccessConfirm');
         const packsDialog = new Dialog({
             title: localizedWarningTitle,
             content:

@@ -1,6 +1,6 @@
 /// <reference path="../Shadowrun.ts" />
 declare namespace Shadowrun {
-    export type Armor = SR5ItemData<ArmorData> & {
+    export type Armor = SR6ItemData<ArmorData> & {
         type: 'armor';
     };
 

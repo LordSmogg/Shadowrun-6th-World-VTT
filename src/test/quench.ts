@@ -1,7 +1,7 @@
-import {shadowrunRulesModifiers} from "./sr5.Modifiers.spec";
-import {shadowrunSR5Item} from "./sr5.SR5Item.spec";
+import {shadowrunRulesModifiers} from "./sr6.Modifiers.spec";
+import {shadowrunSR6Item} from "./sr6.SR6Item.spec";
 
 export const quenchRegister = quench => {
-    quench.registerBatch("shadowrun5e.rules.modifiers", shadowrunRulesModifiers);
-    quench.registerBatch("shadowrun5e.entities.items", shadowrunSR5Item);
+    quench.registerBatch("shadowrun6e.rules.modifiers", shadowrunRulesModifiers);
+    quench.registerBatch("shadowrun6e.entities.items", shadowrunSR6Item);
 };

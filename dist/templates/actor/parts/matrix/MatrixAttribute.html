@@ -27,9 +27,9 @@
         </div>
         {{else}}
         <div class="attribute-input-container">
-            {{> "systems/shadowrun5e/dist/templates/common/ValueInput.html"
+            {{> "systems/shadowrun6e/dist/templates/common/ValueInput.html"
                     cssClass="attribute-input short"
-                    title=(localize 'SR5.BaseValue')
+                    title=(localize 'SR6.BaseValue')
                     size="2"
                     maxLength="2"
                     value=matrixAtt.base
@@ -39,9 +39,9 @@
         {{/if}}
         <div class="track-plus"></div>
         <div class="attribute-input-container">
-            {{> "systems/shadowrun5e/dist/templates/common/ValueInput.html"
+            {{> "systems/shadowrun6e/dist/templates/common/ValueInput.html"
                 cssClass="attribute-input short"
-                title=(localize 'SR5.TemporaryModifiers')
+                title=(localize 'SR6.TemporaryModifiers')
                 size="2"
                 maxLength="2"
                 value=matrixAtt.temp

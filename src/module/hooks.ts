@@ -1,11 +1,11 @@
-import { SR5 } from './config';
+import { SR6 } from './config';
 import { Migrator } from './migrator/Migrator';
 import { registerSystemSettings } from './settings';
 import { SYSTEM_NAME } from './constants';
-import { SR5Actor } from './actor/SR5Actor';
-import { SR5ActorSheet } from './actor/SR5ActorSheet';
-import { SR5Item } from './item/SR5Item';
-import { SR5ItemSheet } from './item/SR5ItemSheet';
+import { SR6Actor } from './actor/SR6Actor';
+import { SR6ActorSheet } from './actor/SR6ActorSheet';
+import { SR6Item } from './item/SR6Item';
+import { SR6ItemSheet } from './item/SR6ItemSheet';
 import { ShadowrunRoller } from './rolls/ShadowrunRoller';
 import { Helpers } from './helpers';
 import { HandlebarManager } from './handlebars/HandlebarManager';
@@ -14,15 +14,15 @@ import * as chat from './chat';
 import {createItemMacro, createSkillMacro, rollItemMacro, rollSkillMacro} from './macros';
 
 import { OverwatchScoreTracker } from './apps/gmtools/OverwatchScoreTracker';
-import {_combatantGetInitiativeFormula, SR5Combat} from './combat/SR5Combat';
+import {_combatantGetInitiativeFormula, SR6Combat} from './combat/SR6Combat';
 import { Import } from './importer/apps/import-form';
 import {ChangelogApplication} from "./apps/ChangelogApplication";
 import {EnvModifiersApplication} from "./apps/EnvModifiersApplication";
 import {quenchRegister} from "../test/quench";
 
-// Redeclare SR5config as a global as foundry-vtt-types CONFIG with SR5 property causes issues.
+// Redeclare SR6config as a global as foundry-vtt-types CONFIG with SR6 property causes issues.
 // TODO: Figure out how to change global CONFIG type
-export const SR5CONFIG = SR5;
+export const SR6CONFIG = SR6;
 
 export class HooksManager {
     static registerHooks() {
@@ -37,7 +37,7 @@ export class HooksManager {
         Hooks.on('hotbarDrop', HooksManager.hotbarDrop);
         Hooks.on('renderSceneControls', HooksManager.renderSceneControls);
         Hooks.on('getSceneControlButtons', HooksManager.getSceneControlButtons);
-        Hooks.on('getCombatTrackerEntryContext', SR5Combat.addCombatTrackerContextOptions);
+        Hooks.on('getCombatTrackerEntryContext', SR6Combat.addCombatTrackerContextOptions);
         Hooks.on('renderItemDirectory', HooksManager.renderItemDirectory);
         Hooks.on('renderTokenHUD', EnvModifiersApplication.addTokenHUDFields);
 
@@ -56,21 +56,21 @@ ___________________
 \\____/\\_| \\_\\____/ 
 ===================
 `);
-        // Create a shadowrun5e namespace within the game global
-        game['shadowrun5e'] = {
-            SR5Actor,
+        // Create a shadowrun6e namespace within the game global
+        game['shadowrun6e'] = {
+            SR6Actor,
             ShadowrunRoller,
-            SR5Item,
+            SR6Item,
             rollItemMacro,
             rollSkillMacro
         };
 
         // @ts-ignore // foundry-vtt-types is missing CONFIG.<>.documentClass
-        CONFIG.Actor.documentClass = SR5Actor;
+        CONFIG.Actor.documentClass = SR6Actor;
         // @ts-ignore // foundry-vtt-types is missing CONFIG.<>.documentClass
-        CONFIG.Item.documentClass = SR5Item;
+        CONFIG.Item.documentClass = SR6Item;
         // @ts-ignore // foundry-vtt-types is missing CONFIG.<>.documentClass
-        CONFIG.Combat.documentClass = SR5Combat;
+        CONFIG.Combat.documentClass = SR6Combat;
         // Register initiative directly (outside of system.json) as DnD5e does it.
         CONFIG.Combat.initiative.formula =  "@initiative.current.base.value[Base] + @initiative.current.dice.text[Dice] - @wounds.value[Wounds]";
         // @ts-ignore
@@ -82,17 +82,17 @@ ___________________
         // Register sheet application classes
         // NOTE: See dnd5e for a multi class approach for all actor types using the types array in Actors.registerSheet
         Actors.unregisterSheet('core', ActorSheet);
-        Actors.registerSheet(SYSTEM_NAME, SR5ActorSheet, {
-            label: "SR5.SheetActor",
+        Actors.registerSheet(SYSTEM_NAME, SR6ActorSheet, {
+            label: "SR6.SheetActor",
             makeDefault: true
         });
         Items.unregisterSheet('core', ItemSheet);
-        Items.registerSheet(SYSTEM_NAME, SR5ItemSheet, {
-            label: "SR5.SheetItem",
+        Items.registerSheet(SYSTEM_NAME, SR6ItemSheet, {
+            label: "SR6.SheetItem",
             makeDefault: true
         });
 
-        ['renderSR5ActorSheet', 'renderSR5ItemSheet'].forEach((s) => {
+        ['renderSR6ActorSheet', 'renderSR6ItemSheet'].forEach((s) => {
             Hooks.on(s, (app, html) => Helpers.setupCustomCheckbox(app, html));
         });
 
@@ -159,7 +159,7 @@ ___________________
         if (game.user?.isGM) {
             tokenControls.tools.push({
                 name: 'overwatch-score-tracker',
-                title: 'CONTROLS.SR5.OverwatchScoreTracker',
+                title: 'CONTROLS.SR6.OverwatchScoreTracker',
                 icon: 'fas fa-network-wired',
                 button: true
             });

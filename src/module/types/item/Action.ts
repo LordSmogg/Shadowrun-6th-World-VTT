@@ -1,5 +1,5 @@
 declare namespace Shadowrun {
-    export type Action = SR5ItemData<ActionData> & {
+    export type Action = SR6ItemData<ActionData> & {
         type: 'action';
     };
 

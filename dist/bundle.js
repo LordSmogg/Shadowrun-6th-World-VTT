@@ -13311,7 +13311,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SR5Actor = void 0;
+exports.SR6Actor = void 0;
 const ShadowrunRoller_1 = require("../rolls/ShadowrunRoller");
 const helpers_1 = require("../helpers");
 const constants_1 = require("../constants");
@@ -13319,14 +13319,14 @@ const PartsList_1 = require("../parts/PartsList");
 const ActorPrepFactory_1 = require("./prep/ActorPrepFactory");
 const ShadowrunActorDialogs_1 = require("../apps/dialogs/ShadowrunActorDialogs");
 const chat_1 = require("../chat");
-const Modifiers_1 = require("../sr5/Modifiers");
+const Modifiers_1 = require("../sr6/Modifiers");
 const SoakFlow_1 = require("./SoakFlow");
 const dataTemplates_1 = require("../dataTemplates");
 const SkillFlow_1 = require("./SkillFlow");
 const SkillRules_1 = require("./SkillRules");
 const config_1 = require("../config");
-class SR5Actor extends Actor {
-    // NOTE: Overwrite Actor.data additionally to extends Actor<T as SR5Actortype.Data: SR5ActorData> to still have
+class SR6Actor extends Actor {
+    // NOTE: Overwrite Actor.data additionally to extends Actor<T as SR6Actortype.Data: SR6ActorData> to still have
     //       access to Actor.data.type checks.
     getOverwatchScore() {
         const os = this.getFlag(constants_1.SYSTEM_NAME, 'overwatchScore');
@@ -13455,7 +13455,7 @@ class SR5Actor extends Actor {
         return dataTemplates_1.DefaultValues.actorArmorData();
     }
     // TODO: Foundry 0.9 Check if this can be replaced with this.items.get and correct typing.
-    getOwnedSR5Item(itemId) {
+    getOwnedSR6Item(itemId) {
         return this.items.get(itemId);
     }
     getMatrixDevice() {
@@ -13463,7 +13463,7 @@ class SR5Actor extends Actor {
             return;
         const matrix = this.data.data.matrix;
         if (matrix.device)
-            return this.getOwnedSR5Item(matrix.device);
+            return this.getOwnedSR6Item(matrix.device);
     }
     getFullDefenseAttribute() {
         if (this.isVehicle()) {
@@ -13480,7 +13480,7 @@ class SR5Actor extends Actor {
         }
     }
     getEquippedWeapons() {
-        // @ts-ignore // TODO: How to define SR5Actor.items as SR5Item[]?
+        // @ts-ignore // TODO: How to define SR6Actor.items as SR6Item[]?
         return this.items.filter((item) => item.isEquipped() && item.isWeapon());
     }
     getRecoilCompensation() {
@@ -13512,7 +13512,7 @@ class SR5Actor extends Actor {
         return limits[name];
     }
     /** Return actor type, which can be different kind of actors from 'character' to 'vehicle'.
-     *  Please check SR5ActorType for reference.
+     *  Please check SR6ActorType for reference.
      */
     getType() {
         return this.data.type;
@@ -13823,8 +13823,8 @@ class SR5Actor extends Actor {
             parts.addUniquePart(wil.label, wil.value);
             parts.addUniquePart(res.label, res.value);
             if (data.modifiers.fade)
-                parts.addUniquePart('SR5.Bonus', data.modifiers.fade);
-            let title = `${game.i18n.localize('SR5.Resist')} ${game.i18n.localize('SR5.Fade')}`;
+                parts.addUniquePart('SR6.Bonus', data.modifiers.fade);
+            let title = `${game.i18n.localize('SR6.Resist')} ${game.i18n.localize('SR6.Fade')}`;
             const actor = this;
             const roll = yield ShadowrunRoller_1.ShadowrunRoller.advancedRoll({
                 parts: parts.list,
@@ -13837,7 +13837,7 @@ class SR5Actor extends Actor {
                 return;
             // Reduce damage by soak roll and inform user.
             const incomingDamage = helpers_1.Helpers.createDamageData(incoming, 'stun');
-            const damage = helpers_1.Helpers.reduceDamageByHits(incomingDamage, roll.hits, 'SR5.Fade');
+            const damage = helpers_1.Helpers.reduceDamageByHits(incomingDamage, roll.hits, 'SR6.Fade');
             yield chat_1.createRollChatMessage({ title, roll, actor, damage });
             return roll;
         });
@@ -13853,8 +13853,8 @@ class SR5Actor extends Actor {
             parts.addPart(wil.label, wil.value);
             parts.addPart(drainAtt.label, drainAtt.value);
             if (data.modifiers.drain)
-                parts.addUniquePart('SR5.Bonus', data.modifiers.drain);
-            let title = `${game.i18n.localize('SR5.Resist')} ${game.i18n.localize('SR5.Drain')}`;
+                parts.addUniquePart('SR6.Bonus', data.modifiers.drain);
+            let title = `${game.i18n.localize('SR6.Resist')} ${game.i18n.localize('SR6.Drain')}`;
             const actor = this;
             const roll = yield ShadowrunRoller_1.ShadowrunRoller.advancedRoll({
                 parts: parts.list,
@@ -13867,7 +13867,7 @@ class SR5Actor extends Actor {
                 return;
             // Reduce damage by soak roll and inform user.
             const incomingDamage = helpers_1.Helpers.createDamageData(incoming, 'stun');
-            const damage = helpers_1.Helpers.reduceDamageByHits(incomingDamage, roll.hits, 'SR5.Drain');
+            const damage = helpers_1.Helpers.reduceDamageByHits(incomingDamage, roll.hits, 'SR6.Drain');
             yield chat_1.createRollChatMessage({ title, roll, actor, damage });
             return roll;
         });
@@ -13879,7 +13879,7 @@ class SR5Actor extends Actor {
             event: options.event,
             actor: this,
             parts: parts.list,
-            title: game.i18n.localize('SR5.Armor'),
+            title: game.i18n.localize('SR6.Armor'),
             wounds: false,
         });
     }
@@ -13896,7 +13896,7 @@ class SR5Actor extends Actor {
                 event: options.event,
                 actor: this,
                 parts: defenseActionData.parts.list,
-                title: game.i18n.localize('SR5.DefenseTest'),
+                title: game.i18n.localize('SR6.DefenseTest'),
                 incomingAttack: attack,
                 combat: defenseActionData.combat
             });
@@ -13917,7 +13917,7 @@ class SR5Actor extends Actor {
             let damage = attack.damage;
             // modified damage value by netHits.
             if (netHits > 0) {
-                const { modified } = helpers_1.Helpers.modifyDamageByHits(damage, netHits, "SR5.NetHits");
+                const { modified } = helpers_1.Helpers.modifyDamageByHits(damage, netHits, "SR6.NetHits");
                 damage = modified;
             }
             const soakRollOptions = {
@@ -13942,9 +13942,9 @@ class SR5Actor extends Actor {
                 return;
             // Prepare the resulting damage message.
             const title = spell.isManaSpell() ?
-                game.i18n.localize('SR5.SpellDefenseDirectMana') :
-                game.i18n.localize('SR5.SpellDefenseDirectPhysical');
-            const modificationLabel = 'SR5.SpellDefense';
+                game.i18n.localize('SR6.SpellDefenseDirectMana') :
+                game.i18n.localize('SR6.SpellDefenseDirectPhysical');
+            const modificationLabel = 'SR6.SpellDefense';
             const actor = this;
             const damage = helpers_1.Helpers.reduceDamageByHits(options.attack.damage, roll.hits, modificationLabel);
             yield chat_1.createRollChatMessage({ title, roll, actor, damage });
@@ -13958,7 +13958,7 @@ class SR5Actor extends Actor {
             const opposedParts = spell.getOpposedTestMod();
             // TODO: indirect LOS spell defense works like a ranged weapon defense, but indirect LOS(A) spell defense
             //       work like grenade attack (no defense, but soak, with the threshold net hits modifying damage.)
-            //       Grenades: SR5#181 Combat Spells: SR5#283
+            //       Grenades: SR6#181 Combat Spells: SR6#283
             return yield this.rollAttackDefense(options, opposedParts.list);
         });
     }
@@ -14045,11 +14045,11 @@ class SR5Actor extends Actor {
             if (!("matrix" in this.data.data))
                 return;
             let matrix_att = duplicate(this.data.data.matrix[attr]);
-            let title = game.i18n.localize(config_1.SR5.matrixAttributes[attr]);
+            let title = game.i18n.localize(config_1.SR6.matrixAttributes[attr]);
             const parts = new PartsList_1.PartsList();
-            parts.addPart(config_1.SR5.matrixAttributes[attr], matrix_att.value);
-            if (options && options.event && options.event[config_1.SR5.kbmod.SPEC])
-                parts.addUniquePart('SR5.Specialization', 2);
+            parts.addPart(config_1.SR6.matrixAttributes[attr], matrix_att.value);
+            if (options && options.event && options.event[config_1.SR6.kbmod.SPEC])
+                parts.addUniquePart('SR6.Specialization', 2);
             if (helpers_1.Helpers.hasModifiers(options === null || options === void 0 ? void 0 : options.event)) {
                 return ShadowrunRoller_1.ShadowrunRoller.advancedRoll({
                     event: options === null || options === void 0 ? void 0 : options.event,
@@ -14071,7 +14071,7 @@ class SR5Actor extends Actor {
                 },
             };
             let cancel = true;
-            renderTemplate('systems/shadowrun5e/dist/templates/rolls/matrix-roll.html', dialogData).then((dlg) => {
+            renderTemplate('systems/shadowrun6e/dist/templates/rolls/matrix-roll.html', dialogData).then((dlg) => {
                 // @ts-ignore
                 new Dialog({
                     title: `${title} Test`,
@@ -14084,7 +14084,7 @@ class SR5Actor extends Actor {
                         let att = undefined;
                         if (newAtt) {
                             att = this.data.data.attributes[newAtt];
-                            title += ` + ${game.i18n.localize(config_1.SR5.attributes[newAtt])}`;
+                            title += ` + ${game.i18n.localize(config_1.SR6.attributes[newAtt])}`;
                         }
                         if (att !== undefined) {
                             if (att.value && att.label)
@@ -14116,7 +14116,7 @@ class SR5Actor extends Actor {
         return ShadowrunRoller_1.ShadowrunRoller.advancedRoll(rollProps, dialogOptions);
     }
     rollDeviceRating(options) {
-        const title = game.i18n.localize('SR5.Labels.ActorSheet.DeviceRating');
+        const title = game.i18n.localize('SR6.Labels.ActorSheet.DeviceRating');
         const parts = new PartsList_1.PartsList();
         const rating = this.getDeviceRating();
         // add device rating twice as this is the most common roll
@@ -14131,7 +14131,7 @@ class SR5Actor extends Actor {
         });
     }
     rollAttributesTest(rollId, options) {
-        const title = game.i18n.localize(config_1.SR5.attributeRolls[rollId]);
+        const title = game.i18n.localize(config_1.SR6.attributeRolls[rollId]);
         const atts = this.data.data.attributes;
         const modifiers = this.data.data.modifiers;
         const parts = new PartsList_1.PartsList();
@@ -14139,25 +14139,25 @@ class SR5Actor extends Actor {
             parts.addUniquePart(atts.charisma.label, atts.charisma.value);
             parts.addUniquePart(atts.willpower.label, atts.willpower.value);
             if (modifiers.composure)
-                parts.addUniquePart('SR5.Bonus', modifiers.composure);
+                parts.addUniquePart('SR6.Bonus', modifiers.composure);
         }
         else if (rollId === 'judge_intentions') {
             parts.addUniquePart(atts.willpower.label, atts.willpower.value);
             parts.addUniquePart(atts.intuition.label, atts.intuition.value);
             if (modifiers.judge_intentions)
-                parts.addUniquePart('SR5.Bonus', modifiers.judge_intentions);
+                parts.addUniquePart('SR6.Bonus', modifiers.judge_intentions);
         }
         else if (rollId === 'lift_carry') {
             parts.addUniquePart(atts.body.label, atts.body.value);
             parts.addUniquePart(atts.willpower.label, atts.willpower.value);			
             if (modifiers.lift_carry)
-                parts.addUniquePart('SR5.Bonus', modifiers.lift_carry);
+                parts.addUniquePart('SR6.Bonus', modifiers.lift_carry);
         }
         else if (rollId === 'memory') {
             parts.addUniquePart(atts.logic.label, atts.logic.value);			
             parts.addUniquePart(atts.intuition.label, atts.intuition.value);
             if (modifiers.memory)
-                parts.addUniquePart('SR5.Bonus', modifiers.memory);
+                parts.addUniquePart('SR6.Bonus', modifiers.memory);
         }
         this._addGlobalParts(parts);
         return ShadowrunRoller_1.ShadowrunRoller.advancedRoll({
@@ -14172,7 +14172,7 @@ class SR5Actor extends Actor {
             // NOTE: Currently defaulting happens at multiple places, which is why SkillFlow.handleDefaulting isn't used
             //       here, yet. A general skill usage clean up between Skill, Attribute and Item action handling is needed.
             if (!SkillFlow_1.SkillFlow.allowRoll(skill)) {
-                ui.notifications.warn(game.i18n.localize('SR5.Warnings.SkillCantBeDefault'));
+                ui.notifications.warn(game.i18n.localize('SR6.Warnings.SkillCantBeDefault'));
                 return;
             }
             // Legacy skills have a label, but no name. Custom skills have a name but no label.
@@ -14182,7 +14182,7 @@ class SR5Actor extends Actor {
             const attributeName = (options === null || options === void 0 ? void 0 : options.attribute) ? options.attribute : skill.attribute;
             const attribute = this.getAttribute(attributeName);
             if (!attribute) {
-                ui.notifications.error(game.i18n.localize('SR5.Errors.SkillWithoutAttribute'));
+                ui.notifications.error(game.i18n.localize('SR6.Errors.SkillWithoutAttribute'));
                 return;
             }
             let limit = attribute.limit ? this.getLimit(attribute.limit) : undefined;
@@ -14194,14 +14194,14 @@ class SR5Actor extends Actor {
             // Directly test, without further skill dialog.
             if ((options === null || options === void 0 ? void 0 : options.event) && helpers_1.Helpers.hasModifiers(options === null || options === void 0 ? void 0 : options.event)) {
                 parts.addUniquePart(attribute.label, attribute.value);
-                if (options.event[config_1.SR5.kbmod.SPEC])
-                    parts.addUniquePart('SR5.Specialization', 2);
+                if (options.event[config_1.SR6.kbmod.SPEC])
+                    parts.addUniquePart('SR6.Specialization', 2);
                 return yield ShadowrunRoller_1.ShadowrunRoller.advancedRoll({
                     event: options.event,
                     actor: this,
                     parts: parts.list,
                     limit,
-                    title: `${title} ${game.i18n.localize('SR5.Test')}`,
+                    title: `${title} ${game.i18n.localize('SR6.Test')}`,
                 });
             }
             // First ask user about skill details.
@@ -14234,15 +14234,15 @@ class SR5Actor extends Actor {
                 const perception = this.findActiveSkill('perception');
                 const limit = this.findLimit('sensor');
                 if (perception && limit) {
-                    parts.addPart('SR5.Vehicle.Clearsight', helpers_1.Helpers.calcTotal(perception));
-                    parts.addPart('SR5.Vehicle.Stats.Pilot', pilot);
+                    parts.addPart('SR6.Vehicle.Clearsight', helpers_1.Helpers.calcTotal(perception));
+                    parts.addPart('SR6.Vehicle.Stats.Pilot', pilot);
                     this._addGlobalParts(parts);
                     return ShadowrunRoller_1.ShadowrunRoller.advancedRoll({
                         event: options === null || options === void 0 ? void 0 : options.event,
                         actor: this,
                         parts: parts.list,
                         limit,
-                        title: game.i18n.localize('SR5.Labels.ActorSheet.RollDronePerception'),
+                        title: game.i18n.localize('SR6.Labels.ActorSheet.RollDronePerception'),
                     });
                 }
             }
@@ -14264,16 +14264,16 @@ class SR5Actor extends Actor {
                 const environment = actorData.environment;
                 const limit = this.findLimit(environment);
                 if (skill && limit) {
-                    parts.addPart('SR5.Vehicle.Stats.Pilot', pilot);
+                    parts.addPart('SR6.Vehicle.Stats.Pilot', pilot);
                     // TODO possibly look for autosoft item level?
-                    parts.addPart('SR5.Vehicle.Maneuvering', helpers_1.Helpers.calcTotal(skill));
+                    parts.addPart('SR6.Vehicle.Maneuvering', helpers_1.Helpers.calcTotal(skill));
                     this._addGlobalParts(parts);
                     return yield ShadowrunRoller_1.ShadowrunRoller.advancedRoll({
                         event: options === null || options === void 0 ? void 0 : options.event,
                         actor: this,
                         parts: parts.list,
                         limit,
-                        title: game.i18n.localize('SR5.Labels.ActorSheet.RollPilotVehicleTest'),
+                        title: game.i18n.localize('SR6.Labels.ActorSheet.RollPilotVehicleTest'),
                     });
                 }
             }
@@ -14298,15 +14298,15 @@ class SR5Actor extends Actor {
                 const sneaking = this.findActiveSkill('sneaking');
                 const limit = this.findLimit('sensor');
                 if (sneaking && limit) {
-                    parts.addPart('SR5.Vehicle.Stealth', helpers_1.Helpers.calcTotal(sneaking));
-                    parts.addPart('SR5.Vehicle.Stats.Pilot', pilot);
+                    parts.addPart('SR6.Vehicle.Stealth', helpers_1.Helpers.calcTotal(sneaking));
+                    parts.addPart('SR6.Vehicle.Stats.Pilot', pilot);
                     this._addGlobalParts(parts);
                     return ShadowrunRoller_1.ShadowrunRoller.advancedRoll({
                         event: options === null || options === void 0 ? void 0 : options.event,
                         actor: this,
                         parts: parts.list,
                         limit,
-                        title: game.i18n.localize('SR5.Labels.ActorSheet.RollDroneInfiltration'),
+                        title: game.i18n.localize('SR6.Labels.ActorSheet.RollDroneInfiltration'),
                     });
                 }
             }
@@ -14333,7 +14333,7 @@ class SR5Actor extends Actor {
         return this.rollSkill(skill, options);
     }
     rollAttribute(attId, options) {
-        let title = game.i18n.localize(config_1.SR5.attributes[attId]);
+        let title = game.i18n.localize(config_1.SR6.attributes[attId]);
         const att = duplicate(this.data.data.attributes[attId]);
         const atts = duplicate(this.data.data.attributes);
         const parts = new PartsList_1.PartsList();
@@ -14343,7 +14343,7 @@ class SR5Actor extends Actor {
             attributes: atts,
         };
         let cancel = true;
-        renderTemplate('systems/shadowrun5e/dist/templates/rolls/single-attribute.html', dialogData).then((dlg) => {
+        renderTemplate('systems/shadowrun6e/dist/templates/rolls/single-attribute.html', dialogData).then((dlg) => {
             new Dialog({
                 title: `${title} Attribute Test`,
                 content: dlg,
@@ -14363,12 +14363,12 @@ class SR5Actor extends Actor {
                         att2 = atts[att2Id];
                         if (att2 === null || att2 === void 0 ? void 0 : att2.label) {
                             parts.addPart(att2.label, att2.value);
-                            const att2IdLabel = game.i18n.localize(config_1.SR5.attributes[att2Id]);
+                            const att2IdLabel = game.i18n.localize(config_1.SR6.attributes[att2Id]);
                             title += ` + ${att2IdLabel}`;
                         }
                     }
                     if (att2Id === 'default') {
-                        parts.addUniquePart('SR5.Defaulting', -1);
+                        parts.addUniquePart('SR6.Defaulting', -1);
                     }
                     this._addMatrixParts(parts, [att, att2]);
                     this._addGlobalParts(parts);
@@ -14388,14 +14388,14 @@ class SR5Actor extends Actor {
                 return;
             const matrix = this.data.data.matrix;
             if (matrix.hot_sim)
-                parts.addUniquePart('SR5.HotSim', 2);
+                parts.addUniquePart('SR6.HotSim', 2);
             if (matrix.running_silent)
-                parts.addUniquePart('SR5.RunningSilent', -2);
+                parts.addUniquePart('SR6.RunningSilent', -2);
         }
     }
     _addGlobalParts(parts) {
         if (this.data.data.modifiers.global) {
-            parts.addUniquePart('SR5.Global', this.data.data.modifiers.global);
+            parts.addUniquePart('SR6.Global', this.data.data.modifiers.global);
         }
     }
     _addDefenseParts(parts) {
@@ -14406,28 +14406,28 @@ class SR5Actor extends Actor {
             }
             const skill = this.getVehicleTypeSkill();
             if (skill) {
-                parts.addUniquePart('SR5.Vehicle.Maneuvering', helpers_1.Helpers.calcTotal(skill));
+                parts.addUniquePart('SR6.Vehicle.Maneuvering', helpers_1.Helpers.calcTotal(skill));
             }
         }
         else {
             const reaction = this.findAttribute('reaction');
             const intuition = this.findAttribute('intuition');
             if (reaction) {
-                parts.addUniquePart(reaction.label || 'SR5.Reaction', reaction.value);
+                parts.addUniquePart(reaction.label || 'SR6.Reaction', reaction.value);
             }
             if (intuition) {
-                parts.addUniquePart(intuition.label || 'SR5.Intuition', intuition.value);
+                parts.addUniquePart(intuition.label || 'SR6.Intuition', intuition.value);
             }
         }
         const mod = this.getModifier('defense');
         if (mod) {
-            parts.addUniquePart('SR5.Bonus', mod);
+            parts.addUniquePart('SR6.Bonus', mod);
         }
     }
     _addArmorParts(parts) {
         const armor = this.getArmor();
         if (armor) {
-            parts.addUniquePart(armor.label || 'SR5.Armor', armor.base);
+            parts.addUniquePart(armor.label || 'SR6.Armor', armor.base);
             for (let part of armor.mod) {
                 parts.addUniquePart(part.name, part.value);
             }
@@ -14452,9 +14452,9 @@ class SR5Actor extends Actor {
                 }
                 if (actor) {
                     const parts = new PartsList_1.PartsList();
-                    parts.addUniquePart('SR5.PushTheLimit', actor.getEdge().base);
+                    parts.addUniquePart('SR6.PushTheLimit', actor.getEdge().base);
                     ShadowrunRoller_1.ShadowrunRoller.basicRoll({
-                        title: ` - ${game.i18n.localize('SR5.PushTheLimit')}`,
+                        title: ` - ${game.i18n.localize('SR6.PushTheLimit')}`,
                         parts: parts.list,
                         actor: actor,
                     }).then(() => {
@@ -14465,7 +14465,7 @@ class SR5Actor extends Actor {
                 }
                 else {
                     // @ts-ignore
-                    ui.notifications.warn(game.i18n.localize('SR5.SelectTokenMessage'));
+                    ui.notifications.warn(game.i18n.localize('SR6.SelectTokenMessage'));
                 }
             }
         });
@@ -14499,8 +14499,8 @@ class SR5Actor extends Actor {
                     }
                     if (actor) {
                         const parts = new PartsList_1.PartsList();
-                        parts.addUniquePart('SR5.OriginalDicePool', pool);
-                        parts.addUniquePart('SR5.Successes', -hits);
+                        parts.addUniquePart('SR6.OriginalDicePool', pool);
+                        parts.addUniquePart('SR6.Successes', -hits);
                         return ShadowrunRoller_1.ShadowrunRoller.basicRoll({
                             title: ` - Second Chance`,
                             parts: parts.list,
@@ -14511,14 +14511,14 @@ class SR5Actor extends Actor {
                     }
                     else {
                         // @ts-ignore
-                        ui.notifications.warn(game.i18n.localize('SR5.SelectTokenMessage'));
+                        ui.notifications.warn(game.i18n.localize('SR6.SelectTokenMessage'));
                     }
                 }
             }
         });
     }
     /**
-     * Override setFlag to remove the 'SR5.' from keys in modlists, otherwise it handles them as embedded keys
+     * Override setFlag to remove the 'SR6.' from keys in modlists, otherwise it handles them as embedded keys
      * @param scope
      * @param key
      * @param value
@@ -14528,7 +14528,7 @@ class SR5Actor extends Actor {
         return super.setFlag(scope, key, newValue);
     }
     /**
-     * Override getFlag to add back the 'SR5.' keys correctly to be handled
+     * Override getFlag to add back the 'SR6.' keys correctly to be handled
      * @param scope
      * @param key
      */
@@ -14664,7 +14664,7 @@ class SR5Actor extends Actor {
             const { overflow, rest } = this._calcDamageOverflow(damage, track);
             // Only change damage type when needed, in order to avoid confusion of callers.
             if (overflow.value > 0) {
-                // Apply Stun overflow damage to physical track according to: SR5E#170
+                // Apply Stun overflow damage to physical track according to: SR6E#170
                 overflow.value = Math.floor(overflow.value / 2);
                 overflow.type.value = 'physical';
             }
@@ -14741,7 +14741,7 @@ class SR5Actor extends Actor {
         const modified = duplicate(this.getArmor());
         if (modified) {
             // @ts-ignore
-            modified.mod = PartsList_1.PartsList.AddUniquePart(modified.mod, 'SR5.DV', damage.ap.value);
+            modified.mod = PartsList_1.PartsList.AddUniquePart(modified.mod, 'SR6.DV', damage.ap.value);
             // @ts-ignore
             modified.value = helpers_1.Helpers.calcTotal(modified, { min: 0 });
         }
@@ -14875,9 +14875,9 @@ class SR5Actor extends Actor {
         });
     }
 }
-exports.SR5Actor = SR5Actor;
+exports.SR6Actor = SR6Actor;
 
-},{"../apps/dialogs/ShadowrunActorDialogs":135,"../chat":143,"../config":145,"../constants":146,"../dataTemplates":147,"../helpers":156,"../parts/PartsList":208,"../rolls/ShadowrunRoller":209,"../sr5/Modifiers":212,"./SkillFlow":88,"./SkillRules":89,"./SoakFlow":90,"./prep/ActorPrepFactory":92}],87:[function(require,module,exports){
+},{"../apps/dialogs/ShadowrunActorDialogs":135,"../chat":143,"../config":145,"../constants":146,"../dataTemplates":147,"../helpers":156,"../parts/PartsList":208,"../rolls/ShadowrunRoller":209,"../sr6/Modifiers":212,"./SkillFlow":88,"./SkillRules":89,"./SoakFlow":90,"./prep/ActorPrepFactory":92}],87:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -14889,14 +14889,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SR5ActorSheet = void 0;
+exports.SR6ActorSheet = void 0;
 const helpers_1 = require("../helpers");
 const chummer_import_form_1 = require("../apps/chummer-import-form");
 const SkillEditSheet_1 = require("../apps/skills/SkillEditSheet");
 const KnowledgeSkillEditSheet_1 = require("../apps/skills/KnowledgeSkillEditSheet");
 const LanguageSkillEditSheet_1 = require("../apps/skills/LanguageSkillEditSheet");
 const config_1 = require("../config");
-// Use SR5ActorSheet._showSkillEditForm to only ever render one SkillEditSheet instance.
+// Use SR6ActorSheet._showSkillEditForm to only ever render one SkillEditSheet instance.
 // Should multiple instances be open, Foundry will cause cross talk between skills and actors,
 // when opened in succession, causing SkillEditSheet to wrongfully overwrite the wrong data.
 let globalSkillAppId = -1;
@@ -14904,7 +14904,7 @@ let globalSkillAppId = -1;
  * Extend the basic ActorSheet with some very simple modifications
  *
  */
-class SR5ActorSheet extends ActorSheet {
+class SR6ActorSheet extends ActorSheet {
     constructor(actor, options) {
         super(actor, options);
         /**
@@ -14925,7 +14925,7 @@ class SR5ActorSheet extends ActorSheet {
     static get defaultOptions() {
         // @ts-ignore
         return mergeObject(super.defaultOptions, {
-            classes: ['sr5', 'sheet', 'actor'],
+            classes: ['sr6', 'sheet', 'actor'],
             width: 880,
             height: 690,
             tabs: [
@@ -14938,7 +14938,7 @@ class SR5ActorSheet extends ActorSheet {
         });
     }
     get template() {
-        const path = 'systems/shadowrun5e/dist/templates';
+        const path = 'systems/shadowrun6e/dist/templates';
         if (this.actor.limited) {
             return `${path}/actor-limited/${this.actor.data.type}.html`;
         }
@@ -14955,7 +14955,7 @@ class SR5ActorSheet extends ActorSheet {
             // @ts-ignore
             data: data.data.data });
         // General purpose fields...
-        data.config = config_1.SR5;
+        data.config = config_1.SR6;
         data.filters = this._filters;
         this._prepareMatrixAttributes(data);
         this._prepareActorAttributes(data);
@@ -15049,7 +15049,7 @@ class SR5ActorSheet extends ActorSheet {
     }
     _filterKnowledgeSkills(data) {
         // Knowledge skill have separate sub-categories.
-        Object.keys(config_1.SR5.knowledgeSkillCategories).forEach((category) => {
+        Object.keys(config_1.SR6.knowledgeSkillCategories).forEach((category) => {
             if (!data.data.skills.knowledge.hasOwnProperty(category)) {
                 console.warn(`Knowledge Skill doesn't provide configured category ${category}`);
                 return;
@@ -15105,7 +15105,7 @@ class SR5ActorSheet extends ActorSheet {
         const inventory = {};
         // All acting entities should be allowed to carry some protection!
         inventory['weapon'] = {
-            label: game.i18n.localize('SR5.ItemTypes.Weapon'),
+            label: game.i18n.localize('SR6.ItemTypes.Weapon'),
             items: [],
             dataset: {
                 type: 'weapon',
@@ -15114,42 +15114,42 @@ class SR5ActorSheet extends ActorSheet {
         // Critters are people to... Support your local HMHVV support groups!
         if (this.actor.matchesActorTypes(['character', 'critter', 'vehicle'])) {
             inventory['armor'] = {
-                label: game.i18n.localize('SR5.ItemTypes.Armor'),
+                label: game.i18n.localize('SR6.ItemTypes.Armor'),
                 items: [],
                 dataset: {
                     type: 'armor',
                 },
             };
             inventory['device'] = {
-                label: game.i18n.localize('SR5.ItemTypes.Device'),
+                label: game.i18n.localize('SR6.ItemTypes.Device'),
                 items: [],
                 dataset: {
                     type: 'device',
                 },
             };
             inventory['equipment'] = {
-                label: game.i18n.localize('SR5.ItemTypes.Equipment'),
+                label: game.i18n.localize('SR6.ItemTypes.Equipment'),
                 items: [],
                 dataset: {
                     type: 'equipment',
                 },
             };
             inventory['ammo'] = {
-                label: game.i18n.localize('SR5.ItemTypes.Ammo'),
+                label: game.i18n.localize('SR6.ItemTypes.Ammo'),
                 items: [],
                 dataset: {
                     type: 'ammo',
                 },
             };
             inventory['cyberware'] = {
-                label: game.i18n.localize('SR5.ItemTypes.Cyberware'),
+                label: game.i18n.localize('SR6.ItemTypes.Cyberware'),
                 items: [],
                 dataset: {
                     type: 'cyberware',
                 },
             };
             inventory['bioware'] = {
-                label: game.i18n.localize('SR5.ItemTypes.Bioware'),
+                label: game.i18n.localize('SR6.ItemTypes.Bioware'),
                 items: [],
                 dataset: {
                     type: 'bioware',
@@ -15309,7 +15309,7 @@ class SR5ActorSheet extends ActorSheet {
             event.preventDefault();
             const field = $(event.currentTarget).parents('.list-item');
             const iid = $(field).data().itemId;
-            const item = this.actor.getOwnedSR5Item(iid);
+            const item = this.actor.getOwnedSR6Item(iid);
             if (item) {
                 yield item.openPdfSource();
             }
@@ -15339,7 +15339,7 @@ class SR5ActorSheet extends ActorSheet {
         html.find('.item-edit').click((event) => {
             event.preventDefault();
             const iid = helpers_1.Helpers.listItemId(event);
-            const item = this.actor.getOwnedSR5Item(iid);
+            const item = this.actor.getOwnedSR6Item(iid);
             if (!item)
                 return;
             // @ts-ignore
@@ -15577,7 +15577,7 @@ class SR5ActorSheet extends ActorSheet {
         return __awaiter(this, void 0, void 0, function* () {
             event.preventDefault();
             const iid = helpers_1.Helpers.listItemId(event);
-            const item = this.actor.getOwnedSR5Item(iid);
+            const item = this.actor.getOwnedSR6Item(iid);
             if (item)
                 return item.reloadAmmo();
         });
@@ -15587,7 +15587,7 @@ class SR5ActorSheet extends ActorSheet {
             if (!("matrix" in this.actor.data.data))
                 return;
             let iid = this.actor.data.data.matrix.device;
-            let item = this.actor.getOwnedSR5Item(iid);
+            let item = this.actor.getOwnedSR6Item(iid);
             if (!item) {
                 console.error('could not find item');
                 return;
@@ -15693,7 +15693,7 @@ class SR5ActorSheet extends ActorSheet {
     _onChangeRtg(event) {
         return __awaiter(this, void 0, void 0, function* () {
             const iid = helpers_1.Helpers.listItemId(event);
-            const item = this.actor.getOwnedSR5Item(iid);
+            const item = this.actor.getOwnedSR6Item(iid);
             const rtg = parseInt(event.currentTarget.value);
             if (item && rtg) {
                 yield item.update({ 'data.technology.rating': rtg });
@@ -15703,7 +15703,7 @@ class SR5ActorSheet extends ActorSheet {
     _onChangeQty(event) {
         return __awaiter(this, void 0, void 0, function* () {
             const iid = helpers_1.Helpers.listItemId(event);
-            const item = this.actor.getOwnedSR5Item(iid);
+            const item = this.actor.getOwnedSR6Item(iid);
             const qty = parseInt(event.currentTarget.value);
             if (item && qty && "technology" in item.data.data) {
                 item.data.data.technology.quantity = qty;
@@ -15715,7 +15715,7 @@ class SR5ActorSheet extends ActorSheet {
         return __awaiter(this, void 0, void 0, function* () {
             event.preventDefault();
             const iid = helpers_1.Helpers.listItemId(event);
-            const item = this.actor.getOwnedSR5Item(iid);
+            const item = this.actor.getOwnedSR6Item(iid);
             if (item) {
                 const newItems = [];
                 if (item.isDevice()) {
@@ -15820,7 +15820,7 @@ class SR5ActorSheet extends ActorSheet {
         return __awaiter(this, void 0, void 0, function* () {
             event.preventDefault();
             const iid = helpers_1.Helpers.listItemId(event);
-            const item = this.actor.getOwnedSR5Item(iid);
+            const item = this.actor.getOwnedSR6Item(iid);
             if (item) {
                 yield item.castAction(event);
             }
@@ -15988,7 +15988,7 @@ class SR5ActorSheet extends ActorSheet {
         });
     }
 }
-exports.SR5ActorSheet = SR5ActorSheet;
+exports.SR6ActorSheet = SR6ActorSheet;
 
 },{"../apps/chummer-import-form":131,"../apps/skills/KnowledgeSkillEditSheet":139,"../apps/skills/LanguageSkillEditSheet":140,"../apps/skills/SkillEditSheet":141,"../config":145,"../helpers":156}],88:[function(require,module,exports){
 "use strict";
@@ -16007,7 +16007,7 @@ class SkillFlow {
         if (!SkillRules_1.SkillRules.mustDefaultToRoll(skill))
             return;
         if (!SkillFlow.allowDefaultingRoll(skill)) {
-            (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.warn(game.i18n.localize('SR5.Warnings.SkillCantBeDefault'));
+            (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.warn(game.i18n.localize('SR6.Warnings.SkillCantBeDefault'));
             return;
         }
         SkillRules_1.SkillRules.addDefaultingPart(parts);
@@ -16044,7 +16044,7 @@ class SkillRules {
     }
     /**
      * Allow defaulting a skill role.
-     * @PDF SR5#130
+     * @PDF SR6#130
      * @param skill Check for this skills ability to be defaulted.
      * @return true will allow for a SuccessTest / role to proceed.
      */
@@ -16055,7 +16055,7 @@ class SkillRules {
     }
     /**
      * Allow a skill role.
-     * @PDF SR5#130
+     * @PDF SR6#130
      * @param skill Check for this skills ability to be rolled.
      * @return true will allow for a SuccessTest / role to proceed.
      */
@@ -16067,7 +16067,7 @@ class SkillRules {
      * @param parts Should be a PartsList involved with skills.
      */
     static addDefaultingPart(parts) {
-        parts.addUniquePart('SR5.Defaulting', SkillRules.getDefaultingModifier());
+        parts.addUniquePart('SR6.Defaulting', SkillRules.getDefaultingModifier());
     }
     static getDefaultingModifier() {
         return constants_1.SR.skill.DEFAULTING_MODIFIER;
@@ -16116,7 +16116,7 @@ class SoakFlow {
             const finalSoakDefenseParts = new PartsList_1.PartsList(duplicate(partsProps));
             SoakRules_1.SoakRules.applyAllSoakParts(finalSoakDefenseParts, actor, damageData);
             // Query user for roll options and do the actual soak test.
-            const title = game.i18n.localize('SR5.SoakTest');
+            const title = game.i18n.localize('SR6.SoakTest');
             const roll = yield ShadowrunRoller_1.ShadowrunRoller.advancedRoll({
                 event: soakRollOptions === null || soakRollOptions === void 0 ? void 0 : soakRollOptions.event,
                 extended: false,
@@ -16142,24 +16142,24 @@ class SoakFlow {
         });
     }
     knocksDown(damage, actor) {
-        // TODO: SR5 195 Called Shot Knock Down (Melee Only), requires attacker STR and actually announcing that called shot.
-        const gelRoundsEffect = this.isDamageFromGelRounds(damage) ? -2 : 0; // SR5 434
+        // TODO: SR6 195 Called Shot Knock Down (Melee Only), requires attacker STR and actually announcing that called shot.
+        const gelRoundsEffect = this.isDamageFromGelRounds(damage) ? -2 : 0; // SR6 434
         const impactDispersionEffect = this.isDamageFromImpactDispersion(damage) ? -2 : 0; // FA 52
         const limit = actor.getLimit('physical');
         const effectiveLimit = limit.value + gelRoundsEffect + impactDispersionEffect;
-        // SR5 194
+        // SR6 194
         return damage.value > effectiveLimit || damage.value >= 10;
     }
     isDamageFromGelRounds(damage) {
         if (damage.source && damage.source.actorId && damage.source.itemId) {
             const attacker = game.actors.find(actor => { var _a; return actor.id == ((_a = damage.source) === null || _a === void 0 ? void 0 : _a.actorId); });
             if (attacker) {
-                // TODO: foundry-vtt-types Resolve attacker.items not matching with SR5Item[].
+                // TODO: foundry-vtt-types Resolve attacker.items not matching with SR6Item[].
                 const item = attacker.items.find(item => { var _a; return item.id == ((_a = damage.source) === null || _a === void 0 ? void 0 : _a.itemId); });
                 if (item) {
                     return item.items
                         .filter(mod => { var _a; return (_a = mod.getTechnology()) === null || _a === void 0 ? void 0 : _a.equipped; })
-                        .filter(tech => tech.name == game.i18n.localize("SR5.AmmoGelRounds")).length > 0;
+                        .filter(tech => tech.name == game.i18n.localize("SR6.AmmoGelRounds")).length > 0;
                 }
             }
         }
@@ -16189,7 +16189,7 @@ class SoakFlow {
         const totalDamage = helpers_1.Helpers.calcTotal(damageData);
         if (totalDamage !== incomingDamage) {
             const diff = incomingDamage - totalDamage;
-            damageData.mod = PartsList_1.PartsList.AddUniquePart(damageData.mod, 'SR5.UserInput', diff);
+            damageData.mod = PartsList_1.PartsList.AddUniquePart(damageData.mod, 'SR6.UserInput', diff);
             damageData.value = helpers_1.Helpers.calcTotal(damageData);
         }
         if (initialDamageData.type.base !== damageType) {
@@ -16200,7 +16200,7 @@ class SoakFlow {
         const totalAp = helpers_1.Helpers.calcTotal(damageData.ap);
         if (totalAp !== ap) {
             const diff = ap - totalAp;
-            damageData.ap.mod = PartsList_1.PartsList.AddUniquePart(damageData.ap.mod, 'SR5.UserInput', diff);
+            damageData.ap.mod = PartsList_1.PartsList.AddUniquePart(damageData.ap.mod, 'SR6.UserInput', diff);
             damageData.ap.value = helpers_1.Helpers.calcTotal(damageData.ap);
         }
         if (element) {
@@ -16248,21 +16248,21 @@ class SoakRules {
     }
     static applyDirectCombatSpellParts(spellItem, soakParts, actor) {
         if (spellItem.data.type === 'mana') {
-            SoakRules.addUniquePart(soakParts, actor.getAttribute('willpower'), config_1.SR5.attributes.willpower);
+            SoakRules.addUniquePart(soakParts, actor.getAttribute('willpower'), config_1.SR6.attributes.willpower);
         }
         else {
-            SoakRules.addUniquePart(soakParts, actor.getAttribute('body'), config_1.SR5.attributes.body);
+            SoakRules.addUniquePart(soakParts, actor.getAttribute('body'), config_1.SR6.attributes.body);
         }
         return;
     }
     static applyBodyAndArmorParts(soakParts, actor) {
         const body = actor.findAttribute('body');
         if (body) {
-            soakParts.addUniquePart(body.label || 'SR5.Body', body.value);
+            soakParts.addUniquePart(body.label || 'SR6.Body', body.value);
         }
         const mod = actor.getModifier('soak');
         if (mod) {
-            soakParts.addUniquePart('SR5.Bonus', mod);
+            soakParts.addUniquePart('SR6.Bonus', mod);
         }
         actor._addArmorParts(soakParts);
     }
@@ -16271,13 +16271,13 @@ class SoakRules {
         const bonusArmor = (_a = armor[damageData.element.value]) !== null && _a !== void 0 ? _a : 0;
         const totalArmor = armor.value + bonusArmor;
         const ap = helpers_1.Helpers.calcTotal(damageData.ap);
-        soakParts.addUniquePart('SR5.AP', Math.max(ap, -totalArmor));
+        soakParts.addUniquePart('SR6.AP', Math.max(ap, -totalArmor));
     }
     static applyElementalArmor(soakParts, armor, element) {
         var _a;
         const bonusArmor = (_a = armor[element]) !== null && _a !== void 0 ? _a : 0;
         if (bonusArmor) {
-            soakParts.addUniquePart(config_1.SR5.elementTypes[element], bonusArmor);
+            soakParts.addUniquePart(config_1.SR6.elementTypes[element], bonusArmor);
         }
     }
     static applyMatrixSoakParts(soakParts, actor) {
@@ -16298,11 +16298,11 @@ class SoakRules {
         }
     }
     static applyBiofeedbackParts(soakParts, actor, actorData) {
-        SoakRules.addUniquePart(soakParts, actor.getAttribute('willpower'), config_1.SR5.attributes.willpower);
+        SoakRules.addUniquePart(soakParts, actor.getAttribute('willpower'), config_1.SR6.attributes.willpower);
         if (!actorData.matrix) {
             return;
         }
-        SoakRules.addUniquePart(soakParts, actorData.matrix.firewall, config_1.SR5.matrixAttributes.firewall);
+        SoakRules.addUniquePart(soakParts, actorData.matrix.firewall, config_1.SR6.matrixAttributes.firewall);
     }
     static applyRatingAndFirewallParts(actorData, soakParts) {
         if (!actorData.matrix) {
@@ -16310,9 +16310,9 @@ class SoakRules {
         }
         const deviceRating = actorData.matrix.rating;
         if (deviceRating) {
-            soakParts.addUniquePart('SR5.Labels.ActorSheet.DeviceRating', deviceRating);
+            soakParts.addUniquePart('SR6.Labels.ActorSheet.DeviceRating', deviceRating);
         }
-        this.addUniquePart(soakParts, actorData.matrix.firewall, config_1.SR5.matrixAttributes.firewall);
+        this.addUniquePart(soakParts, actorData.matrix.firewall, config_1.SR6.matrixAttributes.firewall);
     }
     static addUniquePart(partsList, modifiableValue, label) {
         const totalValue = helpers_1.Helpers.calcTotal(modifiableValue);
@@ -16335,9 +16335,9 @@ class SoakRules {
         // will be converted to stun damage and then reduced to 0. This does not work with drones wearing armor
         // but we do not support this.
         if (damageData.type.value === 'stun' && actor.isVehicle()) {
-            return helpers_1.Helpers.reduceDamageByHits(damageData, damageData.value, 'SR5.VehicleStunImmunity');
+            return helpers_1.Helpers.reduceDamageByHits(damageData, damageData.value, 'SR6.VehicleStunImmunity');
         }
-        return helpers_1.Helpers.reduceDamageByHits(damageData, hits, 'SR5.SoakTest');
+        return helpers_1.Helpers.reduceDamageByHits(damageData, hits, 'SR6.SoakTest');
     }
     /**
      * Changes the damage type based on the incoming damage type and the actor state (armor, matrix perception..)
@@ -16446,16 +16446,16 @@ exports.ActorPrepFactory = ActorPrepFactory;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseActorPrep = void 0;
-const SR5ItemDataWrapper_1 = require("../../item/SR5ItemDataWrapper");
+const SR6ItemDataWrapper_1 = require("../../item/SR6ItemDataWrapper");
 class BaseActorPrep {
     constructor(data) {
         this.data = data.data;
-        this.items = data.items.map((item) => new SR5ItemDataWrapper_1.SR5ItemDataWrapper(item.data));
+        this.items = data.items.map((item) => new SR6ItemDataWrapper_1.SR6ItemDataWrapper(item.data));
     }
 }
 exports.BaseActorPrep = BaseActorPrep;
 
-},{"../../item/SR5ItemDataWrapper":198}],94:[function(require,module,exports){
+},{"../../item/SR6ItemDataWrapper":198}],94:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CharacterPrep = void 0;
@@ -16592,13 +16592,13 @@ class SpiritPrep extends BaseActorPrep_1.BaseActorPrep {
             }
             // prepare initiative data
             initiative.meatspace.base.base = force * 2 + overrides.init + Number(modifiers['astral_initiative']);
-            initiative.meatspace.base.mod = PartsList_1.PartsList.AddUniquePart(initiative.meatspace.base.mod, "SR5.Bonus", Number(modifiers['meat_initiative']));
+            initiative.meatspace.base.mod = PartsList_1.PartsList.AddUniquePart(initiative.meatspace.base.mod, "SR6.Bonus", Number(modifiers['meat_initiative']));
             initiative.meatspace.dice.base = 2;
-            initiative.meatspace.dice.mod = PartsList_1.PartsList.AddUniquePart(initiative.meatspace.dice.mod, "SR5.Bonus", Number(modifiers['meat_initiative_dice']));
+            initiative.meatspace.dice.mod = PartsList_1.PartsList.AddUniquePart(initiative.meatspace.dice.mod, "SR6.Bonus", Number(modifiers['meat_initiative_dice']));
             initiative.astral.base.base = force * 2 + overrides.astral_init + Number(modifiers['astral_initiative_dice']);
-            initiative.astral.base.mod = PartsList_1.PartsList.AddUniquePart(initiative.astral.base.mod, "SR5.Bonus", Number(modifiers['astral_initiative']));
+            initiative.astral.base.mod = PartsList_1.PartsList.AddUniquePart(initiative.astral.base.mod, "SR6.Bonus", Number(modifiers['astral_initiative']));
             initiative.astral.dice.base = 3;
-            initiative.astral.dice.mod = PartsList_1.PartsList.AddUniquePart(initiative.astral.dice.mod, "SR5.Bonus", Number(modifiers['astral_initiative_dice']));
+            initiative.astral.dice.mod = PartsList_1.PartsList.AddUniquePart(initiative.astral.dice.mod, "SR6.Bonus", Number(modifiers['astral_initiative_dice']));
         }
     }
     static prepareSpiritArmor(data) {
@@ -16982,10 +16982,10 @@ class SpritePrep extends BaseActorPrep_1.BaseActorPrep {
         });
         // setup initiative from overrides
         initiative.matrix.base.base = level * 2 + overrides.init;
-        PartsList_1.PartsList.AddUniquePart(initiative.matrix.base.mod, 'SR5.Bonus', modifiers['matrix_initiative']);
+        PartsList_1.PartsList.AddUniquePart(initiative.matrix.base.mod, 'SR6.Bonus', modifiers['matrix_initiative']);
         helpers_1.Helpers.calcTotal(initiative.matrix.base);
         initiative.matrix.dice.base = 4;
-        PartsList_1.PartsList.AddUniquePart(initiative.matrix.dice.mod, 'SR5.Bonus', modifiers['matrix_initiative_dice']);
+        PartsList_1.PartsList.AddUniquePart(initiative.matrix.dice.mod, 'SR6.Bonus', modifiers['matrix_initiative_dice']);
         helpers_1.Helpers.calcTotal(initiative.matrix.dice);
         // always in matrix perception
         initiative.perception = 'matrix';
@@ -17100,11 +17100,11 @@ class VehiclePrep extends BaseActorPrep_1.BaseActorPrep {
                 stat.mod = new PartsList_1.PartsList(stat.mod).list;
             }
             const parts = new PartsList_1.PartsList(stat.mod);
-            parts.addUniquePart('SR5.Temporary', (_a = stat.temp) !== null && _a !== void 0 ? _a : 0);
+            parts.addUniquePart('SR6.Temporary', (_a = stat.temp) !== null && _a !== void 0 ? _a : 0);
             stat.mod = parts.list;
             helpers_1.Helpers.calcTotal(stat);
             // add labels
-            stat.label = config_1.SR5.vehicle.stats[key];
+            stat.label = config_1.SR6.vehicle.stats[key];
         }
         // hide certain stats depending on if we're offroad
         if (isOffRoad) {
@@ -17150,7 +17150,7 @@ class VehiclePrep extends BaseActorPrep_1.BaseActorPrep {
             track.physical.base = 12 + halfBody;
             track.physical.max = track.physical.base + (Number(modifiers['physical_track']) || 0);
         }
-        track.physical.label = config_1.SR5.damageTypes.physical;
+        track.physical.label = config_1.SR6.damageTypes.physical;
         const rating = matrix.rating || 0;
         matrix.condition_monitor.max = 8 + Math.ceil(rating / 2);
     }
@@ -17173,7 +17173,7 @@ class VehiclePrep extends BaseActorPrep_1.BaseActorPrep {
     }
     static prepareArmor(data) {
         const { armor } = data;
-        armor.mod = PartsList_1.PartsList.AddUniquePart(armor.mod, 'SR5.Temporary', armor['temp']);
+        armor.mod = PartsList_1.PartsList.AddUniquePart(armor.mod, 'SR6.Temporary', armor['temp']);
         helpers_1.Helpers.calcTotal(armor);
     }
 }
@@ -17208,7 +17208,7 @@ class AttributesPrep {
             attribute.mod = parts.list;
             AttributesPrep.calculateAttribute(name, attribute);
             // add i18n labels.
-            attribute.label = config_1.SR5.attributes[name];
+            attribute.label = config_1.SR6.attributes[name];
         }
     }
     /**
@@ -17236,7 +17236,7 @@ class ConditionMonitorsPrep {
         const { track, attributes, modifiers } = data;
         track.stun.base = 8 + Math.ceil(attributes.willpower.value / 2);
         track.stun.max = track.stun.base + Number(modifiers['stun_track']);
-        track.stun.label = config_1.SR5.damageTypes.stun;
+        track.stun.label = config_1.SR6.damageTypes.stun;
         track.stun.disabled = false;
     }
     static preparePhysical(data) {
@@ -17244,7 +17244,7 @@ class ConditionMonitorsPrep {
         track.physical.base = 8 + Math.ceil(attributes.body.value / 2);
         track.physical.max = track.physical.base + Number(modifiers['physical_track']);
         track.physical.overflow.max = attributes.body.value;
-        track.physical.label = config_1.SR5.damageTypes.physical;
+        track.physical.label = config_1.SR6.damageTypes.physical;
         track.physical.disabled = false;
     }
     static prepareGrunt(data) {
@@ -17261,7 +17261,7 @@ class ConditionMonitorsPrep {
         track.physical.base = 8 + Math.ceil(attribute.value / 2);
         track.physical.max = track.physical.base + Number(modifiers['physical_track']);
         track.physical.overflow.max = attributes.body.value;
-        track.physical.label = "SR5.ConditionMonitor";
+        track.physical.label = "SR6.ConditionMonitor";
         track.physical.disabled = false;
     }
 }
@@ -17294,24 +17294,24 @@ class InitiativePrep {
     static prepareMeatspaceInit(data) {
         const { initiative, attributes, modifiers } = data;
         initiative.meatspace.base.base = attributes.intuition.value + attributes.reaction.value;
-        initiative.meatspace.base.mod = PartsList_1.PartsList.AddUniquePart(initiative.meatspace.base.mod, "SR5.Bonus", Number(modifiers['meat_initiative']));
+        initiative.meatspace.base.mod = PartsList_1.PartsList.AddUniquePart(initiative.meatspace.base.mod, "SR6.Bonus", Number(modifiers['meat_initiative']));
         initiative.meatspace.dice.base = 1;
-        initiative.meatspace.dice.mod = PartsList_1.PartsList.AddUniquePart(initiative.meatspace.dice.mod, "SR5.Bonus", Number(modifiers['meat_initiative_dice']));
+        initiative.meatspace.dice.mod = PartsList_1.PartsList.AddUniquePart(initiative.meatspace.dice.mod, "SR6.Bonus", Number(modifiers['meat_initiative_dice']));
     }
     static prepareAstralInit(data) {
         const { initiative, attributes, modifiers } = data;
         initiative.astral.base.base = attributes.intuition.value * 2;
-        initiative.astral.base.mod = PartsList_1.PartsList.AddUniquePart(initiative.astral.base.mod, "SR5.Bonus", Number(modifiers['astral_initiative']));
+        initiative.astral.base.mod = PartsList_1.PartsList.AddUniquePart(initiative.astral.base.mod, "SR6.Bonus", Number(modifiers['astral_initiative']));
         initiative.astral.dice.base = 2;
-        initiative.astral.dice.mod = PartsList_1.PartsList.AddUniquePart(initiative.astral.dice.mod, "SR5.Bonus", Number(modifiers['astral_initiative_dice']));
+        initiative.astral.dice.mod = PartsList_1.PartsList.AddUniquePart(initiative.astral.dice.mod, "SR6.Bonus", Number(modifiers['astral_initiative_dice']));
     }
     static prepareMatrixInit(data) {
         const { initiative, attributes, modifiers, matrix } = data;
         if (matrix) {
             initiative.matrix.base.base = attributes.intuition.value + data.matrix.data_processing.value;
-            initiative.matrix.base.mod = PartsList_1.PartsList.AddUniquePart(initiative.matrix.base.mod, "SR5.Bonus", Number(modifiers['matrix_initiative']));
+            initiative.matrix.base.mod = PartsList_1.PartsList.AddUniquePart(initiative.matrix.base.mod, "SR6.Bonus", Number(modifiers['matrix_initiative']));
             initiative.matrix.dice.base = (matrix.hot_sim ? 4 : 3);
-            initiative.matrix.dice.mod = PartsList_1.PartsList.AddUniquePart(initiative.matrix.dice.mod, "SR5.Bonus", Number(modifiers['matrix_initiative_dice']));
+            initiative.matrix.dice.mod = PartsList_1.PartsList.AddUniquePart(initiative.matrix.dice.mod, "SR6.Bonus", Number(modifiers['matrix_initiative_dice']));
         }
     }
 }
@@ -17335,7 +17335,7 @@ class ItemPrep {
         armor.base = 0;
         armor.value = 0;
         armor.mod = [];
-        for (const element of Object.keys(config_1.SR5.elementTypes)) {
+        for (const element of Object.keys(config_1.SR6.elementTypes)) {
             armor[element] = 0;
         }
         const armorModParts = new PartsList_1.PartsList(armor.mod);
@@ -17355,13 +17355,13 @@ class ItemPrep {
                     }
                 }
             }
-            // Apply elemental modifiers of all worn armor and clothing SR5#169.
-            for (const element of Object.keys(config_1.SR5.elementTypes)) {
+            // Apply elemental modifiers of all worn armor and clothing SR6#169.
+            for (const element of Object.keys(config_1.SR6.elementTypes)) {
                 armor[element] += item.getArmorElements()[element];
             }
         });
         if (data.modifiers['armor'])
-            armorModParts.addUniquePart(game.i18n.localize('SR5.Bonus'), data.modifiers['armor']);
+            armorModParts.addUniquePart(game.i18n.localize('SR6.Bonus'), data.modifiers['armor']);
         // SET ARMOR
         armor.value = helpers_1.Helpers.calcTotal(armor);
     }
@@ -17383,7 +17383,7 @@ class ItemPrep {
         // add the bonus from the misc tab if applied
         const essenceMod = data.modifiers['essence'];
         if (essenceMod && !Number.isNaN(essenceMod)) {
-            parts.addUniquePart('SR5.Bonus', Number(essenceMod));
+            parts.addUniquePart('SR6.Bonus', Number(essenceMod));
         }
         attributes.essence.base = 6;
         attributes.essence.mod = parts.list;
@@ -17403,13 +17403,13 @@ class LimitsPrep {
     static prepareLimits(data) {
         const { limits, modifiers } = data;
         // SETUP LIMITS
-        limits.physical.mod = PartsList_1.PartsList.AddUniquePart(limits.physical.mod, 'SR5.Bonus', Number(modifiers['physical_limit']));
-        limits.mental.mod = PartsList_1.PartsList.AddUniquePart(limits.mental.mod, 'SR5.Bonus', Number(modifiers['mental_limit']));
-        limits.social.mod = PartsList_1.PartsList.AddUniquePart(limits.social.mod, "SR5.Bonus", Number(modifiers['social_limit']));
+        limits.physical.mod = PartsList_1.PartsList.AddUniquePart(limits.physical.mod, 'SR6.Bonus', Number(modifiers['physical_limit']));
+        limits.mental.mod = PartsList_1.PartsList.AddUniquePart(limits.mental.mod, 'SR6.Bonus', Number(modifiers['mental_limit']));
+        limits.social.mod = PartsList_1.PartsList.AddUniquePart(limits.social.mod, "SR6.Bonus", Number(modifiers['social_limit']));
         // limit labels
         for (let [limitKey, limitValue] of Object.entries(limits)) {
             helpers_1.Helpers.calcTotal(limitValue);
-            limitValue.label = config_1.SR5.limits[limitKey];
+            limitValue.label = config_1.SR6.limits[limitKey];
         }
     }
     static prepareLimitBaseFromAttributes(data) {
@@ -17440,7 +17440,7 @@ class MatrixPrep {
         // clear matrix data to defaults
         MatrixList.forEach((key) => {
             const parts = new PartsList_1.PartsList(matrix[key].mod);
-            parts.addUniquePart('SR5.Temporary', matrix[key].temp);
+            parts.addUniquePart('SR6.Temporary', matrix[key].temp);
             // TODO LEGACY from when the sheet used 'mod.Temporary'
             parts.removePart('Temporary');
             matrix[key].mod = parts.list;
@@ -17450,7 +17450,7 @@ class MatrixPrep {
         matrix.rating = 0;
         matrix.name = '';
         matrix.device = '';
-        matrix.condition_monitor.label = 'SR5.ConditionMonitor';
+        matrix.condition_monitor.label = 'SR6.ConditionMonitor';
         // get the first equipped device, we don't care if they have more equipped -- it shouldn't happen
         const device = items.find((item) => item.isEquipped() && item.isDevice());
         if (device) {
@@ -17479,7 +17479,7 @@ class MatrixPrep {
             matrix.rating = helpers_1.Helpers.calcTotal(attributes.resonance);
             matrix.attack.base = helpers_1.Helpers.calcTotal(attributes.charisma);
             matrix.sleaze.base = helpers_1.Helpers.calcTotal(attributes.intuition);
-            matrix.name = game.i18n.localize('SR5.LivingPersona');
+            matrix.name = game.i18n.localize('SR6.LivingPersona');
         }
         // set matrix condition monitor to max if greater than
         if (matrix.condition_monitor.value > matrix.condition_monitor.max) {
@@ -17497,7 +17497,7 @@ class MatrixPrep {
         MatrixList.forEach((key) => {
             helpers_1.Helpers.calcTotal(matrix[key]);
             if (matrix[key]) {
-                const label = config_1.SR5.matrixAttributes[key];
+                const label = config_1.SR6.matrixAttributes[key];
                 const { value, base, mod } = matrix[key];
                 const hidden = true;
                 limits[key] = {
@@ -17726,7 +17726,7 @@ class SkillsPrep {
         }
         // skill labels
         for (let [skillKey, skillValue] of Object.entries(active)) {
-            skillValue.label = config_1.SR5.activeSkills[skillKey];
+            skillValue.label = config_1.SR6.activeSkills[skillKey];
         }
     }
 }
@@ -17782,12 +17782,12 @@ exports.ChangelogApplication = void 0;
 const constants_1 = require("../constants");
 class ChangelogApplication extends Application {
     get template() {
-        return 'systems/shadowrun5e/dist/templates/apps/changelog.html';
+        return 'systems/shadowrun6e/dist/templates/apps/changelog.html';
     }
     static get defaultOptions() {
         const options = super.defaultOptions;
-        options.classes = ['shadowrun5e'];
-        options.title = game.i18n.localize('SR5.ChangelogApplication.Title');
+        options.classes = ['shadowrun6e'];
+        options.title = game.i18n.localize('SR6.ChangelogApplication.Title');
         options.width = 500;
         options.height = 'auto';
         return options;
@@ -17826,8 +17826,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EnvModifiersApplication = void 0;
 const constants_1 = require("../constants");
 const helpers_1 = require("../helpers");
-const SR5Actor_1 = require("../actor/SR5Actor");
-const Modifiers_1 = require("../sr5/Modifiers");
+const SR6Actor_1 = require("../actor/SR6Actor");
+const Modifiers_1 = require("../sr6/Modifiers");
 /** Helper window for easy overview and selection of environmental modifiers and their calculated total.
  *
  */
@@ -17837,13 +17837,13 @@ class EnvModifiersApplication extends Application {
         this.target = target;
     }
     get template() {
-        return 'systems/shadowrun5e/dist/templates/apps/env-modifiers.html';
+        return 'systems/shadowrun6e/dist/templates/apps/env-modifiers.html';
     }
     static get defaultOptions() {
         const options = super.defaultOptions;
-        options.classes = ['sr5', 'form-dialog'];
+        options.classes = ['sr6', 'form-dialog'];
         options.id = 'env-modifiers-application';
-        options.title = game.i18n.localize('SR5.EnvModifiersApplication.Title');
+        options.title = game.i18n.localize('SR6.EnvModifiersApplication.Title');
         // @ts-ignore
         options.width = 'auto'; // auto is important for differing i18n text length.
         options.height = 'auto';
@@ -17892,7 +17892,7 @@ class EnvModifiersApplication extends Application {
      * Doing it this way is just easier as relying on any update / hook workflow.
      */
     _updateTokenHUDTotalDisplay() {
-        if (this.target instanceof SR5Actor_1.SR5Actor) {
+        if (this.target instanceof SR6Actor_1.SR6Actor) {
             $('.modifier-value-environmental').each((index, element) => {
                 $(element).html(this.modifiers.environmental.total.toString());
             });
@@ -17917,7 +17917,7 @@ class EnvModifiersApplication extends Application {
         return __awaiter(this, void 0, void 0, function* () {
             // Actor targets might have no personal modifiers, but still see the scene modifiers then, and use those
             // as a template for their local modifiers.
-            if (this.target instanceof SR5Actor_1.SR5Actor) {
+            if (this.target instanceof SR6Actor_1.SR6Actor) {
                 return yield this.target.getModifiers();
             }
             // All other types are handled without special cases.
@@ -17955,7 +17955,7 @@ class EnvModifiersApplication extends Application {
         if (this.target instanceof Scene) {
             return game.i18n.localize('ENTITY.Scene');
         }
-        if (this.target instanceof SR5Actor_1.SR5Actor) {
+        if (this.target instanceof SR6Actor_1.SR6Actor) {
             return game.i18n.localize('ENTITY.Actor');
         }
         return '';
@@ -17965,7 +17965,7 @@ class EnvModifiersApplication extends Application {
      */
     _disableInputsForUser() {
         var _a;
-        const entity = this.target instanceof SR5Actor_1.SR5Actor ? this.target : this.target;
+        const entity = this.target instanceof SR6Actor_1.SR6Actor ? this.target : this.target;
         return !(((_a = game.user) === null || _a === void 0 ? void 0 : _a.isGM) || entity.owner);
     }
     static openForCurrentScene() {
@@ -17995,7 +17995,7 @@ class EnvModifiersApplication extends Application {
     static getControl() {
         return {
             name: 'environmental-modifiers-application',
-            title: 'CONTROLS.SR5.EnvironmentalModifiers',
+            title: 'CONTROLS.SR6.EnvironmentalModifiers',
             icon: 'fas fa-list',
             onClick: EnvModifiersApplication.openForCurrentScene,
             button: true
@@ -18017,7 +18017,7 @@ class EnvModifiersApplication extends Application {
             const column = $('<div class="col modifier-column"></div>');
             const modifier = $('<div class="modifier-row"></div>');
             const modifierValue = $(`<div class="modifier-value modifier-value-environmental">${modifiers.environmental.total}</div>`);
-            const modifierDescription = $(`<div class="modifier-description open-environmental-modifier">${game.i18n.localize("SR5.EnvironmentModifier")}</div>`);
+            const modifierDescription = $(`<div class="modifier-description open-environmental-modifier">${game.i18n.localize("SR6.EnvironmentModifier")}</div>`);
             modifierDescription.on('click', EnvModifiersApplication.openForTokenHUD(data._id));
             container.append(column);
             column.append(modifier);
@@ -18030,7 +18030,7 @@ class EnvModifiersApplication extends Application {
 }
 exports.EnvModifiersApplication = EnvModifiersApplication;
 
-},{"../actor/SR5Actor":86,"../constants":146,"../helpers":156,"../sr5/Modifiers":212}],112:[function(require,module,exports){
+},{"../actor/SR6Actor":86,"../constants":146,"../helpers":156,"../sr6/Modifiers":212}],112:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -18911,14 +18911,14 @@ var LifestyleParser = /*#__PURE__*/function () {
     key: "parseLifestyle",
     value: function parseLifestyle(chummerLifestyle) {
       var data = {}; // Advanced lifestyles and lifestyle qualities are not supported at the moment
-      // Map the chummer lifestyle type to our sr5 foundry type. 
+      // Map the chummer lifestyle type to our sr6 foundry type. 
 
       var chummerLifestyleType = chummerLifestyle.baselifestyle.toLowerCase();
 
-      if (chummerLifestyleType in _config.SR5.lifestyleTypes) {
+      if (chummerLifestyleType in _config.SR6.lifestyleTypes) {
         data.type = chummerLifestyleType;
       } else {
-        // This is necessary because of a typo in SR5 config.
+        // This is necessary because of a typo in SR6 config.
         if (chummerLifestyleType === 'luxury') {
           data.type = 'luxory';
         } else {
@@ -19783,9 +19783,9 @@ var ChummerImportForm = /*#__PURE__*/function (_FormApplication) {
     get: function get() {
       var options = (0, _get2["default"])((0, _getPrototypeOf2["default"])(ChummerImportForm), "defaultOptions", this);
       options.id = 'chummer-import';
-      options.classes = ['shadowrun5e'];
+      options.classes = ['shadowrun6e'];
       options.title = 'Chummer/Hero Lab Import';
-      options.template = 'systems/shadowrun5e/dist/templates/apps/import.html';
+      options.template = 'systems/shadowrun6e/dist/templates/apps/import.html';
       options.width = 600;
       options.height = 'auto';
       return options;
@@ -19810,14 +19810,14 @@ class DamageApplicationDialog extends FormDialog_1.FormDialog {
         const options = super.defaultOptions;
         options.id = 'damage-application';
         // TODO: Class Dialog here is needed for dialog button styling.
-        options.classes = ['sr5', 'form-dialog'];
+        options.classes = ['sr6', 'form-dialog'];
         options.resizable = true;
         options.height = 'auto';
         return options;
     }
     static getDialogData(actors, damage) {
-        const title = game.i18n.localize('SR5.DamageApplication.Title');
-        const templatePath = 'systems/shadowrun5e/dist/templates/apps/dialogs/damage-application.html';
+        const title = game.i18n.localize('SR6.DamageApplication.Title');
+        const templatePath = 'systems/shadowrun6e/dist/templates/apps/dialogs/damage-application.html';
         // Simplify / refactor this
         const actorDamage = actors.map(a => { return { actor: a }; });
         const templateData = {
@@ -19826,7 +19826,7 @@ class DamageApplicationDialog extends FormDialog_1.FormDialog {
         };
         const buttons = {
             damage: {
-                label: game.i18n.localize('SR5.DamageApplication.ApplyDamage')
+                label: game.i18n.localize('SR6.DamageApplication.ApplyDamage')
             }
         };
         const onAfterClose = () => actorDamage;
@@ -19854,25 +19854,25 @@ class DeleteConfirmationDialog extends FormDialog_1.FormDialog {
     }
     static getDialogData() {
         return {
-            title: game.i18n.localize("SR5.DeleteConfirmationApplication.Title"),
+            title: game.i18n.localize("SR6.DeleteConfirmationApplication.Title"),
             buttons: {
                 delete: {
-                    label: game.i18n.localize('SR5.DeleteConfirmationApplication.Delete')
+                    label: game.i18n.localize('SR6.DeleteConfirmationApplication.Delete')
                 },
                 cancel: {
-                    label: game.i18n.localize('SR5.DeleteConfirmationApplication.Cancel')
+                    label: game.i18n.localize('SR6.DeleteConfirmationApplication.Cancel')
                 }
             },
             default: 'cancel',
             templateData: {},
-            templatePath: 'systems/shadowrun5e/dist/templates/apps/dialogs/delete-confirmation-dialog.html'
+            templatePath: 'systems/shadowrun6e/dist/templates/apps/dialogs/delete-confirmation-dialog.html'
         };
     }
     static get defaultOptions() {
         const options = super.defaultOptions;
         options.id = 'delete-confirmation-application';
         // Class Dialog here is needed for dialog button styling.
-        options.classes = ['sr5', 'form-dialog'];
+        options.classes = ['sr6', 'form-dialog'];
         options.resizable = true;
         options.height = 'auto';
         return options;
@@ -20033,20 +20033,20 @@ class ShadowrunActorDialogs {
     }
     static getDefenseDialogData(actor, options, partsProps) {
         var _a, _b, _c, _d;
-        const title = game.i18n.localize('SR5.Defense');
+        const title = game.i18n.localize('SR6.Defense');
         const activeDefenses = {
             full_defense: {
-                label: 'SR5.FullDefense',
+                label: 'SR6.FullDefense',
                 value: (_a = actor.getFullDefenseAttribute()) === null || _a === void 0 ? void 0 : _a.value,
                 initMod: 0,
             },
             dodge: {
-                label: 'SR5.Dodge',
+                label: 'SR6.Dodge',
                 value: (_b = actor.findActiveSkill('Athletics')) === null || _b === void 0 ? void 0 : _b.value,
                 initMod: 0,
             },
             block: {
-                label: 'SR5.Block',
+                label: 'SR6.Block',
                 value: (_c = actor.findActiveSkill('Close Combat')) === null || _c === void 0 ? void 0 : _c.value,
                 initMod: 0,
             },
@@ -20056,7 +20056,7 @@ class ShadowrunActorDialogs {
         equippedMeleeWeapons.forEach((weapon) => {
             var _a;
             activeDefenses[`parry-${weapon.name}`] = {
-                label: 'SR5.Parry',
+                label: 'SR6.Parry',
                 weapon: weapon.name,
                 value: (_a = actor.findActiveSkill(weapon.getActionSkill())) === null || _a === void 0 ? void 0 : _a.value,
                 init: -5,
@@ -20070,12 +20070,12 @@ class ShadowrunActorDialogs {
             const incomingReach = options.attack.reach;
             const netReach = defenseReach - incomingReach;
             if (netReach !== 0) {
-                parts.addUniquePart('SR5.Reach', netReach);
+                parts.addUniquePart('SR6.Reach', netReach);
             }
         }
         const buttons = {
             continue: {
-                label: game.i18n.localize('SR5.Continue'),
+                label: game.i18n.localize('SR6.Continue'),
                 callback: () => { },
             },
         };
@@ -20085,7 +20085,7 @@ class ShadowrunActorDialogs {
             // Zero to indicate no initiative result change.
             const combat = {};
             if (cover) {
-                parts.addUniquePart('SR5.Cover', cover);
+                parts.addUniquePart('SR6.Cover', cover);
             }
             if (special) {
                 // Defense pool modifier
@@ -20096,7 +20096,7 @@ class ShadowrunActorDialogs {
             }
             return { cover, special, parts, combat };
         };
-        const templatePath = 'systems/shadowrun5e/dist/templates/rolls/roll-defense.html';
+        const templatePath = 'systems/shadowrun6e/dist/templates/rolls/roll-defense.html';
         const templateData = {
             parts: parts.getMessageOutput(),
             cover: options.cover,
@@ -20111,17 +20111,17 @@ class ShadowrunActorDialogs {
         };
     }
     static getSoakDialogData(soakRollOptions, soakParts) {
-        const title = game.i18n.localize('SR5.DamageResistanceTest');
-        const templatePath = 'systems/shadowrun5e/dist/templates/rolls/roll-soak.html';
+        const title = game.i18n.localize('SR6.DamageResistanceTest');
+        const templatePath = 'systems/shadowrun6e/dist/templates/rolls/roll-soak.html';
         const templateData = {
             damage: soakRollOptions === null || soakRollOptions === void 0 ? void 0 : soakRollOptions.damage,
             parts: soakParts.getMessageOutput(),
-            elementTypes: config_1.SR5.elementTypes,
-            damageTypes: config_1.SR5.damageTypes
+            elementTypes: config_1.SR6.elementTypes,
+            damageTypes: config_1.SR6.damageTypes
         };
         const buttons = {
             continue: {
-                label: game.i18n.localize('SR5.Continue'),
+                label: game.i18n.localize('SR6.Continue'),
                 callback: () => { },
             },
         };
@@ -20143,7 +20143,7 @@ class ShadowrunActorDialogs {
     static getSkillDialogData(actor, options, partsProps) {
         var _a;
         const title = game.i18n.localize(options.skill.label || options.skill.name);
-        const templatePath = 'systems/shadowrun5e/dist/templates/rolls/skill-roll.html';
+        const templatePath = 'systems/shadowrun6e/dist/templates/rolls/skill-roll.html';
         const attributes = actor.getAttributes();
         const attribute = actor.getAttribute(options.attribute ? options.attribute : options.skill.attribute);
         const limits = actor.getLimits();
@@ -20155,7 +20155,7 @@ class ShadowrunActorDialogs {
         };
         const buttons = {
             roll: {
-                label: game.i18n.localize('SR5.NormalSkillButton'),
+                label: game.i18n.localize('SR6.NormalSkillButton'),
                 callback: () => { },
             },
         };
@@ -20173,15 +20173,15 @@ class ShadowrunActorDialogs {
             const limit = actor.getLimit(newLimit);
             // Legacy skills have a label, but no name. Custom skills have a name but no label.
             const skillLabel = game.i18n.localize(options.skill.label || options.skill.name);
-            const attributeLabel = game.i18n.localize(config_1.SR5.attributes[newAtt]);
-            const testLabel = game.i18n.localize('SR5.Test');
+            const attributeLabel = game.i18n.localize(config_1.SR6.attributes[newAtt]);
+            const testLabel = game.i18n.localize('SR6.Test');
             const skillTestTitle = `${skillLabel} + ${attributeLabel} ${testLabel}`;
             partsProps.addUniquePart(attribute.label, attribute.value);
             SkillFlow_1.SkillFlow.handleDefaulting(options.skill, partsProps);
             // Possible specialization based on button label.
             const isSpecialization = options.skill.specs.includes(selectedButton);
             if (isSpecialization) {
-                partsProps.addUniquePart('SR5.Specialization', 2);
+                partsProps.addUniquePart('SR6.Specialization', 2);
             }
             return {
                 title: skillTestTitle,
@@ -20238,7 +20238,7 @@ class ShadowrunItemDialog {
             const dialogData = { title: item.name,
                 event,
             };
-            const templatePath = 'systems/shadowrun5e/dist/templates/rolls/range-weapon-roll.html';
+            const templatePath = 'systems/shadowrun6e/dist/templates/rolls/range-weapon-roll.html';
             // Prepare template data for display.
             const modifiers = yield item.actor.getModifiers();
             // Disable manual range selection when a overwrite is set.
@@ -20261,7 +20261,7 @@ class ShadowrunItemDialog {
             const dialogData = { title: item.name,
                 event,
             };
-            const templatePath = 'systems/shadowrun5e/dist/templates/rolls/roll-spell.html';
+            const templatePath = 'systems/shadowrun6e/dist/templates/rolls/roll-spell.html';
             const templateData = {};
             const onAfterClose = ShadowrunItemDialog.addSpellData(templateData, dialogData, item);
             dialogData['templateData'] = templateData;
@@ -20276,7 +20276,7 @@ class ShadowrunItemDialog {
             const dialogData = { title: item.name,
                 event,
             };
-            const templatePath = 'systems/shadowrun5e/dist/templates/rolls/roll-complex-form.html';
+            const templatePath = 'systems/shadowrun6e/dist/templates/rolls/roll-complex-form.html';
             const templateData = {};
             const onAfterClose = ShadowrunItemDialog.addComplexFormData(templateData, dialogData, item);
             dialogData['templateData'] = templateData;
@@ -20329,11 +20329,11 @@ class ShadowrunItemDialog {
         let reckless = false;
         dialogData.buttons = {
             normal: {
-                label: game.i18n.localize('SR5.NormalSpellButton'),
+                label: game.i18n.localize('SR6.NormalSpellButton'),
                 callback: () => (cancel = false),
             },
             reckless: {
-                label: game.i18n.localize('SR5.RecklessSpellButton'),
+                label: game.i18n.localize('SR6.RecklessSpellButton'),
                 callback: () => {
                     reckless = true;
                     cancel = false;
@@ -20367,16 +20367,16 @@ class ShadowrunItemDialog {
         const { ammo } = itemData;
         // TODO: This should be moved into constants or some kind of 'rulesData'
         if (modes.single_shot) {
-            fireModes['1'] = game.i18n.localize("SR5.WeaponModeSingleShotShort");
+            fireModes['1'] = game.i18n.localize("SR6.WeaponModeSingleShotShort");
         }
         if (modes.semi_auto) {
-            fireModes['2'] = game.i18n.localize("SR5.WeaponModeSemiAutoBurst");
+            fireModes['2'] = game.i18n.localize("SR6.WeaponModeSemiAutoBurst");
         }
         if (modes.burst_fire) {
-            fireModes['4'] = game.i18n.localize("SR5.WeaponModeBurstFireLong");
+            fireModes['4'] = game.i18n.localize("SR6.WeaponModeBurstFireLong");
         }
         if (modes.full_auto) {
-            fireModes['10'] = game.i18n.localize("SR5.WeaponModeFullAutoShort");
+            fireModes['10'] = game.i18n.localize("SR6.WeaponModeFullAutoShort");
         }
         const templateRanges = this._getRangeWeaponTemplateData(ranges);
         const fireMode = item.getLastFireMode();
@@ -20393,12 +20393,12 @@ class ShadowrunItemDialog {
         }
         else if (!item.actor.getToken() && helpers_1.Helpers.userHasTargets()) {
             // Inform user about usage of actors without tokens!
-            (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.warn(game.i18n.localize('SR5.TargetingNeedsActorWithToken'));
+            (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.warn(game.i18n.localize('SR6.TargetingNeedsActorWithToken'));
         }
         let cancel = true;
         dialogData.buttons = {
             continue: {
-                label: game.i18n.localize('SR5.Continue'),
+                label: game.i18n.localize('SR6.Continue'),
                 callback: () => (cancel = false),
             },
         };
@@ -20441,7 +20441,7 @@ class ShadowrunItemDialog {
         const newRanges = {};
         for (const [key, value] of Object.entries(ranges)) {
             const distance = value;
-            newRanges[key] = helpers_1.Helpers.createRangeDescription(config_1.SR5.weaponRanges[key], distance, range_modifiers[key]);
+            newRanges[key] = helpers_1.Helpers.createRangeDescription(config_1.SR6.weaponRanges[key], distance, range_modifiers[key]);
         }
         return newRanges;
     }
@@ -20455,7 +20455,7 @@ class ShadowrunItemDialog {
         var _a;
         const attacker = actor.getToken();
         if (!attacker || !helpers_1.Helpers.userHasTargets()) {
-            (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.warn(game.i18n.localize('SR5.TargetingNeedsActorWithToken'));
+            (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.warn(game.i18n.localize('SR6.TargetingNeedsActorWithToken'));
             return [];
         }
         const targets = helpers_1.Helpers.getUserTargets();
@@ -20552,11 +20552,11 @@ class ShadowrunTestDialog {
             rollMode: game.settings.get(constants_1.CORE_NAME, constants_1.CORE_FLAGS.RollMode),
             rollModes: CONFIG.Dice.rollModes
         };
-        let templatePath = 'systems/shadowrun5e/dist/templates/rolls/roll-dialog.html';
+        let templatePath = 'systems/shadowrun6e/dist/templates/rolls/roll-dialog.html';
         const rollButtonName = 'roll';
         const buttons = {
             [rollButtonName]: {
-                label: game.i18n.localize('SR5.Roll'),
+                label: game.i18n.localize('SR6.Roll'),
                 icon: '<i class="fas fa-dice-six"></i>',
                 callback: () => {
                 },
@@ -20564,7 +20564,7 @@ class ShadowrunTestDialog {
         };
         if (actor) {
             buttons['edge'] = {
-                label: `${game.i18n.localize('SR5.PushTheLimit')} (+${actor.getEdge().base})`,
+                label: `${game.i18n.localize('SR6.PushTheLimit')} (+${actor.getEdge().base})`,
                 icon: '<i class="fas fa-bomb"></i>',
                 callback: () => {
                 },
@@ -20576,28 +20576,28 @@ class ShadowrunTestDialog {
             if ((_b = options.dialogOptions) === null || _b === void 0 ? void 0 : _b.pool) {
                 parts.clear();
                 yield ((_c = game.user) === null || _c === void 0 ? void 0 : _c.setFlag(constants_1.SYSTEM_NAME, constants_1.FLAGS.LastRollPromptValue, dicePoolValue));
-                parts.addUniquePart('SR5.Base', dicePoolValue);
+                parts.addUniquePart('SR6.Base', dicePoolValue);
             }
             const limitValue = helpers_1.Helpers.parseInputToNumber($(html).find('[name="limitValue"]').val());
             const { limit } = options;
             if (limit && limit.value !== limitValue) {
                 limit.value = limitValue;
                 limit.base = limitValue;
-                limit.label = 'SR5.Override';
+                limit.label = 'SR6.Override';
             }
             const woundValue = helpers_1.Helpers.parseInputToNumber($(html).find('[name="wounds"]').val());
             const situationMod = helpers_1.Helpers.parseInputToNumber($(html).find('[name="dp_mod"]').val());
             const environmentMod = helpers_1.Helpers.parseInputToNumber($(html).find('[name="options.environmental"]').val());
             let { wounds } = options;
             if (wounds && woundValue !== 0) {
-                parts.addUniquePart('SR5.Wounds', woundValue);
+                parts.addUniquePart('SR6.Wounds', woundValue);
                 wounds = true;
             }
             if (situationMod) {
-                parts.addUniquePart('SR5.SituationalModifier', situationMod);
+                parts.addUniquePart('SR6.SituationalModifier', situationMod);
             }
             if (environmentMod) {
-                parts.addUniquePart('SR5.EnvironmentModifier', environmentMod);
+                parts.addUniquePart('SR6.EnvironmentModifier', environmentMod);
             }
             const extendedString = helpers_1.Helpers.parseInputToString($(html).find('[name="extended"]').val());
             const extended = extendedString === 'true';
@@ -20716,7 +20716,7 @@ var OverwatchScoreTracker = /*#__PURE__*/function (_Application) {
       if (tokens.length === 0) {
         var _ui$notifications;
 
-        (_ui$notifications = ui.notifications) === null || _ui$notifications === void 0 ? void 0 : _ui$notifications.warn(game.i18n.localize('SR5.OverwatchScoreTracker.NotifyNoSelectedTokens'));
+        (_ui$notifications = ui.notifications) === null || _ui$notifications === void 0 ? void 0 : _ui$notifications.warn(game.i18n.localize('SR6.OverwatchScoreTracker.NotifyNoSelectedTokens'));
         return;
       }
 
@@ -20804,9 +20804,9 @@ var OverwatchScoreTracker = /*#__PURE__*/function (_Application) {
     get: function get() {
       var options = (0, _get2["default"])((0, _getPrototypeOf2["default"])(OverwatchScoreTracker), "defaultOptions", this);
       options.id = 'overwatch-score-tracker';
-      options.classes = ['sr5'];
-      options.title = game.i18n.localize('SR5.OverwatchScoreTrackerTitle');
-      options.template = 'systems/shadowrun5e/dist/templates/apps/gmtools/overwatch-score-tracker.html';
+      options.classes = ['sr6'];
+      options.title = game.i18n.localize('SR6.OverwatchScoreTrackerTitle');
+      options.template = 'systems/shadowrun6e/dist/templates/apps/gmtools/overwatch-score-tracker.html';
       options.width = 450;
       options.height = 'auto';
       options.resizable = true;
@@ -20893,8 +20893,8 @@ class SkillEditSheet extends DocumentSheet {
         // @ts-ignore
         return mergeObject(options, {
             id: 'skill-editor',
-            classes: ['sr5', 'sheet', 'skill-edit-window'],
-            template: 'systems/shadowrun5e/dist/templates/apps/skill-edit.html',
+            classes: ['sr6', 'sheet', 'skill-edit-window'],
+            template: 'systems/shadowrun6e/dist/templates/apps/skill-edit.html',
             width: 300,
             submitOnClose: true,
             submitOnChange: true,
@@ -20904,7 +20904,7 @@ class SkillEditSheet extends DocumentSheet {
     }
     get title() {
         const label = this.document.getSkillLabel(this.skillId);
-        return `${game.i18n.localize('SR5.EditSkill')} - ${game.i18n.localize(label)}`;
+        return `${game.i18n.localize('SR6.EditSkill')} - ${game.i18n.localize(label)}`;
     }
     _onUpdateObject(event, formData, updateData) {
         // get skill name.
@@ -21030,7 +21030,7 @@ class SkillEditSheet extends DocumentSheet {
     /** Enhance attribute selection by an empty option to allow newly created skills to have no attribute selected.
      */
     _getSkillAttributesForSelect() {
-        return Object.assign(Object.assign({}, config_1.SR5.attributes), { '': '' });
+        return Object.assign(Object.assign({}, config_1.SR6.attributes), { '': '' });
     }
     _allowSkillNameEditing() {
         const skill = this.document.getSkill(this.skillId);
@@ -21109,8 +21109,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.addRollListeners = exports.addChatMessageContextOptions = exports.createRollChatMessage = exports.createItemChatMessage = exports.createTargetChatMessage = exports.ifConfiguredCreateDefaultChatMessage = void 0;
-const SR5Actor_1 = require("./actor/SR5Actor");
-const SR5Item_1 = require("./item/SR5Item");
+const SR6Actor_1 = require("./actor/SR6Actor");
+const SR6Item_1 = require("./item/SR6Item");
 const template_1 = require("./template");
 const constants_1 = require("./constants");
 const helpers_1 = require("./helpers");
@@ -21143,7 +21143,7 @@ function createChatMessage(templateData, options) {
 // Clean up your data within templateData creation functions!
 const createChatData = (templateData, options) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c;
-    const template = `systems/shadowrun5e/dist/templates/rolls/roll-card.html`;
+    const template = `systems/shadowrun6e/dist/templates/rolls/roll-card.html`;
     const actor = templateData.actor;
     const token = actor === null || actor === void 0 ? void 0 : actor.getToken();
     //@ts-ignore
@@ -21165,7 +21165,7 @@ const createChatData = (templateData, options) => __awaiter(void 0, void 0, void
             alias: (_b = game.user) === null || _b === void 0 ? void 0 : _b.name
         },
         flags: {
-            shadowrun5e: {
+            shadowrun6e: {
                 customRoll: true,
             },
         }
@@ -21219,7 +21219,7 @@ function createChatTemplateData(options) {
     let { actor, item, description, tests } = options;
     const token = actor === null || actor === void 0 ? void 0 : actor.getToken();
     const tokenId = getTokenSceneId(token);
-    const title = game.i18n.localize("SR5.Description");
+    const title = game.i18n.localize("SR6.Description");
     return {
         title,
         actor,
@@ -21277,13 +21277,13 @@ const addChatMessageContextOptions = (html, options) => {
         return message.getFlag(constants_1.SYSTEM_NAME, constants_1.FLAGS.MessageCustomRoll);
     };
     options.push({
-        name: game.i18n.localize('SR5.PushTheLimit'),
-        callback: (li) => SR5Actor_1.SR5Actor.pushTheLimit(li),
+        name: game.i18n.localize('SR6.PushTheLimit'),
+        callback: (li) => SR6Actor_1.SR6Actor.pushTheLimit(li),
         condition: canRoll,
         icon: '<i class="fas fa-meteor"></i>',
     }, {
-        name: game.i18n.localize('SR5.SecondChange'),
-        callback: (li) => SR5Actor_1.SR5Actor.secondChance(li),
+        name: game.i18n.localize('SR6.SecondChange'),
+        callback: (li) => SR6Actor_1.SR6Actor.secondChance(li),
         condition: canRoll,
         icon: '<i class="fas fa-dice-d6"></i>',
     });
@@ -21304,10 +21304,10 @@ const addRollListeners = (app, html) => {
         if (!message)
             return;
         const attack = message.getFlag(constants_1.SYSTEM_NAME, constants_1.FLAGS.Attack);
-        const item = SR5Item_1.SR5Item.getItemFromMessage(html);
+        const item = SR6Item_1.SR6Item.getItemFromMessage(html);
         const type = event.currentTarget.dataset.action;
         if (!item) {
-            (_b = ui.notifications) === null || _b === void 0 ? void 0 : _b.error(game.i18n.localize('SR5.MissingItemForOpposedTest'));
+            (_b = ui.notifications) === null || _b === void 0 ? void 0 : _b.error(game.i18n.localize('SR6.MissingItemForOpposedTest'));
             return;
         }
         // Selection will overwrite chat specific targeting
@@ -21330,7 +21330,7 @@ const addRollListeners = (app, html) => {
     }));
     html.on('click', '.place-template', (event) => {
         event.preventDefault();
-        const item = SR5Item_1.SR5Item.getItemFromMessage(html);
+        const item = SR6Item_1.SR6Item.getItemFromMessage(html);
         if (item) {
             const template = template_1.default.fromItem(item);
             template === null || template === void 0 ? void 0 : template.drawPreview();
@@ -21395,7 +21395,7 @@ const addRollListeners = (app, html) => {
             token.control();
         }
         else {
-            (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.warn(game.i18n.localize('SR5.NoSelectableToken'));
+            (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.warn(game.i18n.localize('SR6.NoSelectableToken'));
         }
     });
     /** Apply damage to the actor speaking the chat card.
@@ -21435,7 +21435,7 @@ const addRollListeners = (app, html) => {
                 }
             }
             if (actors.length === 0) {
-                (_d = ui.notifications) === null || _d === void 0 ? void 0 : _d.warn(game.i18n.localize("SR5.Warnings.TokenSelectionNeeded"));
+                (_d = ui.notifications) === null || _d === void 0 ? void 0 : _d.warn(game.i18n.localize("SR6.Warnings.TokenSelectionNeeded"));
                 return;
             }
         }
@@ -21444,7 +21444,7 @@ const addRollListeners = (app, html) => {
 };
 exports.addRollListeners = addRollListeners;
 
-},{"./actor/DamageApplicationFlow":85,"./actor/SR5Actor":86,"./constants":146,"./helpers":156,"./item/SR5Item":197,"./template":213}],144:[function(require,module,exports){
+},{"./actor/DamageApplicationFlow":85,"./actor/SR6Actor":86,"./constants":146,"./helpers":156,"./item/SR6Item":197,"./template":213}],144:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -21456,8 +21456,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports._combatantGetInitiativeFormula = exports.SR5Combat = void 0;
-const Combat_1 = require("../sr5/Combat");
+exports._combatantGetInitiativeFormula = exports.SR6Combat = void 0;
+const Combat_1 = require("../sr6/Combat");
 const constants_1 = require("../constants");
 /**
  * Foundry combat implementation for Shadowrun5 rules.
@@ -21465,9 +21465,9 @@ const constants_1 = require("../constants");
  * TODO: Store what combatants already acted and with what initiative base and dice they did. This can be used to alter
  *       initiative score without fully rerolling and maintain propper turn order after an actor raised they ini while
  *       stepping over other actors that already had their action phase in the current initiative pass.
- *       @PDF SR5#160 'Chaning Initiative'
+ *       @PDF SR6#160 'Chaning Initiative'
  */
-class SR5Combat extends Combat {
+class SR6Combat extends Combat {
     constructor(...args) {
         super(...args);
         this._registerSocketListeners();
@@ -21498,7 +21498,7 @@ class SR5Combat extends Combat {
      */
     static addCombatTrackerContextOptions(html, options) {
         options.push({
-            name: game.i18n.localize('SR5.COMBAT.ReduceInitByOne'),
+            name: game.i18n.localize('SR6.COMBAT.ReduceInitByOne'),
             icon: '<i class="fas fa-caret-down"></i>',
             callback: (li) => __awaiter(this, void 0, void 0, function* () {
                 // @ts-ignore // foundry-vtt-types doesn't have DocumentCollection.get yet.
@@ -21509,7 +21509,7 @@ class SR5Combat extends Combat {
                 }
             }),
         }, {
-            name: game.i18n.localize('SR5.COMBAT.ReduceInitByFive'),
+            name: game.i18n.localize('SR6.COMBAT.ReduceInitByFive'),
             icon: '<i class="fas fa-angle-down"></i>',
             callback: (li) => __awaiter(this, void 0, void 0, function* () {
                 // @ts-ignore // foundry-vtt-types doesn't have DocumentCollection.get yet.
@@ -21520,7 +21520,7 @@ class SR5Combat extends Combat {
                 }
             }),
         }, {
-            name: game.i18n.localize('SR5.COMBAT.ReduceInitByTen'),
+            name: game.i18n.localize('SR6.COMBAT.ReduceInitByTen'),
             icon: '<i class="fas fa-angle-double-down"></i>',
             callback: (li) => __awaiter(this, void 0, void 0, function* () {
                 // @ts-ignore // foundry-vtt-types doesn't have DocumentCollection.get yet.
@@ -21569,7 +21569,7 @@ class SR5Combat extends Combat {
                 // @ts-ignore
                 yield combatant.update({ initiative });
             }
-            yield SR5Combat.setInitiativePass(combat, initiativePass);
+            yield SR6Combat.setInitiativePass(combat, initiativePass);
             yield combat.update({ turn });
             return;
         });
@@ -21585,7 +21585,7 @@ class SR5Combat extends Combat {
             if (!combat)
                 return;
             yield combat.resetAll();
-            yield SR5Combat.setInitiativePass(combat, constants_1.SR.combat.INITIAL_INI_PASS);
+            yield SR6Combat.setInitiativePass(combat, constants_1.SR.combat.INITIAL_INI_PASS);
             if (game.settings.get(constants_1.SYSTEM_NAME, constants_1.FLAGS.OnlyAutoRollNPCInCombat)) {
                 yield combat.rollNPC();
             }
@@ -21601,7 +21601,7 @@ class SR5Combat extends Combat {
      */
     setupTurns() {
         const turns = super.setupTurns();
-        return turns.sort(SR5Combat.sortByRERIC);
+        return turns.sort(SR6Combat.sortByRERIC);
     }
     static sortByRERIC(left, right) {
         // First sort by initiative value if different
@@ -21725,7 +21725,7 @@ class SR5Combat extends Combat {
                 return;
             }
             if (((_b = game.user) === null || _b === void 0 ? void 0 : _b.isGM) && this.doIniPass(nextTurn)) {
-                yield SR5Combat.handleIniPass(this.id);
+                yield SR6Combat.handleIniPass(this.id);
                 return;
             }
             // Initiative Round Handling.
@@ -21740,7 +21740,7 @@ class SR5Combat extends Combat {
             const initiativePass = constants_1.SR.combat.INITIAL_INI_PASS;
             // Start at the top!
             const nextTurn = 0;
-            yield SR5Combat.setInitiativePass(this, initiativePass);
+            yield SR6Combat.setInitiativePass(this, initiativePass);
             yield this.update({ round: nextRound, turn: nextTurn });
             if (game.settings.get(constants_1.SYSTEM_NAME, constants_1.FLAGS.OnlyAutoRollNPCInCombat)) {
                 yield this.rollNPC();
@@ -21764,7 +21764,7 @@ class SR5Combat extends Combat {
                 yield this._createDoNextRoundSocketMessage();
             }
             else {
-                yield SR5Combat.handleNextRound(this.id);
+                yield SR6Combat.handleNextRound(this.id);
             }
         });
     }
@@ -21799,7 +21799,7 @@ class SR5Combat extends Combat {
     /**
      * Alter initiative formula to include initiative pass reduction.
      *
-     * NOTE: Should this here fail or be buggy, there always is SR5Combat.updateNewCombatants which can be uncommented in SR5Combat.rollInitiative
+     * NOTE: Should this here fail or be buggy, there always is SR6Combat.updateNewCombatants which can be uncommented in SR6Combat.rollInitiative
      * @deprecated since Foundry 0.8. Kept for possible Foundry 0.7 support. Might just be not needed anymore during 0.8 lifecycle.
      * @param combatant
      */
@@ -21808,7 +21808,7 @@ class SR5Combat extends Combat {
             return super._getInitiativeFormula(combatant);
         }
         // Reduce for initiative passes until zero.
-        return SR5Combat._getSystemInitiativeFormula(this.initiativePass);
+        return SR6Combat._getSystemInitiativeFormula(this.initiativePass);
     }
     static _getSystemInitiativeBaseFormula() {
         // @ts-ignore
@@ -21816,7 +21816,7 @@ class SR5Combat extends Combat {
     }
     static _getSystemInitiativeFormula(initiativePass) {
         initiativePass = initiativePass > 1 ? initiativePass : 1;
-        const baseFormula = SR5Combat._getSystemInitiativeBaseFormula();
+        const baseFormula = SR6Combat._getSystemInitiativeBaseFormula();
         const ongoingIniPassModified = (initiativePass - 1) * -constants_1.SR.combat.INI_RESULT_MOD_AFTER_INI_PASS;
         return `max(${baseFormula} - ${ongoingIniPassModified}[Pass], 0)`;
     }
@@ -21826,16 +21826,16 @@ class SR5Combat extends Combat {
             switch (message.type) {
                 case (constants_1.FLAGS.DoNextRound):
                     if (!message.data.hasOwnProperty('id') && typeof message.data.id !== 'string') {
-                        console.error(`SR5Combat Socket Message ${constants_1.FLAGS.DoNextRound} data.id must be a string (combat id) but is ${typeof message.data} (${message.data})!`);
+                        console.error(`SR6Combat Socket Message ${constants_1.FLAGS.DoNextRound} data.id must be a string (combat id) but is ${typeof message.data} (${message.data})!`);
                         return;
                     }
-                    return yield SR5Combat.handleNextRound(message.data.id);
+                    return yield SR6Combat.handleNextRound(message.data.id);
                 case (constants_1.FLAGS.DoInitPass):
                     if (!message.data.hasOwnProperty('id') && typeof message.data.id !== 'string') {
-                        console.error(`SR5Combat Socket Message ${constants_1.FLAGS.DoInitPass} data.id must be a string (combat id) but is ${typeof message.data} (${message.data})!`);
+                        console.error(`SR6Combat Socket Message ${constants_1.FLAGS.DoInitPass} data.id must be a string (combat id) but is ${typeof message.data} (${message.data})!`);
                         return;
                     }
-                    return yield SR5Combat.handleIniPass(message.data.id);
+                    return yield SR6Combat.handleIniPass(message.data.id);
             }
         }));
     }
@@ -21852,7 +21852,7 @@ class SR5Combat extends Combat {
         });
     }
 }
-exports.SR5Combat = SR5Combat;
+exports.SR6Combat = SR6Combat;
 /**
  * Since Foundry 0.8 Combat._getInitiativeFormula has been moved to Combatant._getInitiativeFormula.
  *
@@ -21862,177 +21862,177 @@ exports.SR5Combat = SR5Combat;
  */
 function _combatantGetInitiativeFormula() {
     const combat = this.parent;
-    return SR5Combat._getSystemInitiativeFormula(combat.initiativePass);
+    return SR6Combat._getSystemInitiativeFormula(combat.initiativePass);
 }
 exports._combatantGetInitiativeFormula = _combatantGetInitiativeFormula;
 
-},{"../constants":146,"../sr5/Combat":211}],145:[function(require,module,exports){
+},{"../constants":146,"../sr6/Combat":211}],145:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SR5 = void 0;
-exports.SR5 = {
+exports.SR6 = void 0;
+exports.SR6 = {
     itemTypes: {
-        action: 'SR5.ItemTypes.Action',
-        adept_power: 'SR5.ItemTypes.AdeptPower',
-        ammo: 'SR5.ItemTypes.Ammo',
-        armor: 'SR5.ItemTypes.Armor',
-        complex_form: 'SR5.ItemTypes.ComplexForm',
-        contact: 'SR5.ItemTypes.Contact',
-        critter_power: 'SR5.ItemTypes.CritterPower',
-        cyberware: 'SR5.ItemTypes.Cyberware',
-        bioware: 'SR5.ItemTypes.Bioware',
-        device: 'SR5.ItemTypes.Device',
-        equipment: 'SR5.ItemTypes.Equipment',
-        lifestyle: 'SR5.ItemTypes.Lifestyle',
-        modification: 'SR5.ItemTypes.Modification',
-        quality: 'SR5.ItemTypes.Quality',
-        sin: 'SR5.ItemTypes.Sin',
-        spell: 'SR5.ItemTypes.Spell',
-        weapon: 'SR5.ItemTypes.Weapon',
+        action: 'SR6.ItemTypes.Action',
+        adept_power: 'SR6.ItemTypes.AdeptPower',
+        ammo: 'SR6.ItemTypes.Ammo',
+        armor: 'SR6.ItemTypes.Armor',
+        complex_form: 'SR6.ItemTypes.ComplexForm',
+        contact: 'SR6.ItemTypes.Contact',
+        critter_power: 'SR6.ItemTypes.CritterPower',
+        cyberware: 'SR6.ItemTypes.Cyberware',
+        bioware: 'SR6.ItemTypes.Bioware',
+        device: 'SR6.ItemTypes.Device',
+        equipment: 'SR6.ItemTypes.Equipment',
+        lifestyle: 'SR6.ItemTypes.Lifestyle',
+        modification: 'SR6.ItemTypes.Modification',
+        quality: 'SR6.ItemTypes.Quality',
+        sin: 'SR6.ItemTypes.Sin',
+        spell: 'SR6.ItemTypes.Spell',
+        weapon: 'SR6.ItemTypes.Weapon',
     },
     attributes: {
-        body: 'SR5.AttrBody',
-        agility: 'SR5.AttrAgility',
-        reaction: 'SR5.AttrReaction',
-        strength: 'SR5.AttrStrength',
-        willpower: 'SR5.AttrWillpower',
-        logic: 'SR5.AttrLogic',
-        intuition: 'SR5.AttrIntuition',
-        charisma: 'SR5.AttrCharisma',
-        magic: 'SR5.AttrMagic',
-        resonance: 'SR5.AttrResonance',
-        edge: 'SR5.AttrEdge',
-        essence: 'SR5.AttrEssence',
-        attack: 'SR5.MatrixAttrAttack',
-        sleaze: 'SR5.MatrixAttrSleaze',
-        data_processing: 'SR5.MatrixAttrDataProc',
-        firewall: 'SR5.MatrixAttrFirewall',
+        body: 'SR6.AttrBody',
+        agility: 'SR6.AttrAgility',
+        reaction: 'SR6.AttrReaction',
+        strength: 'SR6.AttrStrength',
+        willpower: 'SR6.AttrWillpower',
+        logic: 'SR6.AttrLogic',
+        intuition: 'SR6.AttrIntuition',
+        charisma: 'SR6.AttrCharisma',
+        magic: 'SR6.AttrMagic',
+        resonance: 'SR6.AttrResonance',
+        edge: 'SR6.AttrEdge',
+        essence: 'SR6.AttrEssence',
+        attack: 'SR6.MatrixAttrAttack',
+        sleaze: 'SR6.MatrixAttrSleaze',
+        data_processing: 'SR6.MatrixAttrDataProc',
+        firewall: 'SR6.MatrixAttrFirewall',
     },
     limits: {
-        physical: 'SR5.LimitPhysical',
-        social: 'SR5.LimitSocial',
-        mental: 'SR5.LimitMental',
-        attack: 'SR5.MatrixAttrAttack',
-        sleaze: 'SR5.MatrixAttrSleaze',
-        data_processing: 'SR5.MatrixAttrDataProc',
-        firewall: 'SR5.MatrixAttrFirewall',
+        physical: 'SR6.LimitPhysical',
+        social: 'SR6.LimitSocial',
+        mental: 'SR6.LimitMental',
+        attack: 'SR6.MatrixAttrAttack',
+        sleaze: 'SR6.MatrixAttrSleaze',
+        data_processing: 'SR6.MatrixAttrDataProc',
+        firewall: 'SR6.MatrixAttrFirewall',
     },
     specialTypes: {
-        mundane: 'SR5.Mundane',
-        magic: 'SR5.Awakened',
-        resonance: 'SR5.Emerged',
+        mundane: 'SR6.Mundane',
+        magic: 'SR6.Awakened',
+        resonance: 'SR6.Emerged',
     },
     damageTypes: {
-        physical: 'SR5.DmgTypePhysical',
-        stun: 'SR5.DmgTypeStun',
-        matrix: 'SR5.DmgTypeMatrix',
+        physical: 'SR6.DmgTypePhysical',
+        stun: 'SR6.DmgTypeStun',
+        matrix: 'SR6.DmgTypeMatrix',
     },
     elementTypes: {
-        fire: 'SR5.ElementFire',
-        cold: 'SR5.ElementCold',
-        acid: 'SR5.ElementAcid',
-        electricity: 'SR5.ElementElectricity',
-        radiation: 'SR5.ElementRadiation',
+        fire: 'SR6.ElementFire',
+        cold: 'SR6.ElementCold',
+        acid: 'SR6.ElementAcid',
+        electricity: 'SR6.ElementElectricity',
+        radiation: 'SR6.ElementRadiation',
     },
     spellCategories: {
-        combat: 'SR5.SpellCatCombat',
-        detection: 'SR5.SpellCatDetection',
-        health: 'SR5.SpellCatHealth',
-        illusion: 'SR5.SpellCatIllusion',
-        manipulation: 'SR5.SpellCatManipulation',
+        combat: 'SR6.SpellCatCombat',
+        detection: 'SR6.SpellCatDetection',
+        health: 'SR6.SpellCatHealth',
+        illusion: 'SR6.SpellCatIllusion',
+        manipulation: 'SR6.SpellCatManipulation',
     },
     spellTypes: {
-        physical: 'SR5.SpellTypePhysical',
-        mana: 'SR5.SpellTypeMana',
+        physical: 'SR6.SpellTypePhysical',
+        mana: 'SR6.SpellTypeMana',
     },
     spellRanges: {
-        touch: 'SR5.SpellRangeTouch',
-        los: 'SR5.SpellRangeLos',
-        los_a: 'SR5.SpellRangeLosA',
+        touch: 'SR6.SpellRangeTouch',
+        los: 'SR6.SpellRangeLos',
+        los_a: 'SR6.SpellRangeLosA',
     },
     combatSpellTypes: {
-        direct: 'SR5.SpellCombatDirect',
-        indirect: 'SR5.SpellCombatIndirect',
+        direct: 'SR6.SpellCombatDirect',
+        indirect: 'SR6.SpellCombatIndirect',
     },
     detectionSpellTypes: {
-        directional: 'SR5.SpellDetectionDirectional',
-        psychic: 'SR5.SpellDetectionPsychic',
-        area: 'SR5.SpellDetectionArea',
+        directional: 'SR6.SpellDetectionDirectional',
+        psychic: 'SR6.SpellDetectionPsychic',
+        area: 'SR6.SpellDetectionArea',
     },
     illusionSpellTypes: {
-        obvious: 'SR5.SpellIllusionObvious',
-        realistic: 'SR5.SpellIllusionRealistic',
+        obvious: 'SR6.SpellIllusionObvious',
+        realistic: 'SR6.SpellIllusionRealistic',
     },
     illusionSpellSenses: {
-        'single-sense': 'SR5.SpellIllusionSingleSense',
-        'multi-sense': 'SR5.SpellIllusionMultiSense',
+        'single-sense': 'SR6.SpellIllusionSingleSense',
+        'multi-sense': 'SR6.SpellIllusionMultiSense',
     },
     attributeRolls: {
-        composure: 'SR5.RollComposure',
-        lift_carry: 'SR5.RollLiftCarry',
-        judge_intentions: 'SR5.RollJudgeIntentions',
-        memory: 'SR5.RollMemory',
+        composure: 'SR6.RollComposure',
+        lift_carry: 'SR6.RollLiftCarry',
+        judge_intentions: 'SR6.RollJudgeIntentions',
+        memory: 'SR6.RollMemory',
     },
     matrixTargets: {
-        persona: 'SR5.TargetPersona',
-        device: 'SR5.TargetDevice',
-        file: 'SR5.TargetFile',
-        self: 'SR5.TargetSelf',
-        sprite: 'SR5.TargetSprite',
-        other: 'SR5.TargetOther',
+        persona: 'SR6.TargetPersona',
+        device: 'SR6.TargetDevice',
+        file: 'SR6.TargetFile',
+        self: 'SR6.TargetSelf',
+        sprite: 'SR6.TargetSprite',
+        other: 'SR6.TargetOther',
     },
     durations: {
-        instant: 'SR5.DurationInstant',
-        sustained: 'SR5.DurationSustained',
-        permanent: 'SR5.DurationPermanent',
+        instant: 'SR6.DurationInstant',
+        sustained: 'SR6.DurationSustained',
+        permanent: 'SR6.DurationPermanent',
     },
     weaponCategories: {
-        range: 'SR5.WeaponCatRange',
-        melee: 'SR5.WeaponCatMelee',
-        thrown: 'SR5.WeaponCatThrown',
+        range: 'SR6.WeaponCatRange',
+        melee: 'SR6.WeaponCatMelee',
+        thrown: 'SR6.WeaponCatThrown',
     },
     weaponRanges: {
-        short: 'SR5.WeaponRangeShort',
-        medium: 'SR5.WeaponRangeMedium',
-        long: 'SR5.WeaponRangeLong',
-        extreme: 'SR5.WeaponRangeExtreme',
+        short: 'SR6.WeaponRangeShort',
+        medium: 'SR6.WeaponRangeMedium',
+        long: 'SR6.WeaponRangeLong',
+        extreme: 'SR6.WeaponRangeExtreme',
     },
     qualityTypes: {
-        positive: 'SR5.QualityTypePositive',
-        negative: 'SR5.QualityTypeNegative',
+        positive: 'SR6.QualityTypePositive',
+        negative: 'SR6.QualityTypeNegative',
     },
     adeptPower: {
         types: {
-            active: 'SR5.AdeptPower.Types.Active',
-            passive: 'SR5.AdeptPower.Types.Passive',
+            active: 'SR6.AdeptPower.Types.Active',
+            passive: 'SR6.AdeptPower.Types.Passive',
         },
     },
     deviceCategories: {
-        commlink: 'SR5.DeviceCatCommlink',
-        cyberdeck: 'SR5.DeviceCatCyberdeck',
+        commlink: 'SR6.DeviceCatCommlink',
+        cyberdeck: 'SR6.DeviceCatCyberdeck',
     },
     cyberwareGrades: {
-        standard: 'SR5.CyberwareGradeStandard',
-        alpha: 'SR5.CyberwareGradeAlpha',
-        beta: 'SR5.CyberwareGradeBeta',
-        delta: 'SR5.CyberwareGradeDelta',
-        used: 'SR5.CyberwareGradeUsed',
+        standard: 'SR6.CyberwareGradeStandard',
+        alpha: 'SR6.CyberwareGradeAlpha',
+        beta: 'SR6.CyberwareGradeBeta',
+        delta: 'SR6.CyberwareGradeDelta',
+        used: 'SR6.CyberwareGradeUsed',
     },
     knowledgeSkillCategories: {
-        street: 'SR5.KnowledgeSkillStreet',
-        academic: 'SR5.KnowledgeSkillAcademic',
-        professional: 'SR5.KnowledgeSkillProfessional',
-        interests: 'SR5.KnowledgeSkillInterests',
+        street: 'SR6.KnowledgeSkillStreet',
+        academic: 'SR6.KnowledgeSkillAcademic',
+        professional: 'SR6.KnowledgeSkillProfessional',
+        interests: 'SR6.KnowledgeSkillInterests',
     },
     activeSkills: {
 		
 	},
     actionTypes: {
-        none: 'SR5.ActionTypeNone',
-        free: 'SR5.ActionTypeFree',
-        simple: 'SR5.ActionTypeSimple',
-        complex: 'SR5.ActionTypeComplex',
-        varies: 'SR5.ActionTypeVaries',
+        none: 'SR6.ActionTypeNone',
+        free: 'SR6.ActionTypeFree',
+        simple: 'SR6.ActionTypeSimple',
+        complex: 'SR6.ActionTypeComplex',
+        varies: 'SR6.ActionTypeVaries',
     },
     // Use within action damage calculation (base <operator> attribute) => value
     actionDamageFormulaOperators: {
@@ -22042,36 +22042,36 @@ exports.SR5 = {
         divide: '/'
     },
     matrixAttributes: {
-        attack: 'SR5.MatrixAttrAttack',
-        sleaze: 'SR5.MatrixAttrSleaze',
-        data_processing: 'SR5.MatrixAttrDataProc',
-        firewall: 'SR5.MatrixAttrFirewall',
+        attack: 'SR6.MatrixAttrAttack',
+        sleaze: 'SR6.MatrixAttrSleaze',
+        data_processing: 'SR6.MatrixAttrDataProc',
+        firewall: 'SR6.MatrixAttrFirewall',
     },
     initiativeCategories: {
-        meatspace: 'SR5.InitCatMeatspace',
-        astral: 'SR5.InitCatAstral',
-        matrix: 'SR5.InitCatMatrix',
+        meatspace: 'SR6.InitCatMeatspace',
+        astral: 'SR6.InitCatAstral',
+        matrix: 'SR6.InitCatMatrix',
     },
     modificationTypes: {
-        weapon: 'SR5.Weapon',
-        armor: 'SR5.Armor',
+        weapon: 'SR6.Weapon',
+        armor: 'SR6.Armor',
     },
     mountPoints: {
-        barrel: 'SR5.Barrel',
-        under_barrel: 'SR5.UnderBarrel',
-        stock: 'SR5.Stock',
-        top: 'SR5.Top',
-        side: 'SR5.Side',
-        internal: 'SR5.Internal',
+        barrel: 'SR6.Barrel',
+        under_barrel: 'SR6.UnderBarrel',
+        stock: 'SR6.Stock',
+        top: 'SR6.Top',
+        side: 'SR6.Side',
+        internal: 'SR6.Internal',
     },
     lifestyleTypes: {
-        street: 'SR5.LifestyleStreet',
-        squatter: 'SR5.LifestyleSquatter',
-        low: 'SR5.LifestyleLow',
-        medium: 'SR5.LifestyleMiddle',
-        high: 'SR5.LifestyleHigh',
-        luxory: 'SR5.LifestyleLuxory',
-        other: 'SR5.LifestyleOther',
+        street: 'SR6.LifestyleStreet',
+        squatter: 'SR6.LifestyleSquatter',
+        low: 'SR6.LifestyleLow',
+        medium: 'SR6.LifestyleMiddle',
+        high: 'SR6.LifestyleHigh',
+        luxory: 'SR6.LifestyleLuxory',
+        other: 'SR6.LifestyleOther',
     },
     kbmod: {
         STANDARD: 'shiftKey',
@@ -22079,157 +22079,157 @@ exports.SR5 = {
         SPEC: 'ctrlKey',
     },
     actorModifiers: {
-        soak: 'SR5.RollSoak',
-        drain: 'SR5.Drain',
-        armor: 'SR5.Armor',
-        physical_limit: 'SR5.PhysicalLimit',
-        social_limit: 'SR5.SocialLimit',
-        mental_limit: 'SR5.MentalLimit',
-        stun_track: 'SR5.StunTrack',
-        physical_track: 'SR5.PhysicalTrack',
-        meat_initiative: 'SR5.MeatSpaceInit',
-        meat_initiative_dice: 'SR5.MeatSpaceDice',
-        astral_initiative: 'SR5.AstralInit',
-        astral_initiative_dice: 'SR5.AstralDice',
-        matrix_initiative: 'SR5.MatrixInit',
-        matrix_initiative_dice: 'SR5.MatrixDice',
-        composure: 'SR5.RollComposure',
-        lift_carry: 'SR5.RollLiftCarry',
-        judge_intentions: 'SR5.RollJudgeIntentions',
-        memory: 'SR5.RollMemory',
-        walk: 'SR5.Walk',
-        run: 'SR5.Run',
-        defense: 'SR5.RollDefense',
-        wound_tolerance: 'SR5.WoundTolerance',
-        essence: 'SR5.AttrEssence',
-        fade: 'SR5.RollFade',
-        global: 'SR5.Global',
+        soak: 'SR6.RollSoak',
+        drain: 'SR6.Drain',
+        armor: 'SR6.Armor',
+        physical_limit: 'SR6.PhysicalLimit',
+        social_limit: 'SR6.SocialLimit',
+        mental_limit: 'SR6.MentalLimit',
+        stun_track: 'SR6.StunTrack',
+        physical_track: 'SR6.PhysicalTrack',
+        meat_initiative: 'SR6.MeatSpaceInit',
+        meat_initiative_dice: 'SR6.MeatSpaceDice',
+        astral_initiative: 'SR6.AstralInit',
+        astral_initiative_dice: 'SR6.AstralDice',
+        matrix_initiative: 'SR6.MatrixInit',
+        matrix_initiative_dice: 'SR6.MatrixDice',
+        composure: 'SR6.RollComposure',
+        lift_carry: 'SR6.RollLiftCarry',
+        judge_intentions: 'SR6.RollJudgeIntentions',
+        memory: 'SR6.RollMemory',
+        walk: 'SR6.Walk',
+        run: 'SR6.Run',
+        defense: 'SR6.RollDefense',
+        wound_tolerance: 'SR6.WoundTolerance',
+        essence: 'SR6.AttrEssence',
+        fade: 'SR6.RollFade',
+        global: 'SR6.Global',
     },
     programTypes: {
-        common_program: 'SR5.CommonProgram',
-        hacking_program: 'SR5.HackingProgram',
-        agent: 'SR5.Agent',
+        common_program: 'SR6.CommonProgram',
+        hacking_program: 'SR6.HackingProgram',
+        agent: 'SR6.Agent',
     },
     spiritTypes: {
         // base types
-        air: 'SR5.Spirit.Types.Air',
-        aircraft: 'SR5.Spirit.Types.Aircraft',
-        airwave: 'SR5.Spirit.Types.Airwave',
-        automotive: 'SR5.Spirit.Types.Automotive',
-        beasts: 'SR5.Spirit.Types.Beasts',
-        ceramic: 'SR5.Spirit.Types.Ceramic',
-        earth: 'SR5.Spirit.Types.Earth',
-        energy: 'SR5.Spirit.Types.Energy',
-        fire: 'SR5.Spirit.Types.Fire',
-        guardian: 'SR5.Spirit.Types.Guardian',
-        guidance: 'SR5.Spirit.Types.Guidance',
-        man: 'SR5.Spirit.Types.Man',
-        metal: 'SR5.Spirit.Types.Metal',
-        plant: 'SR5.Spirit.Types.Plant',
-        ship: 'SR5.Spirit.Types.Ship',
-        task: 'SR5.Spirit.Types.Task',
-        train: 'SR5.Spirit.Types.Train',
-        water: 'SR5.Spirit.Types.Water',
+        air: 'SR6.Spirit.Types.Air',
+        aircraft: 'SR6.Spirit.Types.Aircraft',
+        airwave: 'SR6.Spirit.Types.Airwave',
+        automotive: 'SR6.Spirit.Types.Automotive',
+        beasts: 'SR6.Spirit.Types.Beasts',
+        ceramic: 'SR6.Spirit.Types.Ceramic',
+        earth: 'SR6.Spirit.Types.Earth',
+        energy: 'SR6.Spirit.Types.Energy',
+        fire: 'SR6.Spirit.Types.Fire',
+        guardian: 'SR6.Spirit.Types.Guardian',
+        guidance: 'SR6.Spirit.Types.Guidance',
+        man: 'SR6.Spirit.Types.Man',
+        metal: 'SR6.Spirit.Types.Metal',
+        plant: 'SR6.Spirit.Types.Plant',
+        ship: 'SR6.Spirit.Types.Ship',
+        task: 'SR6.Spirit.Types.Task',
+        train: 'SR6.Spirit.Types.Train',
+        water: 'SR6.Spirit.Types.Water',
         // toxic types
-        toxic_air: 'SR5.Spirit.Types.ToxicAir',
-        toxic_beasts: 'SR5.Spirit.Types.ToxicBeasts',
-        toxic_earth: 'SR5.Spirit.Types.ToxicEarth',
-        toxic_fire: 'SR5.Spirit.Types.ToxicFire',
-        toxic_man: 'SR5.Spirit.Types.ToxicMan',
-        toxic_water: 'SR5.Spirit.Types.ToxicWater',
+        toxic_air: 'SR6.Spirit.Types.ToxicAir',
+        toxic_beasts: 'SR6.Spirit.Types.ToxicBeasts',
+        toxic_earth: 'SR6.Spirit.Types.ToxicEarth',
+        toxic_fire: 'SR6.Spirit.Types.ToxicFire',
+        toxic_man: 'SR6.Spirit.Types.ToxicMan',
+        toxic_water: 'SR6.Spirit.Types.ToxicWater',
         // blood types
-        blood: 'SR5.Spirit.Types.Blood',
+        blood: 'SR6.Spirit.Types.Blood',
         // shadow types
-        muse: 'SR5.Spirit.Types.Muse',
-        nightmare: 'SR5.Spirit.Types.Nightmare',
-        shade: 'SR5.Spirit.Types.Shade',
-        succubus: 'SR5.Spirit.Types.Succubus',
-        wraith: 'SR5.Spirit.Types.Wraith',
+        muse: 'SR6.Spirit.Types.Muse',
+        nightmare: 'SR6.Spirit.Types.Nightmare',
+        shade: 'SR6.Spirit.Types.Shade',
+        succubus: 'SR6.Spirit.Types.Succubus',
+        wraith: 'SR6.Spirit.Types.Wraith',
         // shedim types
-        shedim: 'SR5.Spirit.Types.Shedim',
-        master_shedim: 'SR5.Spirit.Types.MasterShedim',
+        shedim: 'SR6.Spirit.Types.Shedim',
+        master_shedim: 'SR6.Spirit.Types.MasterShedim',
         // insect types
-        caretaker: 'SR5.Spirit.Types.Caretaker',
-        nymph: 'SR5.Spirit.Types.Nymph',
-        scout: 'SR5.Spirit.Types.Scout',
-        soldier: 'SR5.Spirit.Types.Soldier',
-        worker: 'SR5.Spirit.Types.Worker',
-        queen: 'SR5.Spirit.Types.Queen',
+        caretaker: 'SR6.Spirit.Types.Caretaker',
+        nymph: 'SR6.Spirit.Types.Nymph',
+        scout: 'SR6.Spirit.Types.Scout',
+        soldier: 'SR6.Spirit.Types.Soldier',
+        worker: 'SR6.Spirit.Types.Worker',
+        queen: 'SR6.Spirit.Types.Queen',
     },
     critterPower: {
         categories: {
-            mundane: 'SR5.CritterPower.Categories.Mundane',
-            paranormal: 'SR5.CritterPower.Categories.Paranormal',
-            free_spirit: 'SR5.CritterPower.Categories.FreeSpirit',
-            emergent: 'SR5.CritterPower.Categories.Emergent',
-            shapeshifter: 'SR5.CritterPower.Categories.Shapeshifter',
-            drake: 'SR5.CritterPower.Categories.Drake',
-            echoes: 'SR5.CritterPower.Categories.Echoes',
-            weakness: 'SR5.CritterPower.Categories.Weakness',
-            paranormal_infected: 'SR5.CritterPower.Categories.ParanormalInfected',
+            mundane: 'SR6.CritterPower.Categories.Mundane',
+            paranormal: 'SR6.CritterPower.Categories.Paranormal',
+            free_spirit: 'SR6.CritterPower.Categories.FreeSpirit',
+            emergent: 'SR6.CritterPower.Categories.Emergent',
+            shapeshifter: 'SR6.CritterPower.Categories.Shapeshifter',
+            drake: 'SR6.CritterPower.Categories.Drake',
+            echoes: 'SR6.CritterPower.Categories.Echoes',
+            weakness: 'SR6.CritterPower.Categories.Weakness',
+            paranormal_infected: 'SR6.CritterPower.Categories.ParanormalInfected',
         },
         types: {
-            mana: 'SR5.CritterPower.Types.Mana',
-            physical: 'SR5.CritterPower.Types.Physical',
+            mana: 'SR6.CritterPower.Types.Mana',
+            physical: 'SR6.CritterPower.Types.Physical',
         },
         ranges: {
-            los: 'SR5.CritterPower.Ranges.LineOfSight',
-            self: 'SR5.CritterPower.Ranges.Self',
-            touch: 'SR5.CritterPower.Ranges.Touch',
-            los_a: 'SR5.CritterPower.Ranges.LineOfSightArea',
-            special: 'SR5.CritterPower.Ranges.Special',
+            los: 'SR6.CritterPower.Ranges.LineOfSight',
+            self: 'SR6.CritterPower.Ranges.Self',
+            touch: 'SR6.CritterPower.Ranges.Touch',
+            los_a: 'SR6.CritterPower.Ranges.LineOfSightArea',
+            special: 'SR6.CritterPower.Ranges.Special',
         },
         durations: {
-            always: 'SR5.CritterPower.Durations.Always',
-            instant: 'SR5.CritterPower.Durations.Instant',
-            sustained: 'SR5.CritterPower.Durations.Sustained',
-            permanent: 'SR5.CritterPower.Durations.Permanent',
-            special: 'SR5.CritterPower.Durations.Special',
+            always: 'SR6.CritterPower.Durations.Always',
+            instant: 'SR6.CritterPower.Durations.Instant',
+            sustained: 'SR6.CritterPower.Durations.Sustained',
+            permanent: 'SR6.CritterPower.Durations.Permanent',
+            special: 'SR6.CritterPower.Durations.Special',
         },
     },
     spriteTypes: {
-        courier: 'SR5.Sprite.Types.Courier',
-        crack: 'SR5.Sprite.Types.Crack',
-        data: 'SR5.Sprite.Types.Data',
-        fault: 'SR5.Sprite.Types.Fault',
-        machine: 'SR5.Sprite.Types.Machine',
+        courier: 'SR6.Sprite.Types.Courier',
+        crack: 'SR6.Sprite.Types.Crack',
+        data: 'SR6.Sprite.Types.Data',
+        fault: 'SR6.Sprite.Types.Fault',
+        machine: 'SR6.Sprite.Types.Machine',
     },
     vehicle: {
         types: {
-            air: 'SR5.Vehicle.Types.Air',
-            aerospace: 'SR5.Vehicle.Types.Aerospace',
-            ground: 'SR5.Vehicle.Types.Ground',
-            water: 'SR5.Vehicle.Types.Water',
-            walker: 'SR5.Vehicle.Types.Walker',
-            exotic: 'SR5.Vehicle.Types.Exotic',
+            air: 'SR6.Vehicle.Types.Air',
+            aerospace: 'SR6.Vehicle.Types.Aerospace',
+            ground: 'SR6.Vehicle.Types.Ground',
+            water: 'SR6.Vehicle.Types.Water',
+            walker: 'SR6.Vehicle.Types.Walker',
+            exotic: 'SR6.Vehicle.Types.Exotic',
         },
         stats: {
-            handling: 'SR5.Vehicle.Stats.Handling',
-            off_road_handling: 'SR5.Vehicle.Stats.OffRoadHandling',
-            speed: 'SR5.Vehicle.Stats.Speed',
-            off_road_speed: 'SR5.Vehicle.Stats.OffRoadSpeed',
-            acceleration: 'SR5.Vehicle.Stats.Acceleration',
-            pilot: 'SR5.Vehicle.Stats.Pilot',
-            sensor: 'SR5.Vehicle.Stats.Sensor',
+            handling: 'SR6.Vehicle.Stats.Handling',
+            off_road_handling: 'SR6.Vehicle.Stats.OffRoadHandling',
+            speed: 'SR6.Vehicle.Stats.Speed',
+            off_road_speed: 'SR6.Vehicle.Stats.OffRoadSpeed',
+            acceleration: 'SR6.Vehicle.Stats.Acceleration',
+            pilot: 'SR6.Vehicle.Stats.Pilot',
+            sensor: 'SR6.Vehicle.Stats.Sensor',
         },
         control_modes: {
-            manual: 'SR5.Vehicle.ControlModes.Manual',
-            remote: 'SR5.Vehicle.ControlModes.Remote',
-            rigger: 'SR5.Vehicle.ControlModes.Rigger',
-            autopilot: 'SR5.Vehicle.ControlModes.Autopilot',
+            manual: 'SR6.Vehicle.ControlModes.Manual',
+            remote: 'SR6.Vehicle.ControlModes.Remote',
+            rigger: 'SR6.Vehicle.ControlModes.Rigger',
+            autopilot: 'SR6.Vehicle.ControlModes.Autopilot',
         },
         environments: {
-            speed: 'SR5.Vehicle.Environments.Speed',
-            handling: 'SR5.Vehicle.Environments.Handling',
+            speed: 'SR6.Vehicle.Environments.Speed',
+            handling: 'SR6.Vehicle.Environments.Handling',
         },
     },
     character: {
         types: {
-            human: 'SR5.Character.Types.Human',
-            elf: 'SR5.Character.Types.Elf',
-            ork: 'SR5.Character.Types.Ork',
-            dwarf: 'SR5.Character.Types.Dwarf',
-            troll: 'SR5.Character.Types.Troll',
+            human: 'SR6.Character.Types.Human',
+            elf: 'SR6.Character.Types.Elf',
+            ork: 'SR6.Character.Types.Ork',
+            dwarf: 'SR6.Character.Types.Dwarf',
+            troll: 'SR6.Character.Types.Troll',
         },
     },
 };
@@ -22250,7 +22250,7 @@ exports.SR = exports.DEFAULT_ID_LENGTH = exports.SKILL_DEFAULT_NAME = exports.LE
  * Other than this file config.ts exists and only contains mappings between fixed names/ids and translation labels.
  *
  */
-exports.SYSTEM_NAME = 'shadowrun5e';
+exports.SYSTEM_NAME = 'shadowrun6e';
 exports.SYSTEM_SOCKET = `system.${exports.SYSTEM_NAME}`;
 exports.FLAGS = {
     ShowGlitchAnimation: 'showGlitchAnimation',
@@ -22281,7 +22281,7 @@ exports.CORE_NAME = 'core';
 exports.CORE_FLAGS = {
     RollMode: 'rollMode'
 };
-exports.METATYPEMODIFIER = 'SR5.Character.Modifiers.NPCMetatypeAttribute';
+exports.METATYPEMODIFIER = 'SR6.Character.Modifiers.NPCMetatypeAttribute';
 exports.LENGTH_UNIT_TO_METERS_MULTIPLIERS = {
     'm': 1,
     'meter': 1,
@@ -22352,7 +22352,7 @@ exports.SR = {
         SHORT_NAME_LENGTH: 3
     },
     skill: {
-        // @PDF SR5#130
+        // @PDF SR6#130
         DEFAULTING_MODIFIER: -1,
         SPECIALIZATION_MODIFIER: 2
     }
@@ -22594,7 +22594,7 @@ const registerBasicHelpers = () => {
         //     return translatedSkill;
         //
         // // Try showing the first three letters, or less.
-        // const translatedAttribute = game.i18n.localize(SR5.attributes[skill.attribute]);
+        // const translatedAttribute = game.i18n.localize(SR6.attributes[skill.attribute]);
         // if (!translatedAttribute) return translatedSkill;
         //
         // const cutToIndex = translatedAttribute.length < SR.attributes.SHORT_NAME_LENGTH ?
@@ -22770,104 +22770,104 @@ exports.preloadHandlebarsTemplates = void 0;
 const preloadHandlebarsTemplates = () => __awaiter(void 0, void 0, void 0, function* () {
     const templatePaths = [
         // actor tabs
-        'systems/shadowrun5e/dist/templates/actor/tabs/ActionsTab.html',
-        'systems/shadowrun5e/dist/templates/actor/tabs/BioTab.html',
-        'systems/shadowrun5e/dist/templates/actor/tabs/GearTab.html',
-        'systems/shadowrun5e/dist/templates/actor/tabs/MagicTab.html',
-        'systems/shadowrun5e/dist/templates/actor/tabs/MatrixTab.html',
-        'systems/shadowrun5e/dist/templates/actor/tabs/MiscTab.html',
-        'systems/shadowrun5e/dist/templates/actor/tabs/SkillsTab.html',
-        'systems/shadowrun5e/dist/templates/actor/tabs/SocialTab.html',
-        'systems/shadowrun5e/dist/templates/actor/tabs/SpellsTab.html',
-        'systems/shadowrun5e/dist/templates/actor/tabs/CritterPowersTab.html',
-        'systems/shadowrun5e/dist/templates/actor/tabs/spirit/SpiritSkillsTab.html',
-        'systems/shadowrun5e/dist/templates/actor/tabs/matrix/SpriteSkillsTab.html',
-        'systems/shadowrun5e/dist/templates/actor/tabs/vehicle/VehicleSkillsTab.html',
-        'systems/shadowrun5e/dist/templates/actor/tabs/vehicle/VehicleMatrixTab.html',
+        'systems/shadowrun6e/dist/templates/actor/tabs/ActionsTab.html',
+        'systems/shadowrun6e/dist/templates/actor/tabs/BioTab.html',
+        'systems/shadowrun6e/dist/templates/actor/tabs/GearTab.html',
+        'systems/shadowrun6e/dist/templates/actor/tabs/MagicTab.html',
+        'systems/shadowrun6e/dist/templates/actor/tabs/MatrixTab.html',
+        'systems/shadowrun6e/dist/templates/actor/tabs/MiscTab.html',
+        'systems/shadowrun6e/dist/templates/actor/tabs/SkillsTab.html',
+        'systems/shadowrun6e/dist/templates/actor/tabs/SocialTab.html',
+        'systems/shadowrun6e/dist/templates/actor/tabs/SpellsTab.html',
+        'systems/shadowrun6e/dist/templates/actor/tabs/CritterPowersTab.html',
+        'systems/shadowrun6e/dist/templates/actor/tabs/spirit/SpiritSkillsTab.html',
+        'systems/shadowrun6e/dist/templates/actor/tabs/matrix/SpriteSkillsTab.html',
+        'systems/shadowrun6e/dist/templates/actor/tabs/vehicle/VehicleSkillsTab.html',
+        'systems/shadowrun6e/dist/templates/actor/tabs/vehicle/VehicleMatrixTab.html',
         // uncategorized lists
-        'systems/shadowrun5e/dist/templates/actor/parts/Initiative.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/Movement.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/ProfileImage.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/NameInput.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/ActionList.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/ContactList.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/SinAndLifestyleList.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/Initiative.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/Movement.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/ProfileImage.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/NameInput.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/ActionList.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/ContactList.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/SinAndLifestyleList.html',
         // magic
-        'systems/shadowrun5e/dist/templates/actor/parts/magic/AdeptPowerList.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/magic/SpellList.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/magic/SpellAndAdeptPowerList.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/magic/SpiritOptions.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/magic/AdeptPowerList.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/magic/SpellList.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/magic/SpellAndAdeptPowerList.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/magic/SpiritOptions.html',
         // matrix
-        'systems/shadowrun5e/dist/templates/actor/parts/matrix/ProgramList.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/matrix/ComplexFormList.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/matrix/MatrixAttribute.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/matrix/SpritePowerList.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/matrix/DeviceRating.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/matrix/ProgramList.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/matrix/ComplexFormList.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/matrix/MatrixAttribute.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/matrix/SpritePowerList.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/matrix/DeviceRating.html',
         // attributes
-        'systems/shadowrun5e/dist/templates/actor/parts/attributes/Attribute.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/attributes/AttributeList.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/attributes/SpecialAttributeList.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/attributes/Limits.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/attributes/Attribute.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/attributes/AttributeList.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/attributes/SpecialAttributeList.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/attributes/Limits.html',
         // skills
-        'systems/shadowrun5e/dist/templates/actor/parts/skills/ActiveSkillList.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/skills/LanguageAndKnowledgeSkillList.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/skills/ActiveSkillList.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/skills/LanguageAndKnowledgeSkillList.html',
         // vehicle
-        'systems/shadowrun5e/dist/templates/actor/parts/vehicle/VehicleStatsList.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/vehicle/VehicleSecondStatsList.html',
-        'systems/shadowrun5e/dist/templates/actor/parts/vehicle/VehicleMovement.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/vehicle/VehicleStatsList.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/vehicle/VehicleSecondStatsList.html',
+        'systems/shadowrun6e/dist/templates/actor/parts/vehicle/VehicleMovement.html',
         // limited actor
-        'systems/shadowrun5e/dist/templates/actor-limited/character.html',
-        'systems/shadowrun5e/dist/templates/actor-limited/spirit.html',
-        'systems/shadowrun5e/dist/templates/actor-limited/sprite.html',
-        'systems/shadowrun5e/dist/templates/actor-limited/vehicle.html',
-        'systems/shadowrun5e/dist/templates/actor-limited/critter.html',
-        'systems/shadowrun5e/dist/templates/actor-limited/parts/Header.html',
-        'systems/shadowrun5e/dist/templates/actor-limited/parts/MiscCharacter.html',
-        'systems/shadowrun5e/dist/templates/actor-limited/parts/MiscSpirit.html',
-        'systems/shadowrun5e/dist/templates/actor-limited/parts/MiscSprite.html',
-        'systems/shadowrun5e/dist/templates/actor-limited/parts/MiscVehicle.html',
-        'systems/shadowrun5e/dist/templates/actor-limited/parts/MiscCritter.html',
-        'systems/shadowrun5e/dist/templates/item/parts/description.html',
-        'systems/shadowrun5e/dist/templates/item/parts/technology.html',
-        'systems/shadowrun5e/dist/templates/item/parts/header.html',
-        'systems/shadowrun5e/dist/templates/item/parts/weapon-ammo-list.html',
-        'systems/shadowrun5e/dist/templates/item/parts/weapon-mods-list.html',
-        'systems/shadowrun5e/dist/templates/item/parts/action.html',
-        'systems/shadowrun5e/dist/templates/item/parts/damage.html',
-        'systems/shadowrun5e/dist/templates/item/parts/opposed.html',
-        'systems/shadowrun5e/dist/templates/item/parts/spell.html',
-        'systems/shadowrun5e/dist/templates/item/parts/complex_form.html',
-        'systems/shadowrun5e/dist/templates/item/parts/weapon.html',
-        'systems/shadowrun5e/dist/templates/item/parts/armor.html',
-        'systems/shadowrun5e/dist/templates/item/parts/matrix.html',
-        'systems/shadowrun5e/dist/templates/item/parts/sin.html',
-        'systems/shadowrun5e/dist/templates/item/parts/contact.html',
-        'systems/shadowrun5e/dist/templates/item/parts/lifestyle.html',
-        'systems/shadowrun5e/dist/templates/item/parts/ammo.html',
-        'systems/shadowrun5e/dist/templates/item/parts/modification.html',
-        'systems/shadowrun5e/dist/templates/item/parts/program.html',
-        'systems/shadowrun5e/dist/templates/item/parts/critter_power.html',
-        'systems/shadowrun5e/dist/templates/rolls/parts/parts-list.html',
-        'systems/shadowrun5e/dist/templates/rolls/parts/Damage.html',
+        'systems/shadowrun6e/dist/templates/actor-limited/character.html',
+        'systems/shadowrun6e/dist/templates/actor-limited/spirit.html',
+        'systems/shadowrun6e/dist/templates/actor-limited/sprite.html',
+        'systems/shadowrun6e/dist/templates/actor-limited/vehicle.html',
+        'systems/shadowrun6e/dist/templates/actor-limited/critter.html',
+        'systems/shadowrun6e/dist/templates/actor-limited/parts/Header.html',
+        'systems/shadowrun6e/dist/templates/actor-limited/parts/MiscCharacter.html',
+        'systems/shadowrun6e/dist/templates/actor-limited/parts/MiscSpirit.html',
+        'systems/shadowrun6e/dist/templates/actor-limited/parts/MiscSprite.html',
+        'systems/shadowrun6e/dist/templates/actor-limited/parts/MiscVehicle.html',
+        'systems/shadowrun6e/dist/templates/actor-limited/parts/MiscCritter.html',
+        'systems/shadowrun6e/dist/templates/item/parts/description.html',
+        'systems/shadowrun6e/dist/templates/item/parts/technology.html',
+        'systems/shadowrun6e/dist/templates/item/parts/header.html',
+        'systems/shadowrun6e/dist/templates/item/parts/weapon-ammo-list.html',
+        'systems/shadowrun6e/dist/templates/item/parts/weapon-mods-list.html',
+        'systems/shadowrun6e/dist/templates/item/parts/action.html',
+        'systems/shadowrun6e/dist/templates/item/parts/damage.html',
+        'systems/shadowrun6e/dist/templates/item/parts/opposed.html',
+        'systems/shadowrun6e/dist/templates/item/parts/spell.html',
+        'systems/shadowrun6e/dist/templates/item/parts/complex_form.html',
+        'systems/shadowrun6e/dist/templates/item/parts/weapon.html',
+        'systems/shadowrun6e/dist/templates/item/parts/armor.html',
+        'systems/shadowrun6e/dist/templates/item/parts/matrix.html',
+        'systems/shadowrun6e/dist/templates/item/parts/sin.html',
+        'systems/shadowrun6e/dist/templates/item/parts/contact.html',
+        'systems/shadowrun6e/dist/templates/item/parts/lifestyle.html',
+        'systems/shadowrun6e/dist/templates/item/parts/ammo.html',
+        'systems/shadowrun6e/dist/templates/item/parts/modification.html',
+        'systems/shadowrun6e/dist/templates/item/parts/program.html',
+        'systems/shadowrun6e/dist/templates/item/parts/critter_power.html',
+        'systems/shadowrun6e/dist/templates/rolls/parts/parts-list.html',
+        'systems/shadowrun6e/dist/templates/rolls/parts/Damage.html',
         // to wrap the bodies of tabs
-        'systems/shadowrun5e/dist/templates/common/TabWrapper.html',
-        'systems/shadowrun5e/dist/templates/common/ValueInput.html',
+        'systems/shadowrun6e/dist/templates/common/TabWrapper.html',
+        'systems/shadowrun6e/dist/templates/common/ValueInput.html',
         // Useful wrapper and implemented components
-        'systems/shadowrun5e/dist/templates/common/ValueMaxAttribute.html',
-        'systems/shadowrun5e/dist/templates/common/Attribute.html',
-        'systems/shadowrun5e/dist/templates/common/ValueModifiers.html',
+        'systems/shadowrun6e/dist/templates/common/ValueMaxAttribute.html',
+        'systems/shadowrun6e/dist/templates/common/Attribute.html',
+        'systems/shadowrun6e/dist/templates/common/ValueModifiers.html',
         // useful select template for the common pattern
-        'systems/shadowrun5e/dist/templates/common/Select.html',
+        'systems/shadowrun6e/dist/templates/common/Select.html',
         // to create the condition monitors and edge counter
-        'systems/shadowrun5e/dist/templates/common/HorizontalCellInput.html',
+        'systems/shadowrun6e/dist/templates/common/HorizontalCellInput.html',
         // looks like a ListHeader
-        'systems/shadowrun5e/dist/templates/common/HeaderBlock.html',
-        'systems/shadowrun5e/dist/templates/common/NameLineBlock.html',
+        'systems/shadowrun6e/dist/templates/common/HeaderBlock.html',
+        'systems/shadowrun6e/dist/templates/common/NameLineBlock.html',
         // list components
-        'systems/shadowrun5e/dist/templates/common/List/ListItem.html',
-        'systems/shadowrun5e/dist/templates/common/List/ListHeader.html',
+        'systems/shadowrun6e/dist/templates/common/List/ListItem.html',
+        'systems/shadowrun6e/dist/templates/common/List/ListHeader.html',
         // dialogs
-        'systems/shadowrun5e/dist/templates/apps/dialogs/damage-application.html',
+        'systems/shadowrun6e/dist/templates/apps/dialogs/damage-application.html',
     ];
     return loadTemplates(templatePaths);
 });
@@ -22877,78 +22877,78 @@ exports.preloadHandlebarsTemplates = preloadHandlebarsTemplates;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerItemLineHelpers = void 0;
-const SR5ItemDataWrapper_1 = require("../item/SR5ItemDataWrapper");
+const SR6ItemDataWrapper_1 = require("../item/SR6ItemDataWrapper");
 const config_1 = require("../config");
 const registerItemLineHelpers = () => {
     Handlebars.registerHelper('ItemHeaderIcons', function (id) {
         const PlusIcon = 'fas fa-plus';
-        const AddText = game.i18n.localize('SR5.Add');
+        const AddText = game.i18n.localize('SR6.Add');
         const addIcon = {
             icon: PlusIcon,
             text: AddText,
-            title: game.i18n.localize('SR5.CreateItem'),
+            title: game.i18n.localize('SR6.CreateItem'),
             cssClass: 'item-create',
         };
         switch (id) {
             case 'lifestyle':
-                addIcon.title = game.i18n.localize('SR5.CreateItemLifestyle');
+                addIcon.title = game.i18n.localize('SR6.CreateItemLifestyle');
                 return [addIcon];
             case 'contact':
-                addIcon.title = game.i18n.localize('SR5.CreateItemContact');
+                addIcon.title = game.i18n.localize('SR6.CreateItemContact');
                 return [addIcon];
             case 'sin':
-                addIcon.title = game.i18n.localize('SR5.CreateItemSIN');
+                addIcon.title = game.i18n.localize('SR6.CreateItemSIN');
                 return [addIcon];
             case 'license':
-                addIcon.title = game.i18n.localize('SR5.CreateItemLicense');
+                addIcon.title = game.i18n.localize('SR6.CreateItemLicense');
                 return [addIcon];
             case 'quality':
-                addIcon.title = game.i18n.localize('SR5.CreateItemQuality');
+                addIcon.title = game.i18n.localize('SR6.CreateItemQuality');
                 return [addIcon];
             case 'adept_power':
-                addIcon.title = game.i18n.localize('SR5.CreateItemAdeptPower');
+                addIcon.title = game.i18n.localize('SR6.CreateItemAdeptPower');
                 return [addIcon];
             case 'action':
-                addIcon.title = game.i18n.localize('SR5.CreateItemAction');
+                addIcon.title = game.i18n.localize('SR6.CreateItemAction');
                 return [addIcon];
             case 'spell':
-                addIcon.title = game.i18n.localize('SR5.CreateItemSpell');
+                addIcon.title = game.i18n.localize('SR6.CreateItemSpell');
                 return [addIcon];
             case 'gear':
-                addIcon.title = game.i18n.localize('SR5.CreateItemGear');
+                addIcon.title = game.i18n.localize('SR6.CreateItemGear');
                 return [addIcon];
             case 'complex_form':
-                addIcon.title = game.i18n.localize('SR5.CreateItemComplexForm');
+                addIcon.title = game.i18n.localize('SR6.CreateItemComplexForm');
                 return [addIcon];
             case 'program':
-                addIcon.title = game.i18n.localize('SR5.CreateItemProgram');
+                addIcon.title = game.i18n.localize('SR6.CreateItemProgram');
                 return [addIcon];
             case 'weapon':
-                addIcon.title = game.i18n.localize('SR5.CreateItemWeapon');
+                addIcon.title = game.i18n.localize('SR6.CreateItemWeapon');
                 return [addIcon];
             case 'armor':
-                addIcon.title = game.i18n.localize('SR5.CreateItemArmor');
+                addIcon.title = game.i18n.localize('SR6.CreateItemArmor');
                 return [addIcon];
             case 'ammo':
-                addIcon.title = game.i18n.localize('SR5.CreateItemAmmo');
+                addIcon.title = game.i18n.localize('SR6.CreateItemAmmo');
                 return [addIcon];
             case 'device':
-                addIcon.title = game.i18n.localize('SR5.CreateItemDevice');
+                addIcon.title = game.i18n.localize('SR6.CreateItemDevice');
                 return [addIcon];
             case 'equipment':
-                addIcon.title = game.i18n.localize('SR5.CreateItemEquipment');
+                addIcon.title = game.i18n.localize('SR6.CreateItemEquipment');
                 return [addIcon];
             case 'cyberware':
-                addIcon.title = game.i18n.localize('SR5.CreateItemCyberware');
+                addIcon.title = game.i18n.localize('SR6.CreateItemCyberware');
                 return [addIcon];
             case 'bioware':
-                addIcon.title = game.i18n.localize('SR5.CreateItemBioware');
+                addIcon.title = game.i18n.localize('SR6.CreateItemBioware');
                 return [addIcon];
             case 'critter_power':
-                addIcon.title = game.i18n.localize('SR5.CreateItemCritterPower');
+                addIcon.title = game.i18n.localize('SR6.CreateItemCritterPower');
                 return [addIcon];
             case 'sprite_power':
-                addIcon.title = game.i18n.localize('SR5.CreateItemSpritePower');
+                addIcon.title = game.i18n.localize('SR6.CreateItemSpritePower');
                 return [addIcon];
             default:
                 return [];
@@ -22960,31 +22960,31 @@ const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Skill'),
+                            text: game.i18n.localize('SR6.Skill'),
                             cssClass: 'six',
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Attribute'),
+                            text: game.i18n.localize('SR6.Attribute'),
                             cssClass: 'six',
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Attribute'),
+                            text: game.i18n.localize('SR6.Attribute'),
                             cssClass: 'six',
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Limit'),
+                            text: game.i18n.localize('SR6.Limit'),
                             cssClass: 'six',
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Modifier'),
+                            text: game.i18n.localize('SR6.Modifier'),
                             cssClass: 'six',
                         },
                     },
@@ -22999,7 +22999,7 @@ const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Qty'),
+                            text: game.i18n.localize('SR6.Qty'),
                         },
                     },
                 ];
@@ -23007,17 +23007,17 @@ const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Target'),
+                            text: game.i18n.localize('SR6.Target'),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Duration'),
+                            text: game.i18n.localize('SR6.Duration'),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Fade'),
+                            text: game.i18n.localize('SR6.Fade'),
                         },
                     },
                 ];
@@ -23025,7 +23025,7 @@ const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize('SR5.PowerType'),
+                            text: game.i18n.localize('SR6.PowerType'),
                         },
                     },
                 ];
@@ -23033,22 +23033,22 @@ const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize('SR5.SpellType'),
+                            text: game.i18n.localize('SR6.SpellType'),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.SpellRange'),
+                            text: game.i18n.localize('SR6.SpellRange'),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Duration'),
+                            text: game.i18n.localize('SR6.Duration'),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.Drain'),
+                            text: game.i18n.localize('SR6.Drain'),
                         },
                     },
                 ];
@@ -23056,17 +23056,17 @@ const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize('SR5.CritterPower.Type'),
+                            text: game.i18n.localize('SR6.CritterPower.Type'),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.CritterPower.Range'),
+                            text: game.i18n.localize('SR6.CritterPower.Range'),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize('SR5.CritterPower.Duration'),
+                            text: game.i18n.localize('SR6.CritterPower.Duration'),
                         },
                     },
                 ];
@@ -23074,7 +23074,7 @@ const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize('SR5.QualityType'),
+                            text: game.i18n.localize('SR6.QualityType'),
                         },
                     },
                 ];
@@ -23084,7 +23084,7 @@ const registerItemLineHelpers = () => {
     });
     Handlebars.registerHelper('ItemRightSide', function (item) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
-        const wrapper = new SR5ItemDataWrapper_1.SR5ItemDataWrapper(item);
+        const wrapper = new SR6ItemDataWrapper_1.SR6ItemDataWrapper(item);
         const qtyInput = {
             input: {
                 type: 'number',
@@ -23097,26 +23097,26 @@ const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize(config_1.SR5.activeSkills[(_a = wrapper.getActionSkill()) !== null && _a !== void 0 ? _a : '']),
+                            text: game.i18n.localize(config_1.SR6.activeSkills[(_a = wrapper.getActionSkill()) !== null && _a !== void 0 ? _a : '']),
                             cssClass: 'six',
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize(config_1.SR5.attributes[(_b = wrapper.getActionAttribute()) !== null && _b !== void 0 ? _b : '']),
+                            text: game.i18n.localize(config_1.SR6.attributes[(_b = wrapper.getActionAttribute()) !== null && _b !== void 0 ? _b : '']),
                             cssClass: 'six',
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize(config_1.SR5.attributes[(_c = wrapper.getActionAttribute2()) !== null && _c !== void 0 ? _c : '']),
+                            text: game.i18n.localize(config_1.SR6.attributes[(_c = wrapper.getActionAttribute2()) !== null && _c !== void 0 ? _c : '']),
                             cssClass: 'six',
                         },
                     },
                     {
                         text: {
                             text: wrapper.getLimitAttribute()
-                                ? game.i18n.localize(config_1.SR5.attributes[(_d = wrapper.getLimitAttribute()) !== null && _d !== void 0 ? _d : ''])
+                                ? game.i18n.localize(config_1.SR6.attributes[(_d = wrapper.getLimitAttribute()) !== null && _d !== void 0 ? _d : ''])
                                 : wrapper.getActionLimit(),
                             cssClass: 'six',
                         },
@@ -23139,12 +23139,12 @@ const registerItemLineHelpers = () => {
                 if (wrapper.isRangedWeapon()) {
                     const count = (_f = (_e = wrapper.getAmmo()) === null || _e === void 0 ? void 0 : _e.current.value) !== null && _f !== void 0 ? _f : 0;
                     const max = (_h = (_g = wrapper.getAmmo()) === null || _g === void 0 ? void 0 : _g.current.max) !== null && _h !== void 0 ? _h : 0;
-                    const text = count < max ? `${game.i18n.localize('SR5.WeaponReload')} (${count}/${max})` : game.i18n.localize('SR5.AmmoFull');
+                    const text = count < max ? `${game.i18n.localize('SR6.WeaponReload')} (${count}/${max})` : game.i18n.localize('SR6.AmmoFull');
                     const cssClass = 'no-break' + (count < max ? ' reload-ammo roll' : 'faded');
                     return [
                         {
                             text: {
-                                title: `${game.i18n.localize('SR5.WeaponAmmoCount')}: ${count}`,
+                                title: `${game.i18n.localize('SR6.WeaponAmmoCount')}: ${count}`,
                                 text,
                                 cssClass,
                             },
@@ -23164,7 +23164,7 @@ const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize(config_1.SR5.qualityTypes[(_j = item.data.type) !== null && _j !== void 0 ? _j : '']),
+                            text: game.i18n.localize(config_1.SR6.qualityTypes[(_j = item.data.type) !== null && _j !== void 0 ? _j : '']),
                         },
                     },
                 ];
@@ -23172,7 +23172,7 @@ const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize(config_1.SR5.adeptPower.types[(_k = item.data.type) !== null && _k !== void 0 ? _k : '']),
+                            text: game.i18n.localize(config_1.SR6.adeptPower.types[(_k = item.data.type) !== null && _k !== void 0 ? _k : '']),
                         },
                     },
                 ];
@@ -23180,17 +23180,17 @@ const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize(config_1.SR5.spellTypes[(_l = item.data.type) !== null && _l !== void 0 ? _l : '']),
+                            text: game.i18n.localize(config_1.SR6.spellTypes[(_l = item.data.type) !== null && _l !== void 0 ? _l : '']),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize(config_1.SR5.spellRanges[(_m = item.data.range) !== null && _m !== void 0 ? _m : '']),
+                            text: game.i18n.localize(config_1.SR6.spellRanges[(_m = item.data.range) !== null && _m !== void 0 ? _m : '']),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize(config_1.SR5.durations[(_o = item.data.duration) !== null && _o !== void 0 ? _o : '']),
+                            text: game.i18n.localize(config_1.SR6.durations[(_o = item.data.duration) !== null && _o !== void 0 ? _o : '']),
                         },
                     },
                     {
@@ -23203,17 +23203,17 @@ const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize(config_1.SR5.critterPower.types[(_p = item.data.powerType) !== null && _p !== void 0 ? _p : '']),
+                            text: game.i18n.localize(config_1.SR6.critterPower.types[(_p = item.data.powerType) !== null && _p !== void 0 ? _p : '']),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize(config_1.SR5.critterPower.ranges[(_q = item.data.range) !== null && _q !== void 0 ? _q : '']),
+                            text: game.i18n.localize(config_1.SR6.critterPower.ranges[(_q = item.data.range) !== null && _q !== void 0 ? _q : '']),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize(config_1.SR5.critterPower.durations[(_r = item.data.duration) !== null && _r !== void 0 ? _r : '']),
+                            text: game.i18n.localize(config_1.SR6.critterPower.durations[(_r = item.data.duration) !== null && _r !== void 0 ? _r : '']),
                         },
                     },
                 ];
@@ -23221,12 +23221,12 @@ const registerItemLineHelpers = () => {
                 return [
                     {
                         text: {
-                            text: game.i18n.localize(config_1.SR5.matrixTargets[(_s = item.data.target) !== null && _s !== void 0 ? _s : '']),
+                            text: game.i18n.localize(config_1.SR6.matrixTargets[(_s = item.data.target) !== null && _s !== void 0 ? _s : '']),
                         },
                     },
                     {
                         text: {
-                            text: game.i18n.localize(config_1.SR5.durations[(_t = item.data.duration) !== null && _t !== void 0 ? _t : '']),
+                            text: game.i18n.localize(config_1.SR6.durations[(_t = item.data.duration) !== null && _t !== void 0 ? _t : '']),
                         },
                     },
                     {
@@ -23241,7 +23241,7 @@ const registerItemLineHelpers = () => {
                         button: {
                             cssClass: `item-equip-toggle ${wrapper.isEquipped() ? 'light' : ''}`,
                             short: true,
-                            text: wrapper.isEquipped() ? game.i18n.localize('SR5.Loaded') : game.i18n.localize('SR5.Load') + ' >>',
+                            text: wrapper.isEquipped() ? game.i18n.localize('SR6.Loaded') : game.i18n.localize('SR6.Load') + ' >>',
                         },
                     },
                 ];
@@ -23250,22 +23250,22 @@ const registerItemLineHelpers = () => {
         }
     });
     Handlebars.registerHelper('ItemIcons', function (item) {
-        const wrapper = new SR5ItemDataWrapper_1.SR5ItemDataWrapper(item);
+        const wrapper = new SR6ItemDataWrapper_1.SR6ItemDataWrapper(item);
         const editIcon = {
             icon: 'fas fa-edit item-edit',
-            title: game.i18n.localize('SR5.EditItem'),
+            title: game.i18n.localize('SR6.EditItem'),
         };
         const removeIcon = {
             icon: 'fas fa-trash item-delete',
-            title: game.i18n.localize('SR5.DeleteItem'),
+            title: game.i18n.localize('SR6.DeleteItem'),
         };
         const equipIcon = {
             icon: `${wrapper.isEquipped() ? 'fas fa-check-circle' : 'far fa-circle'} item-equip-toggle`,
-            title: game.i18n.localize('SR5.ToggleEquip'),
+            title: game.i18n.localize('SR6.ToggleEquip'),
         };
         const pdfIcon = {
             icon: 'fas fa-file open-source-pdf',
-            title: game.i18n.localize('SR5.OpenSourcePdf'),
+            title: game.i18n.localize('SR6.OpenSourcePdf'),
         };
         const icons = [editIcon, removeIcon];
         if (ui['PDFoundry']) {
@@ -23286,7 +23286,7 @@ const registerItemLineHelpers = () => {
 };
 exports.registerItemLineHelpers = registerItemLineHelpers;
 
-},{"../config":145,"../item/SR5ItemDataWrapper":198}],154:[function(require,module,exports){
+},{"../config":145,"../item/SR6ItemDataWrapper":198}],154:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerRollAndLabelHelpers = void 0;
@@ -23371,8 +23371,8 @@ const registerSkillLineHelpers = () => {
     Handlebars.registerHelper('SkillHeaderIcons', function (category) {
         const addIcon = {
             icon: 'fas fa-plus',
-            title: game.i18n.localize('SR5.AddSkill'),
-            text: game.i18n.localize('SR5.Add'),
+            title: game.i18n.localize('SR6.AddSkill'),
+            text: game.i18n.localize('SR6.Add'),
             cssClass: '',
         };
         switch (category) {
@@ -23392,7 +23392,7 @@ const registerSkillLineHelpers = () => {
     Handlebars.registerHelper('SkillHeaderRightSide', function (id, filters) {
         const specs = {
             text: {
-                text: game.i18n.localize('SR5.Specialization'),
+                text: game.i18n.localize('SR6.Specialization'),
                 cssClass: 'skill-spec-item',
             },
         };
@@ -23400,8 +23400,8 @@ const registerSkillLineHelpers = () => {
             // Change Rating header to show active filtering.
             text: {
                 text: !filters || filters.showUntrainedSkills ?
-                    game.i18n.localize('SR5.Rtg') :
-                    game.i18n.localize('SR5.RtgAboveZero'),
+                    game.i18n.localize('SR6.Rtg') :
+                    game.i18n.localize('SR6.RtgAboveZero'),
                 cssClass: 'rtg',
             },
         };
@@ -23434,7 +23434,7 @@ const registerSkillLineHelpers = () => {
     });
     Handlebars.registerHelper('SkillAdditionCssClass', function (skill) {
         const classes = [];
-        // @PDF SR5#151 not defaultable skills should be shown as italic.
+        // @PDF SR6#151 not defaultable skills should be shown as italic.
         if (game.settings.get(constants_1.SYSTEM_NAME, constants_1.FLAGS.ShowSkillsWithDetails) && !SkillRules_1.SkillRules.allowDefaultingRoll(skill)) {
             classes.push('skill-roll-not-defaultable');
         }
@@ -23443,12 +23443,12 @@ const registerSkillLineHelpers = () => {
     Handlebars.registerHelper('SkillIcons', function (skillType, skill) {
         const editIcon = {
             icon: 'fas fa-edit',
-            title: game.i18n.localize('SR5.EditSkill'),
+            title: game.i18n.localize('SR6.EditSkill'),
             cssClass: '',
         };
         const removeIcon = {
             icon: 'fas fa-trash',
-            title: game.i18n.localize('SR5.DeleteSkill'),
+            title: game.i18n.localize('SR6.DeleteSkill'),
             cssClass: '',
         };
         switch (skillType) {
@@ -23501,7 +23501,7 @@ class Helpers {
         const parts = new PartsList_1.PartsList(value.mod);
         // if a temp field is found, add it as a unique part
         if (value['temp'] !== undefined) {
-            parts.addUniquePart('SR5.Temporary', value['temp']);
+            parts.addUniquePart('SR6.Temporary', value['temp']);
         }
         value.value = Helpers.roundTo(parts.total + value.base, 3);
         value.mod = parts.list;
@@ -23534,7 +23534,7 @@ class Helpers {
     static listItemId(event) {
         return event.currentTarget.closest('.list-item').dataset.itemId;
     }
-    // replace 'SR5.'s on keys with 'SR5_DOT_'
+    // replace 'SR6.'s on keys with 'SR6_DOT_'
     static onSetFlag(data) {
         if (typeof data !== 'object')
             return data;
@@ -23542,12 +23542,12 @@ class Helpers {
             return data;
         const newData = {};
         for (const [key, value] of Object.entries(data)) {
-            const newKey = key.replace('SR5.', 'SR5_DOT_');
+            const newKey = key.replace('SR6.', 'SR6_DOT_');
             newData[newKey] = this.onSetFlag(value);
         }
         return newData;
     }
-    // replace 'SR5_DOT_' with 'SR5.' on keys
+    // replace 'SR6_DOT_' with 'SR6.' on keys
     static onGetFlag(data) {
         if (typeof data !== 'object')
             return data;
@@ -23555,7 +23555,7 @@ class Helpers {
             return data;
         const newData = {};
         for (const [key, value] of Object.entries(data)) {
-            const newKey = key.replace('SR5_DOT_', 'SR5.');
+            const newKey = key.replace('SR6_DOT_', 'SR6.');
             newData[newKey] = this.onGetFlag(value);
         }
         return newData;
@@ -23568,15 +23568,15 @@ class Helpers {
             return atts;
         // array of labels to check for on the incoming data
         const matrixLabels = [
-            'SR5.MatrixAttrFirewall',
-            'SR5.MatrixAttrDataProcessing',
-            'SR5.MatrixAttrSleaze',
-            'SR5.MatrixAttrAttack',
-            'SR5.SkillComputer',
-            'SR5.SkillHacking',
-            'SR5.SkillCybercombat',
-            'SR5.SkillElectronicWarfare',
-            'SR5.Software',
+            'SR6.MatrixAttrFirewall',
+            'SR6.MatrixAttrDataProcessing',
+            'SR6.MatrixAttrSleaze',
+            'SR6.MatrixAttrAttack',
+            'SR6.SkillComputer',
+            'SR6.SkillHacking',
+            'SR6.SkillCybercombat',
+            'SR6.SkillElectronicWarfare',
+            'SR6.Software',
         ];
         if (!Array.isArray(atts))
             atts = [atts];
@@ -23667,7 +23667,7 @@ class Helpers {
         if (rounds === 10)
             return '';
         if (rounds === 20)
-            return 'SR5.DuckOrCover';
+            return 'SR6.DuckOrCover';
         return '';
     }
     static label(str) {
@@ -23805,7 +23805,7 @@ class Helpers {
         }
         else {
             const { extreme } = ranges;
-            return Helpers.createRangeDescription('SR5.OutOfRange', extreme.distance, constants_1.SR.combat.environmental.range_modifiers.out_of_range);
+            return Helpers.createRangeDescription('SR6.OutOfRange', extreme.distance, constants_1.SR.combat.environmental.range_modifiers.out_of_range);
         }
     }
     static getControlledTokens() {
@@ -24011,7 +24011,7 @@ class Helpers {
         return sortedAsObject;
     }
     /**
-     * Alphabetically sort any SR5 config object with a key to label structure.
+     * Alphabetically sort any SR6 config object with a key to label structure.
      *
      * Sorting should be aware of UTF-8, however please blame JavaScript if it's not. :)
      *
@@ -24105,15 +24105,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HooksManager = exports.SR5CONFIG = void 0;
+exports.HooksManager = exports.SR6CONFIG = void 0;
 const config_1 = require("./config");
 const Migrator_1 = require("./migrator/Migrator");
 const settings_1 = require("./settings");
 const constants_1 = require("./constants");
-const SR5Actor_1 = require("./actor/SR5Actor");
-const SR5ActorSheet_1 = require("./actor/SR5ActorSheet");
-const SR5Item_1 = require("./item/SR5Item");
-const SR5ItemSheet_1 = require("./item/SR5ItemSheet");
+const SR6Actor_1 = require("./actor/SR6Actor");
+const SR6ActorSheet_1 = require("./actor/SR6ActorSheet");
+const SR6Item_1 = require("./item/SR6Item");
+const SR6ItemSheet_1 = require("./item/SR6ItemSheet");
 const ShadowrunRoller_1 = require("./rolls/ShadowrunRoller");
 const helpers_1 = require("./helpers");
 const HandlebarManager_1 = require("./handlebars/HandlebarManager");
@@ -24121,14 +24121,14 @@ const canvas_1 = require("./canvas");
 const chat = require("./chat");
 const macros_1 = require("./macros");
 const OverwatchScoreTracker_1 = require("./apps/gmtools/OverwatchScoreTracker");
-const SR5Combat_1 = require("./combat/SR5Combat");
+const SR6Combat_1 = require("./combat/SR6Combat");
 const import_form_1 = require("./importer/apps/import-form");
 const ChangelogApplication_1 = require("./apps/ChangelogApplication");
 const EnvModifiersApplication_1 = require("./apps/EnvModifiersApplication");
 const quench_1 = require("../test/quench");
-// Redeclare SR5config as a global as foundry-vtt-types CONFIG with SR5 property causes issues.
+// Redeclare SR6config as a global as foundry-vtt-types CONFIG with SR6 property causes issues.
 // TODO: Figure out how to change global CONFIG type
-exports.SR5CONFIG = config_1.SR5;
+exports.SR6CONFIG = config_1.SR6;
 class HooksManager {
     static registerHooks() {
         // Register your highest level hook callbacks here for a quick overview of what's hooked into.
@@ -24140,7 +24140,7 @@ class HooksManager {
         Hooks.on('hotbarDrop', HooksManager.hotbarDrop);
         Hooks.on('renderSceneControls', HooksManager.renderSceneControls);
         Hooks.on('getSceneControlButtons', HooksManager.getSceneControlButtons);
-        Hooks.on('getCombatTrackerEntryContext', SR5Combat_1.SR5Combat.addCombatTrackerContextOptions);
+        Hooks.on('getCombatTrackerEntryContext', SR6Combat_1.SR6Combat.addCombatTrackerContextOptions);
         Hooks.on('renderItemDirectory', HooksManager.renderItemDirectory);
         Hooks.on('renderTokenHUD', EnvModifiersApplication_1.EnvModifiersApplication.addTokenHUDFields);
         // Foundry VTT Module 'quench': https://github.com/schultzcole/FVTT-Quench
@@ -24157,38 +24157,38 @@ ___________________
 \\____/\\_| \\_\\____/ 
 ===================
 `);
-        // Create a shadowrun5e namespace within the game global
-        game['shadowrun5e'] = {
-            SR5Actor: SR5Actor_1.SR5Actor,
+        // Create a shadowrun6e namespace within the game global
+        game['shadowrun6e'] = {
+            SR6Actor: SR6Actor_1.SR6Actor,
             ShadowrunRoller: ShadowrunRoller_1.ShadowrunRoller,
-            SR5Item: SR5Item_1.SR5Item,
+            SR6Item: SR6Item_1.SR6Item,
             rollItemMacro: macros_1.rollItemMacro,
             rollSkillMacro: macros_1.rollSkillMacro
         };
         // @ts-ignore // foundry-vtt-types is missing CONFIG.<>.documentClass
-        CONFIG.Actor.documentClass = SR5Actor_1.SR5Actor;
+        CONFIG.Actor.documentClass = SR6Actor_1.SR6Actor;
         // @ts-ignore // foundry-vtt-types is missing CONFIG.<>.documentClass
-        CONFIG.Item.documentClass = SR5Item_1.SR5Item;
+        CONFIG.Item.documentClass = SR6Item_1.SR6Item;
         // @ts-ignore // foundry-vtt-types is missing CONFIG.<>.documentClass
-        CONFIG.Combat.documentClass = SR5Combat_1.SR5Combat;
+        CONFIG.Combat.documentClass = SR6Combat_1.SR6Combat;
         // Register initiative directly (outside of system.json) as DnD5e does it.
         CONFIG.Combat.initiative.formula = "@initiative.current.base.value[Base] + @initiative.current.dice.text[Dice] - @wounds.value[Wounds]";
         // @ts-ignore
-        Combatant.prototype._getInitiativeFormula = SR5Combat_1._combatantGetInitiativeFormula;
+        Combatant.prototype._getInitiativeFormula = SR6Combat_1._combatantGetInitiativeFormula;
         settings_1.registerSystemSettings();
         // Register sheet application classes
         // NOTE: See dnd5e for a multi class approach for all actor types using the types array in Actors.registerSheet
         Actors.unregisterSheet('core', ActorSheet);
-        Actors.registerSheet(constants_1.SYSTEM_NAME, SR5ActorSheet_1.SR5ActorSheet, {
-            label: "SR5.SheetActor",
+        Actors.registerSheet(constants_1.SYSTEM_NAME, SR6ActorSheet_1.SR6ActorSheet, {
+            label: "SR6.SheetActor",
             makeDefault: true
         });
         Items.unregisterSheet('core', ItemSheet);
-        Items.registerSheet(constants_1.SYSTEM_NAME, SR5ItemSheet_1.SR5ItemSheet, {
-            label: "SR5.SheetItem",
+        Items.registerSheet(constants_1.SYSTEM_NAME, SR6ItemSheet_1.SR6ItemSheet, {
+            label: "SR6.SheetItem",
             makeDefault: true
         });
-        ['renderSR5ActorSheet', 'renderSR5ItemSheet'].forEach((s) => {
+        ['renderSR6ActorSheet', 'renderSR6ItemSheet'].forEach((s) => {
             Hooks.on(s, (app, html) => helpers_1.Helpers.setupCustomCheckbox(app, html));
         });
         HandlebarManager_1.HandlebarManager.loadTemplates();
@@ -24252,7 +24252,7 @@ ___________________
         if ((_a = game.user) === null || _a === void 0 ? void 0 : _a.isGM) {
             tokenControls.tools.push({
                 name: 'overwatch-score-tracker',
-                title: 'CONTROLS.SR5.OverwatchScoreTracker',
+                title: 'CONTROLS.SR6.OverwatchScoreTracker',
                 icon: 'fas fa-network-wired',
                 button: true
             });
@@ -24272,7 +24272,7 @@ ___________________
 }
 exports.HooksManager = HooksManager;
 
-},{"../test/quench":214,"./actor/SR5Actor":86,"./actor/SR5ActorSheet":87,"./apps/ChangelogApplication":110,"./apps/EnvModifiersApplication":111,"./apps/gmtools/OverwatchScoreTracker":138,"./canvas":142,"./chat":143,"./combat/SR5Combat":144,"./config":145,"./constants":146,"./handlebars/HandlebarManager":151,"./helpers":156,"./importer/apps/import-form":158,"./item/SR5Item":197,"./item/SR5ItemSheet":199,"./macros":200,"./migrator/Migrator":202,"./rolls/ShadowrunRoller":209,"./settings":210}],158:[function(require,module,exports){
+},{"../test/quench":214,"./actor/SR6Actor":86,"./actor/SR6ActorSheet":87,"./apps/ChangelogApplication":110,"./apps/EnvModifiersApplication":111,"./apps/gmtools/OverwatchScoreTracker":138,"./canvas":142,"./chat":143,"./combat/SR6Combat":144,"./config":145,"./constants":146,"./handlebars/HandlebarManager":151,"./helpers":156,"./importer/apps/import-form":158,"./item/SR6Item":197,"./item/SR6ItemSheet":199,"./macros":200,"./migrator/Migrator":202,"./rolls/ShadowrunRoller":209,"./settings":210}],158:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -24319,7 +24319,7 @@ class Import extends Application {
         options.id = 'chummer-data-import';
         options.classes = ['app', 'window-app', 'filepicker'];
         options.title = 'Chummer/Data Import';
-        options.template = 'systems/shadowrun5e/dist/templates/apps/compendium-import.html';
+        options.template = 'systems/shadowrun6e/dist/templates/apps/compendium-import.html';
         options.width = 600;
         options.height = 'auto';
         return options;
@@ -25340,7 +25340,7 @@ Constants.WEAPON_RANGES = {
         extreme: -1,
     },
 };
-Constants.ROOT_IMPORT_FOLDER_NAME = 'SR5e';
+Constants.ROOT_IMPORT_FOLDER_NAME = 'SR6e';
 
 },{}],167:[function(require,module,exports){
 "use strict";
@@ -25679,8 +25679,8 @@ class DeviceImporter extends DataImporter_1.DataImporter {
             let entries = [];
             const commlinks = jsonObject['gears']['gear'].filter(gear => ImportHelper_1.ImportHelper.StringValue(gear, 'category', '') === 'Commlinks');
             const cyberdecks = jsonObject['gears']['gear'].filter(gear => ImportHelper_1.ImportHelper.StringValue(gear, 'category', '') === 'Cyberdecks');
-            let commlinksFolder = yield ImportHelper_1.ImportHelper.GetFolderAtPath(`${Constants_1.Constants.ROOT_IMPORT_FOLDER_NAME}/${game.i18n.localize('SR5.DeviceCatCommlink')}`, true);
-            let cyberdecksFolder = yield ImportHelper_1.ImportHelper.GetFolderAtPath(`${Constants_1.Constants.ROOT_IMPORT_FOLDER_NAME}/${game.i18n.localize('SR5.DeviceCatCyberdeck')}`, true);
+            let commlinksFolder = yield ImportHelper_1.ImportHelper.GetFolderAtPath(`${Constants_1.Constants.ROOT_IMPORT_FOLDER_NAME}/${game.i18n.localize('SR6.DeviceCatCommlink')}`, true);
+            let cyberdecksFolder = yield ImportHelper_1.ImportHelper.GetFolderAtPath(`${Constants_1.Constants.ROOT_IMPORT_FOLDER_NAME}/${game.i18n.localize('SR6.DeviceCatCyberdeck')}`, true);
             entries = entries.concat(this.ParseCommlinkDevices(commlinks, commlinksFolder));
             entries = entries.concat(this.ParseCyberdeckDevices(cyberdecks, cyberdecksFolder));
             // @ts-ignore // TODO: TYPE: Remove this.
@@ -25779,7 +25779,7 @@ class EquipmentImporter extends DataImporter_1.DataImporter {
                 }
                 // Replace / as it's used as a separator in GetFolderAtPath.
                 const category = ImportHelper_1.ImportHelper.TranslateCategory(ImportHelper_1.ImportHelper.StringValue(equipment, 'category'), this.categoryTranslations).replace('/', ' ');
-                let categoryFolder = yield ImportHelper_1.ImportHelper.GetFolderAtPath(`${Constants_1.Constants.ROOT_IMPORT_FOLDER_NAME}/${game.i18n.localize('SR5.Gear')}/${category}`, true);
+                let categoryFolder = yield ImportHelper_1.ImportHelper.GetFolderAtPath(`${Constants_1.Constants.ROOT_IMPORT_FOLDER_NAME}/${game.i18n.localize('SR6.Gear')}/${category}`, true);
                 const data = this.GetDefaultData();
                 data.name = ImportHelper_1.ImportHelper.StringValue(equipment, 'name');
                 data.name = ImportHelper_1.ImportHelper.MapNameToTranslation(this.entryTranslations, data.name);
@@ -26508,7 +26508,7 @@ class WeaponImporter extends DataImporter_1.DataImporter {
                 data.folder = folders[data.data.subcategory].id;
                 datas.push(data);
             }
-            // @ts-ignore // TODO: TYPE: This should be removed after typing of SR5Item
+            // @ts-ignore // TODO: TYPE: This should be removed after typing of SR6Item
             return yield Item.create(datas);
         });
     }
@@ -27287,7 +27287,7 @@ exports.ChatData = {
                 labelStringList.push(helpers_1.Helpers.label(data.action.attribute));
             }
             if (data.action.mod) {
-                labelStringList.push(`${game.i18n.localize('SR5.ItemMod')} (${data.action.mod})`);
+                labelStringList.push(`${game.i18n.localize('SR6.ItemMod')} (${data.action.mod})`);
                 // TODO when all mods are modlists
                 // Object.entries(data.action.mod).forEach(([key, value]) =>
                 //     labelStringList.push(`${game.i18n.localize(key)} (${value})`)
@@ -27315,7 +27315,7 @@ exports.ChatData = {
             }
             if (data.action.limit) {
                 const { limit } = data.action;
-                const attribute = limit.attribute ? `${game.i18n.localize(config_1.SR5.limits[limit.attribute])}` : '';
+                const attribute = limit.attribute ? `${game.i18n.localize(config_1.SR6.limits[limit.attribute])}` : '';
                 const limitVal = limit.value ? limit.value : '';
                 let limitStr = '';
                 if (attribute) {
@@ -27335,7 +27335,7 @@ exports.ChatData = {
                 const { damage } = data.action;
                 let damageString = '';
                 let elementString = '';
-                const attribute = damage.attribute ? `${game.i18n.localize(config_1.SR5.attributes[damage.attribute])} + ` : '';
+                const attribute = damage.attribute ? `${game.i18n.localize(config_1.SR6.attributes[damage.attribute])} + ` : '';
                 if (damage.value || attribute) {
                     const type = damage.type.value ? damage.type.value.toUpperCase().charAt(0) : '';
                     damageString = `DV ${attribute}${damage.value}${type}`;
@@ -27371,13 +27371,13 @@ exports.ChatData = {
     },
     contact: (data, labels, props) => {
         props.push(data.type);
-        props.push(`${game.i18n.localize('SR5.Connection')} ${data.connection}`);
-        props.push(`${game.i18n.localize('SR5.Loyalty')} ${data.loyalty}`);
+        props.push(`${game.i18n.localize('SR6.Connection')} ${data.connection}`);
+        props.push(`${game.i18n.localize('SR6.Loyalty')} ${data.loyalty}`);
         if (data.blackmail) {
-            props.push(`${game.i18n.localize('SR5.Blackmail')}`);
+            props.push(`${game.i18n.localize('SR6.Blackmail')}`);
         }
         if (data.family) {
-            props.push(game.i18n.localize('SR5.Family'));
+            props.push(game.i18n.localize('SR6.Family'));
         }
     },
     lifestyle: (data, labels, props) => {
@@ -27416,20 +27416,20 @@ exports.ChatData = {
     },
     ammo: (data, labels, props) => {
         if (data.damageType)
-            props.push(`${game.i18n.localize("SR5.DamageType")} ${data.damageType}`);
+            props.push(`${game.i18n.localize("SR6.DamageType")} ${data.damageType}`);
         if (data.damage)
-            props.push(`${game.i18n.localize("SR5.DamageValue")} ${data.damage}`);
+            props.push(`${game.i18n.localize("SR6.DamageValue")} ${data.damage}`);
         if (data.element)
-            props.push(`${game.i18n.localize("SR5.Element")} ${data.element}`);
+            props.push(`${game.i18n.localize("SR6.Element")} ${data.element}`);
         if (data.ap)
-            props.push(`${game.i18n.localize("SR5.AP")} ${data.ap}`);
+            props.push(`${game.i18n.localize("SR6.AP")} ${data.ap}`);
         if (data.blast.radius)
-            props.push(`${game.i18n.localize('SR5.BlastRadius')} ${data.blast.radius}m`);
+            props.push(`${game.i18n.localize('SR6.BlastRadius')} ${data.blast.radius}m`);
         if (data.blast.dropoff)
-            props.push(`${game.i18n.localize('SR5.Dropoff')} ${data.blast.dropoff}/m`);
+            props.push(`${game.i18n.localize('SR6.Dropoff')} ${data.blast.dropoff}/m`);
     },
     program: (data, labels, props) => {
-        props.push(game.i18n.localize(config_1.SR5.programTypes[data.type]));
+        props.push(game.i18n.localize(config_1.SR6.programTypes[data.type]));
     },
     complex_form: (data, labels, props) => {
         exports.ChatData.action(data, labels, props);
@@ -27477,11 +27477,11 @@ exports.ChatData = {
     },
     critter_power: (data, labels, props) => {
         // power type
-        props.push(game.i18n.localize(config_1.SR5.critterPower.types[data.powerType]));
+        props.push(game.i18n.localize(config_1.SR6.critterPower.types[data.powerType]));
         // duration
-        props.push(game.i18n.localize(config_1.SR5.critterPower.durations[data.duration]));
+        props.push(game.i18n.localize(config_1.SR6.critterPower.durations[data.duration]));
         // range
-        props.push(game.i18n.localize(config_1.SR5.critterPower.ranges[data.range]));
+        props.push(game.i18n.localize(config_1.SR6.critterPower.ranges[data.range]));
         // add action data
         exports.ChatData.action(data, labels, props);
     },
@@ -27548,28 +27548,28 @@ exports.ChatData = {
                 if (equippedAmmo.name)
                     props.push(`${equippedAmmo.name} (${current.value}/${current.max})`);
                 if (ammoData.blast.radius)
-                    props.push(`${game.i18n.localize('SR5.BlastRadius')} ${ammoData.blast.radius}m`);
+                    props.push(`${game.i18n.localize('SR6.BlastRadius')} ${ammoData.blast.radius}m`);
                 if (ammoData.blast.dropoff)
-                    props.push(`${game.i18n.localize('SR5.Dropoff')} $ammoData.blast.dropoff}/m`);
+                    props.push(`${game.i18n.localize('SR6.Dropoff')} $ammoData.blast.dropoff}/m`);
                 if (spare_clips && spare_clips.max)
-                    props.push(`${game.i18n.localize('SR5.SpareClips')} (${spare_clips.value}/${spare_clips.max})`);
+                    props.push(`${game.i18n.localize('SR6.SpareClips')} (${spare_clips.value}/${spare_clips.max})`);
             }
         }
         if ((_c = (_b = data.technology) === null || _b === void 0 ? void 0 : _b.conceal) === null || _c === void 0 ? void 0 : _c.value) {
-            props.push(`${game.i18n.localize('SR5.Conceal')} ${data.technology.conceal.value}`);
+            props.push(`${game.i18n.localize('SR6.Conceal')} ${data.technology.conceal.value}`);
         }
         if (data.category === 'range') {
             if (data.range.modes) {
                 const newModes = [];
                 const { modes } = data.range;
                 if (modes.single_shot)
-                    newModes.push('SR5.WeaponModeSingleShotShort');
+                    newModes.push('SR6.WeaponModeSingleShotShort');
                 if (modes.semi_auto)
-                    newModes.push('SR5.WeaponModeSemiAutoShort');
+                    newModes.push('SR6.WeaponModeSemiAutoShort');
                 if (modes.burst_fire)
-                    newModes.push('SR5.WeaponModeBurstFireShort');
+                    newModes.push('SR6.WeaponModeBurstFireShort');
                 if (modes.full_auto)
-                    newModes.push('SR5.WeaponModeFullAutoShort');
+                    newModes.push('SR6.WeaponModeFullAutoShort');
                 props.push(newModes.map((m) => game.i18n.localize(m)).join('/'));
             }
             if (data.range.ranges)
@@ -27577,7 +27577,7 @@ exports.ChatData = {
         }
         else if (data.category === 'melee') {
             if (data.melee.reach) {
-                const reachString = `${game.i18n.localize('SR5.Reach')} ${data.melee.reach}`;
+                const reachString = `${game.i18n.localize('SR6.Reach')} ${data.melee.reach}`;
                 // find accuracy in props and insert ourselves after it
                 const accIndex = props.findIndex((p) => p.includes('Accuracy'));
                 if (accIndex > -1) {
@@ -27591,9 +27591,9 @@ exports.ChatData = {
         else if (data.category === 'thrown') {
             const { blast } = data.thrown;
             if (blast === null || blast === void 0 ? void 0 : blast.radius)
-                props.push(`${game.i18n.localize('SR5.BlastRadius')} ${blast.radius}m`);
+                props.push(`${game.i18n.localize('SR6.BlastRadius')} ${blast.radius}m`);
             if (blast === null || blast === void 0 ? void 0 : blast.dropoff)
-                props.push(`${game.i18n.localize('SR5.Dropoff')} ${blast.dropoff}/m`);
+                props.push(`${game.i18n.localize('SR6.Dropoff')} ${blast.dropoff}/m`);
             if (data.thrown.ranges) {
                 const mult = data.thrown.ranges.attribute && (item === null || item === void 0 ? void 0 : item.actor) ? item.actor.data.data.attributes[data.thrown.ranges.attribute].value : 1;
                 const ranges = [data.thrown.ranges.short, data.thrown.ranges.medium, data.thrown.ranges.long, data.thrown.ranges.extreme];
@@ -27663,37 +27663,37 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SR5Item = void 0;
+exports.SR6Item = void 0;
 const helpers_1 = require("../helpers");
-const SR5Actor_1 = require("../actor/SR5Actor");
+const SR6Actor_1 = require("../actor/SR6Actor");
 const ShadowrunItemDialog_1 = require("../apps/dialogs/ShadowrunItemDialog");
 const ChatData_1 = require("./ChatData");
 const ShadowrunRoller_1 = require("../rolls/ShadowrunRoller");
 const chat_1 = require("../chat");
 const constants_1 = require("../constants");
-const SR5ItemDataWrapper_1 = require("./SR5ItemDataWrapper");
+const SR6ItemDataWrapper_1 = require("./SR6ItemDataWrapper");
 const PartsList_1 = require("../parts/PartsList");
 const ItemAction_1 = require("./ItemAction");
 const SkillFlow_1 = require("../actor/SkillFlow");
 const config_1 = require("../config");
 /**
- * Implementation of Shadowrun5e items (owned, unowned and embedded).
+ * Implementation of Shadowrun6e items (owned, unowned and embedded).
  *
  *       tamIf here: The current legacy embedded items approach has been cleaned up a bit but is still causing some issues
  *       with typing and ease of use.
  *
- *       SR5Item.items currently overwrites foundries internal DocumentCollection mechanism of embedded documents. Partially
- *       due to legacy reasons and since Foundry 0.8 SR5Item.update can't be used for embedded items in items anymore.
+ *       SR6Item.items currently overwrites foundries internal DocumentCollection mechanism of embedded documents. Partially
+ *       due to legacy reasons and since Foundry 0.8 SR6Item.update can't be used for embedded items in items anymore.
  *
- *        At the moment this means, that this.actor can actually be an SR5Actor as well as an SR5Item, depending on who
+ *        At the moment this means, that this.actor can actually be an SR6Actor as well as an SR6Item, depending on who
  *       'owns' the embedded item as they are created using Item.createOwned during the embedded item prep phase.
  *
- *       For this reason SR5Item.actorOwner has been introduced to allow access to the actual owning actor, no matter
+ *       For this reason SR6Item.actorOwner has been introduced to allow access to the actual owning actor, no matter
  *       how deep embedded into other items an item is.
  *
- *       Be wary of SR5Item.actor for this reason!
+ *       Be wary of SR6Item.actor for this reason!
  */
-class SR5Item extends Item {
+class SR6Item extends Item {
     constructor() {
         super(...arguments);
         this.labels = {};
@@ -27709,14 +27709,14 @@ class SR5Item extends Item {
      *
      * NOTE: This helper is necessary since we have setup embedded items with an item owner, due to the current embedding
      *       workflow using item.update.isOwned condition within Item.update (foundry Item) to NOT trigger a global item
-     *       update within the ItemCollection but instead have this.actor.updateEmbeddedEntities actually trigger SR5Item.updateEmbeddedEntities
+     *       update within the ItemCollection but instead have this.actor.updateEmbeddedEntities actually trigger SR6Item.updateEmbeddedEntities
      */
     get actorOwner() {
         // An unowned item won't have an actor.
         if (!this.actor)
             return;
         // An owned item will have an actor.
-        if (this.actor instanceof SR5Actor_1.SR5Actor)
+        if (this.actor instanceof SR6Actor_1.SR6Actor)
             return this.actor;
         // An embedded item will have an item as an actor, which might have an actor owner.
         // NOTE: This is very likely wrong and should be fixed during embedded item prep / creation. this.actor will only
@@ -27726,7 +27726,7 @@ class SR5Item extends Item {
     }
     get wrapper() {
         // we need to cast here to unknown first to make ts happy
-        return new SR5ItemDataWrapper_1.SR5ItemDataWrapper(this.data);
+        return new SR6ItemDataWrapper_1.SR6ItemDataWrapper(this.data);
     }
     // Flag Functions
     getLastFireMode() {
@@ -27863,7 +27863,7 @@ class SR5Item extends Item {
             if (action.damage.base_formula_operator === '+') {
                 action.damage.base_formula_operator = 'add';
             }
-            // Item.prepareData is called once (first) with an empty SR5Actor instance without .data and once (second) with .data.
+            // Item.prepareData is called once (first) with an empty SR6Actor instance without .data and once (second) with .data.
             if ((_a = this.actor) === null || _a === void 0 ? void 0 : _a.data) {
                 action.damage.source = {
                     actorId: this.actor.id,
@@ -27973,7 +27973,7 @@ class SR5Item extends Item {
         const data = duplicate(this.data.data);
         const { labels } = this;
         //@ts-ignore // This is a hacky monkey patch solution to add a property to the item data
-        //              that's not actually defined in any SR5Item typing.
+        //              that's not actually defined in any SR6Item typing.
         if (!data.description)
             data.description = {};
         // TextEditor.enrichHTML will return null as a string, making later handling difficult.
@@ -27985,13 +27985,13 @@ class SR5Item extends Item {
         if (func)
             func(duplicate(data), labels, props, this);
         //@ts-ignore // This is a hacky monkey patch solution to add a property to the item data
-        //              that's not actually defined in any SR5Item typing.
+        //              that's not actually defined in any SR6Item typing.
         data.properties = props.filter((p) => !!p);
         return data;
     }
     getActionTestName() {
         const testName = this.getRollName();
-        return testName ? testName : game.i18n.localize('SR5.Action');
+        return testName ? testName : game.i18n.localize('SR6.Action');
     }
     getOpposedTestName() {
         let name = '';
@@ -28020,14 +28020,14 @@ class SR5Item extends Item {
         const parts = new PartsList_1.PartsList();
         if (this.hasDefenseTest()) {
             if (this.isAreaOfEffect()) {
-                parts.addUniquePart('SR5.Aoe', -2);
+                parts.addUniquePart('SR6.Aoe', -2);
             }
             if (this.isRangedWeapon()) {
                 const fireModeData = this.getLastFireMode();
                 if (fireModeData === null || fireModeData === void 0 ? void 0 : fireModeData.defense) {
-                    if (fireModeData.defense !== 'SR5.DuckOrCover') {
+                    if (fireModeData.defense !== 'SR6.DuckOrCover') {
                         const fireMode = +fireModeData.defense;
-                        parts.addUniquePart('SR5.FireMode', fireMode);
+                        parts.addUniquePart('SR6.FireMode', fireMode);
                     }
                 }
             }
@@ -28043,8 +28043,8 @@ class SR5Item extends Item {
             if (this.isRangedWeapon()) {
                 const fireModeData = this.getLastFireMode();
                 if (fireModeData === null || fireModeData === void 0 ? void 0 : fireModeData.defense) {
-                    if (fireModeData.defense === 'SR5.DuckOrCover') {
-                        return game.i18n.localize('SR5.DuckOrCover');
+                    if (fireModeData.defense === 'SR6.DuckOrCover') {
+                        return game.i18n.localize('SR6.DuckOrCover');
                     }
                 }
             }
@@ -28225,7 +28225,7 @@ class SR5Item extends Item {
         //@ts-ignore parseInt does allow for number type parameter.
         const mod = parseInt(this.data.data.action.mod || 0);
         if (mod)
-            parts.addUniquePart('SR5.ItemMod', mod);
+            parts.addUniquePart('SR6.ItemMod', mod);
         const atts = [];
         if (attribute !== undefined)
             atts.push(attribute);
@@ -28246,7 +28246,7 @@ class SR5Item extends Item {
         if (this.isRangedWeapon()) {
             const recoil = this.calculateRecoil();
                if (recoil) 
-				   parts.addUniquePart('SR5.Recoil', recoil);
+				   parts.addUniquePart('SR6.Recoil', recoil);
         }
     }
     isSin() {
@@ -28355,7 +28355,7 @@ class SR5Item extends Item {
             else if (opposed.skill && opposed.attribute) {
                 const skill = target.getSkill(opposed.skill);
                 if (!skill) {
-                    (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.error(game.i18n.localize("SR5.Errors.MissingSkill"));
+                    (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.error(game.i18n.localize("SR6.Errors.MissingSkill"));
                     return;
                 }
                 return target.rollSkill(skill, Object.assign(Object.assign({}, options), { attribute: opposed.attribute }));
@@ -28502,7 +28502,7 @@ class SR5Item extends Item {
                 else {
                     // NOTE: createdOwned expects an Actor instance as the second parameter.
                     //       HOWEVER the legacy approach for embeddedItems in other items relies upon this.actor
-                    //       returning an SR5Item instance to call .updateEmbeddedEntities, when Foundry expects an actor
+                    //       returning an SR6Item instance to call .updateEmbeddedEntities, when Foundry expects an actor
                     //@ts-ignore
                     return Item.createOwned(item, this);
                 }
@@ -28571,7 +28571,7 @@ class SR5Item extends Item {
                 return;
             const idx = items.findIndex((i) => i._id === deleted || Number(i._id) === deleted);
             if (idx === -1)
-                throw new Error(`Shadowrun5e | Couldn't find owned item ${deleted}`);
+                throw new Error(`Shadowrun6e | Couldn't find owned item ${deleted}`);
             items.splice(idx, 1);
             // we need to clear the items when one is deleted or it won't actually be deleted
             yield this.clearEmbeddedItems();
@@ -28587,13 +28587,13 @@ class SR5Item extends Item {
         return __awaiter(this, void 0, void 0, function* () {
             // Check for PDFoundry module hook: https://github.com/Djphoenix719/PDFoundry
             if (!ui['PDFoundry']) {
-                (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.warn(game.i18n.localize('SR5.DIALOG.MissingModuleContent'));
+                (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.warn(game.i18n.localize('SR6.DIALOG.MissingModuleContent'));
                 return;
             }
             const source = this.getBookSource();
             if (source === '') {
                 // @ts-ignore
-                (_b = ui.notifications) === null || _b === void 0 ? void 0 : _b.error(game.i18n.localize('SR5.SourceFieldEmptyError'));
+                (_b = ui.notifications) === null || _b === void 0 ? void 0 : _b.error(game.i18n.localize('SR6.SourceFieldEmptyError'));
             }
             // TODO open PDF to correct location
             // parse however you need, all "buttons" will lead to this function
@@ -28672,16 +28672,16 @@ class SR5Item extends Item {
     }
     getRollName() {
         if (this.isRangedWeapon()) {
-            return game.i18n.localize('SR5.RangeWeaponAttack');
+            return game.i18n.localize('SR6.RangeWeaponAttack');
         }
         if (this.isMeleeWeapon()) {
-            return game.i18n.localize('SR5.MeleeWeaponAttack');
+            return game.i18n.localize('SR6.MeleeWeaponAttack');
         }
         if (this.isCombatSpell()) {
-            return game.i18n.localize('SR5.SpellAttack');
+            return game.i18n.localize('SR6.SpellAttack');
         }
         if (this.isSpell()) {
-            return game.i18n.localize('SR5.SpellCast');
+            return game.i18n.localize('SR6.SpellCast');
         }
         if (this.hasRoll) {
             return this.name;
@@ -28696,21 +28696,21 @@ class SR5Item extends Item {
             return undefined;
         // go through and set the label correctly
         if (this.data.type === 'weapon') {
-            limit.label = 'SR5.Accuracy';
+            limit.label = 'SR6.Accuracy';
         }
         else if (limit === null || limit === void 0 ? void 0 : limit.attribute) {
-            limit.label = config_1.SR5.limits[limit.attribute];
+            limit.label = config_1.SR6.limits[limit.attribute];
         }
         else if (this.isSpell()) {
             limit.value = this.getLastSpellForce().value;
-            limit.label = 'SR5.Force';
+            limit.label = 'SR6.Force';
         }
         else if (this.isComplexForm()) {
             limit.value = this.getLastComplexFormLevel().value;
-            limit.label = 'SR5.Level';
+            limit.label = 'SR6.Level';
         }
         else {
-            limit.label = 'SR5.Limit';
+            limit.label = 'SR6.Limit';
         }
         // adjust limit value for actor data
         if (limit.attribute) {
@@ -28723,7 +28723,7 @@ class SR5Item extends Item {
         return limit;
     }
     /**
-     * Override setFlag to remove the 'SR5.' from keys in modlists, otherwise it handles them as embedded keys
+     * Override setFlag to remove the 'SR6.' from keys in modlists, otherwise it handles them as embedded keys
      * @param scope
      * @param key
      * @param value
@@ -28733,7 +28733,7 @@ class SR5Item extends Item {
         return super.setFlag(scope, key, newValue);
     }
     /**
-     * Override getFlag to add back the 'SR5.' keys correctly to be handled
+     * Override getFlag to add back the 'SR6.' keys correctly to be handled
      * @param scope
      * @param key
      */
@@ -29009,12 +29009,12 @@ class SR5Item extends Item {
     }
     get _isEmbeddedItem() {
         // @ts-ignore // TODO: foundry-vtt-types Document hasn't be implemented yet
-        return this.hasOwnProperty('parent') && this.parent instanceof SR5Item;
+        return this.hasOwnProperty('parent') && this.parent instanceof SR6Item;
     }
     /**
      * Hook into the Item.update process for embedded items.
      *
-     * @param data changes made to the SR5ItemData
+     * @param data changes made to the SR6ItemData
      */
     updateEmbeddedItem(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -29046,14 +29046,14 @@ class SR5Item extends Item {
         });
     }
 }
-exports.SR5Item = SR5Item;
+exports.SR6Item = SR6Item;
 
-},{"../actor/SR5Actor":86,"../actor/SkillFlow":88,"../apps/dialogs/ShadowrunItemDialog":136,"../chat":143,"../config":145,"../constants":146,"../helpers":156,"../parts/PartsList":208,"../rolls/ShadowrunRoller":209,"./ChatData":195,"./ItemAction":196,"./SR5ItemDataWrapper":198}],198:[function(require,module,exports){
+},{"../actor/SR6Actor":86,"../actor/SkillFlow":88,"../apps/dialogs/ShadowrunItemDialog":136,"../chat":143,"../config":145,"../constants":146,"../helpers":156,"../parts/PartsList":208,"../rolls/ShadowrunRoller":209,"./ChatData":195,"./ItemAction":196,"./SR6ItemDataWrapper":198}],198:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SR5ItemDataWrapper = void 0;
+exports.SR6ItemDataWrapper = void 0;
 const DataWrapper_1 = require("../dataWrappers/DataWrapper");
-class SR5ItemDataWrapper extends DataWrapper_1.DataWrapper {
+class SR6ItemDataWrapper extends DataWrapper_1.DataWrapper {
     getType() {
         return this.data.type;
     }
@@ -29316,7 +29316,7 @@ class SR5ItemDataWrapper extends DataWrapper_1.DataWrapper {
     getActionSpecialization() {
         var _a;
         if ((_a = this.getData().action) === null || _a === void 0 ? void 0 : _a.spec)
-            return 'SR5.Specialization';
+            return 'SR6.Specialization';
         return undefined;
     }
     getDrain() {
@@ -29362,7 +29362,7 @@ class SR5ItemDataWrapper extends DataWrapper_1.DataWrapper {
         return !!ammo;
     }
 }
-exports.SR5ItemDataWrapper = SR5ItemDataWrapper;
+exports.SR6ItemDataWrapper = SR6ItemDataWrapper;
 
 },{"../dataWrappers/DataWrapper":148}],199:[function(require,module,exports){
 "use strict";
@@ -29376,14 +29376,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SR5ItemSheet = void 0;
+exports.SR6ItemSheet = void 0;
 const helpers_1 = require("../helpers");
 const config_1 = require("../config");
 /**
  * Extend the basic ItemSheet with some very simple modifications
  */
 // TODO: Check foundry-vtt-types systems for how to do typing...
-class SR5ItemSheet extends ItemSheet {
+class SR6ItemSheet extends ItemSheet {
     constructor() {
         super(...arguments);
         this._shownDesc = [];
@@ -29398,14 +29398,14 @@ class SR5ItemSheet extends ItemSheet {
     static get defaultOptions() {
         // @ts-ignore // mergeObject breaks TypeScript typing. Should be fine.
         return mergeObject(super.defaultOptions, {
-            classes: ['sr5', 'sheet', 'item'],
+            classes: ['sr6', 'sheet', 'item'],
             width: 650,
             height: 450,
             tabs: [{ navSelector: '.tabs', contentSelector: '.sheetbody' }],
         });
     }
     get template() {
-        const path = 'systems/shadowrun5e/dist/templates/item/';
+        const path = 'systems/shadowrun6e/dist/templates/item/';
         return `${path}${this.item.data.type}.html`;
     }
     /* -------------------------------------------- */
@@ -29458,7 +29458,7 @@ class SR5ItemSheet extends ItemSheet {
                     console.log(e);
                 }
             }
-            data['config'] = config_1.SR5;
+            data['config'] = config_1.SR6;
             const items = this.getEmbeddedItems();
             const [ammunition, weaponMods, armorMods] = items.reduce((parts, item) => {
                 if (item.type === 'ammo')
@@ -29482,13 +29482,13 @@ class SR5ItemSheet extends ItemSheet {
      * Action limits currently contain limits for all action types. Be it matrix, magic or physical.
      */
     _getSortedLimitsForSelect() {
-        return helpers_1.Helpers.sortConfigValuesByTranslation(config_1.SR5.limits);
+        return helpers_1.Helpers.sortConfigValuesByTranslation(config_1.SR6.limits);
     }
     /**
      * Sorted (by translation) actor attributes.
      */
     _getSortedAttributesForSelect() {
-        return helpers_1.Helpers.sortConfigValuesByTranslation(config_1.SR5.attributes);
+        return helpers_1.Helpers.sortConfigValuesByTranslation(config_1.SR6.attributes);
     }
     /**
      * Sorted (by translation) active skills either from the owning actor or general configuration.
@@ -29497,7 +29497,7 @@ class SR5ItemSheet extends ItemSheet {
         // We need the actor owner, instead of the item owner. See actorOwner jsdoc for details.
         const actor = this.item.actorOwner;
         if (!actor)
-            return helpers_1.Helpers.sortConfigValuesByTranslation(config_1.SR5.activeSkills);
+            return helpers_1.Helpers.sortConfigValuesByTranslation(config_1.SR6.activeSkills);
         const activeSkills = helpers_1.Helpers.sortSkills(actor.getActiveSkills());
         const activeSkillsForSelect = {};
         for (const [id, skill] of Object.entries(activeSkills)) {
@@ -29561,18 +29561,18 @@ class SR5ItemSheet extends ItemSheet {
             try {
                 data = JSON.parse(event.dataTransfer.getData('text/plain'));
                 if (data.type !== 'Item') {
-                    console.log('Shadowrun5e | Can only drop Items');
+                    console.log('Shadowrun6e | Can only drop Items');
                 }
             }
             catch (err) {
-                console.log('Shadowrun5e | drop error');
+                console.log('Shadowrun6e | drop error');
             }
             let item;
             // Case 1 - Data explicitly provided
             if (data.data) {
                 // TODO test
                 if (this.item.isOwned && data.actorId === ((_a = this.item.actor) === null || _a === void 0 ? void 0 : _a._id) && data.data._id === this.item._id) {
-                    console.log('Shadowrun5e | Cant drop item on itself');
+                    console.log('Shadowrun6e | Cant drop item on itself');
                     // @ts-ignore
                     (_b = ui.notifications) === null || _b === void 0 ? void 0 : _b.error('Are you trying to break the game??');
                 }
@@ -29712,7 +29712,7 @@ class SR5ItemSheet extends ItemSheet {
     fixStaleRenderedState() {
         if (this._state === Application.RENDER_STATES.RENDERED && ui.windows[this.appId] === undefined) {
             // @ts-ignore // TODO: foundry-vtt-types doesn't know of DocumentSheet.document yet.
-            console.warn(`SR5ItemSheet app for ${this.document.name} is set as RENDERED but has no window registered. Fixing app internal render state. This is a known bug.`);
+            console.warn(`SR6ItemSheet app for ${this.document.name} is set as RENDERED but has no window registered. Fixing app internal render state. This is a known bug.`);
             // Hotfixing instead of this.close() since FormApplication.close() expects form elements, which don't exist anymore.
             this._state = Application.RENDER_STATES.CLOSED;
         }
@@ -29751,7 +29751,7 @@ class SR5ItemSheet extends ItemSheet {
         }
     }
 }
-exports.SR5ItemSheet = SR5ItemSheet;
+exports.SR6ItemSheet = SR6ItemSheet;
 
 },{"../config":145,"../helpers":156}],200:[function(require,module,exports){
 "use strict";
@@ -29779,7 +29779,7 @@ function createItemMacro(item, slot) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!game || !game.macros)
             return;
-        const command = `game.shadowrun5e.rollItemMacro("${item.name}");`;
+        const command = `game.shadowrun6e.rollItemMacro("${item.name}");`;
         // @ts-ignore // TODO: foundry-vtt-types Does not support DocumentCollection yet.
         let macro = game.macros.contents.find((m) => m.name === item.name);
         if (!macro) {
@@ -29788,7 +29788,7 @@ function createItemMacro(item, slot) {
                 type: 'script',
                 img: item.img,
                 command: command,
-                flags: { 'shadowrun5e.itemMacro': true },
+                flags: { 'shadowrun6e.itemMacro': true },
             }, { displaySheet: false }));
         }
         if (macro)
@@ -29839,7 +29839,7 @@ function createSkillMacro(data, slot) {
         if (existingMacro)
             return;
         // Setup macro data.
-        const command = `game.shadowrun5e.rollSkillMacro("${name}");`;
+        const command = `game.shadowrun6e.rollSkillMacro("${name}");`;
         const macro = yield Macro.create({
             name,
             type: 'script',
@@ -29869,7 +29869,7 @@ function rollSkillMacro(skillLabel) {
             return;
         const skill = actor.getSkill(skillLabel, { byLabel: true });
         if (!skill)
-            return ui.notifications.warn(game.i18n.localize('SR5.Warnings.MissingSkillOnActor'));
+            return ui.notifications.warn(game.i18n.localize('SR6.Warnings.MissingSkillOnActor'));
         yield actor.rollSkill(skill);
     });
 }
@@ -29920,12 +29920,12 @@ class Migrator {
             if (migrations.length === 0) {
                 return;
             }
-            const localizedWarningTitle = game.i18n.localize('SR5.MIGRATION.WarningTitle');
-            const localizedWarningHeader = game.i18n.localize('SR5.MIGRATION.WarningHeader');
-            const localizedWarningRequired = game.i18n.localize('SR5.MIGRATION.WarningRequired');
-            const localizedWarningDescription = game.i18n.localize('SR5.MIGRATION.WarningDescription');
-            const localizedWarningBackup = game.i18n.localize('SR5.MIGRATION.WarningBackup');
-            const localizedWarningBegin = game.i18n.localize('SR5.MIGRATION.BeginMigration');
+            const localizedWarningTitle = game.i18n.localize('SR6.MIGRATION.WarningTitle');
+            const localizedWarningHeader = game.i18n.localize('SR6.MIGRATION.WarningHeader');
+            const localizedWarningRequired = game.i18n.localize('SR6.MIGRATION.WarningRequired');
+            const localizedWarningDescription = game.i18n.localize('SR6.MIGRATION.WarningDescription');
+            const localizedWarningBackup = game.i18n.localize('SR6.MIGRATION.WarningBackup');
+            const localizedWarningBegin = game.i18n.localize('SR6.MIGRATION.BeginMigration');
             const d = new Dialog({
                 title: localizedWarningTitle,
                 content: `<h2 style="color: red; text-align: center">${localizedWarningHeader}</h2>` +
@@ -29951,11 +29951,11 @@ class Migrator {
             });
             yield this.migrateWorld(game, migrations);
             yield this.migrateCompendium(game, migrations);
-            const localizedWarningTitle = game.i18n.localize('SR5.MIGRATION.SuccessTitle');
-            const localizedWarningHeader = game.i18n.localize('SR5.MIGRATION.SuccessHeader');
-            const localizedSuccessDescription = game.i18n.localize('SR5.MIGRATION.SuccessDescription');
-            const localizedSuccessPacksInfo = game.i18n.localize('SR5.MIGRATION.SuccessPacksInfo');
-            const localizedSuccessConfirm = game.i18n.localize('SR5.MIGRATION.SuccessConfirm');
+            const localizedWarningTitle = game.i18n.localize('SR6.MIGRATION.SuccessTitle');
+            const localizedWarningHeader = game.i18n.localize('SR6.MIGRATION.SuccessHeader');
+            const localizedSuccessDescription = game.i18n.localize('SR6.MIGRATION.SuccessDescription');
+            const localizedSuccessPacksInfo = game.i18n.localize('SR6.MIGRATION.SuccessPacksInfo');
+            const localizedSuccessConfirm = game.i18n.localize('SR6.MIGRATION.SuccessConfirm');
             const packsDialog = new Dialog({
                 title: localizedWarningTitle,
                 content: `<h2 style="text-align: center; color: green">${localizedWarningHeader}</h2>` +
@@ -30083,9 +30083,9 @@ class VersionMigration {
         var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function* () {
             // @ts-ignore TODO Unignore when Foundry Types updates
-            (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.info(`${game.i18n.localize('SR5.MIGRATION.BeginNotification')} ${this.SourceVersionFriendlyName} -> ${this.TargetVersionFriendlyName}.`);
+            (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.info(`${game.i18n.localize('SR6.MIGRATION.BeginNotification')} ${this.SourceVersionFriendlyName} -> ${this.TargetVersionFriendlyName}.`);
             // @ts-ignore TODO Unignore when Foundry Types updates
-            (_b = ui.notifications) === null || _b === void 0 ? void 0 : _b.warn(game.i18n.localize('SR5.MIGRATION.DoNotCloseNotification'), {
+            (_b = ui.notifications) === null || _b === void 0 ? void 0 : _b.warn(game.i18n.localize('SR6.MIGRATION.DoNotCloseNotification'), {
                 permanent: true,
             });
             // Map of entities to update, store until later to reduce chance of partial updates
@@ -30125,7 +30125,7 @@ class VersionMigration {
             yield this.Apply(entityUpdates);
             yield game.settings.set(VersionMigration.MODULE_NAME, VersionMigration.KEY_DATA_VERSION, this.TargetVersion);
             // @ts-ignore TODO Unignore when Foundry Types updates
-            (_c = ui.notifications) === null || _c === void 0 ? void 0 : _c.info(`${game.i18n.localize('SR5.MIGRATION.SuccessNotification')} ${this.TargetVersion}.`, { permanent: true });
+            (_c = ui.notifications) === null || _c === void 0 ? void 0 : _c.info(`${game.i18n.localize('SR6.MIGRATION.SuccessNotification')} ${this.TargetVersion}.`, { permanent: true });
         });
     }
     /**
@@ -30469,7 +30469,7 @@ class VersionMigration {
     }
 }
 exports.VersionMigration = VersionMigration;
-VersionMigration.MODULE_NAME = 'shadowrun5e';
+VersionMigration.MODULE_NAME = 'shadowrun6e';
 VersionMigration.KEY_DATA_VERSION = 'systemMigrationVersion';
 VersionMigration.NO_VERSION = '0';
 
@@ -30857,7 +30857,7 @@ class Version0_7_2 extends VersionMigration_1.VersionMigration {
         //@ts-ignore // in-operator doesn't work here, as the underlying typing for metatype will result in string | number | undefined
         const type = (_b = (_a = actorData.data.metatype) === null || _a === void 0 ? void 0 : _a.toLowerCase()) !== null && _b !== void 0 ? _b : '';
         return actorData.type === 'character' &&
-            config_1.SR5.character.types.hasOwnProperty(type);
+            config_1.SR6.character.types.hasOwnProperty(type);
     }
     MigrateActorData(actorData) {
         var _a, _b;
@@ -30868,7 +30868,7 @@ class Version0_7_2 extends VersionMigration_1.VersionMigration {
                 //@ts-ignore // in-operator doesn't work here, as the underlying typing for metatype will result in string | number | undefined
                 const type = (_b = (_a = actorData.data.metatype) === null || _a === void 0 ? void 0 : _a.toLowerCase()) !== null && _b !== void 0 ? _b : '';
                 // TODO: What to do with custom metatypes?
-                const metatypeData = { metatype: config_1.SR5.character.types.hasOwnProperty(type) ? type : 'human' };
+                const metatypeData = { metatype: config_1.SR6.character.types.hasOwnProperty(type) ? type : 'human' };
                 updateData.data = Object.assign(Object.assign({}, updateData.data), metatypeData);
             }
             if (Version0_7_2.NoNPCDataForCharacter(actorData)) {
@@ -31166,7 +31166,7 @@ class ShadowrunRoller {
         const parts = new PartsList_1.PartsList(partsProps);
         const count = parts.total;
         if (count <= 0) {
-            (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.warn(game.i18n.localize('SR5.RollOneDie'));
+            (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.warn(game.i18n.localize('SR6.RollOneDie'));
             return '0d6cs>=5';
         }
         let formula = `${count}d6`;
@@ -31233,8 +31233,8 @@ class ShadowrunRoller {
     static promptRoll() {
         var _a;
         const value = ((_a = game.user) === null || _a === void 0 ? void 0 : _a.getFlag(constants_1.SYSTEM_NAME, constants_1.FLAGS.LastRollPromptValue)) || 0;
-        const parts = [{ name: 'SR5.LastRoll', value }];
-        const advancedRollProps = { parts, title: game.i18n.localize("SR5.Test") };
+        const parts = [{ name: 'SR6.LastRoll', value }];
+        const advancedRollProps = { parts, title: game.i18n.localize("SR6.Test") };
         const dialogOptions = { pool: true };
         return ShadowrunRoller.advancedRoll(advancedRollProps, dialogOptions);
     }
@@ -31319,7 +31319,7 @@ class ShadowrunRoller {
             const rollMode = (_a = options.rollMode) !== null && _a !== void 0 ? _a : game.settings.get(constants_1.CORE_NAME, constants_1.CORE_FLAGS.RollMode);
             if (rollMode === 'roll')
                 return;
-            // @ts-ignore // Token.actor is of type Actor instead of SR5Actor
+            // @ts-ignore // Token.actor is of type Actor instead of SR6Actor
             const users = options.target.actor.getActivePlayerOwners();
             for (const user of users) {
                 if (user.isGM)
@@ -31347,7 +31347,7 @@ class ShadowrunRoller {
             if (!game.settings.get(constants_1.SYSTEM_NAME, constants_1.FLAGS.WhisperOpposedTestsToTargetedPlayers))
                 return;
             targets.forEach(target => {
-                // @ts-ignore // Token.actor is of type Actor instead of SR5Actor
+                // @ts-ignore // Token.actor is of type Actor instead of SR6Actor
                 if (!target.actor.hasActivePlayerOwner())
                     return;
                 options = Object.assign(Object.assign({}, options), { target });
@@ -31358,13 +31358,13 @@ class ShadowrunRoller {
     static _errorOnInvalidLimit(limit) {
         var _a;
         if (limit && limit.value < 0) {
-            (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.error(game.i18n.localize('SR5.Warnings.NegativeLimitValue'));
+            (_a = ui.notifications) === null || _a === void 0 ? void 0 : _a.error(game.i18n.localize('SR6.Warnings.NegativeLimitValue'));
         }
     }
     static handleExtendedRoll(advancedProps, testData) {
         var _a;
-        const currentExtended = (_a = testData.parts.getPartValue('SR5.Extended')) !== null && _a !== void 0 ? _a : 0;
-        testData.parts.addUniquePart('SR5.Extended', currentExtended - 1);
+        const currentExtended = (_a = testData.parts.getPartValue('SR6.Extended')) !== null && _a !== void 0 ? _a : 0;
+        testData.parts.addUniquePart('SR6.Extended', currentExtended - 1);
         // Prepare the next, extended test roll.
         advancedProps.parts = testData.parts.list;
         advancedProps.extended = true;
@@ -31375,7 +31375,7 @@ class ShadowrunRoller {
         return __awaiter(this, void 0, void 0, function* () {
             basicProps.explodeSixes = true;
             delete basicProps.limit;
-            testData.parts.addUniquePart('SR5.PushTheLimit', actor.getEdge().base);
+            testData.parts.addUniquePart('SR6.PushTheLimit', actor.getEdge().base);
             yield actor.useEdge();
         });
     }
@@ -31510,14 +31510,14 @@ class CombatRules {
         return CombatRules.reduceIniResultAfterPass(score) > 0;
     }
     /**
-     * Reduce the given initiative score according to @PDF SR5#159
+     * Reduce the given initiative score according to @PDF SR6#159
      * @param score This given score can't be reduced under zero.
      */
     static reduceIniResultAfterPass(score) {
         return Math.max(score + constants_1.SR.combat.INI_RESULT_MOD_AFTER_INI_PASS, 0);
     }
     /**
-     * Reduce the initiative score according to the current initiative pass @PDF SR5#160.
+     * Reduce the initiative score according to the current initiative pass @PDF SR6#160.
      * @param score
      * @param pass The current initiative pass. Each combat round starts at the initiative pass of 1.
      */
@@ -31853,19 +31853,19 @@ exports.default = Template;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.quenchRegister = void 0;
-const sr5_Modifiers_spec_1 = require("./sr5.Modifiers.spec");
-const sr5_SR5Item_spec_1 = require("./sr5.SR5Item.spec");
+const sr6_Modifiers_spec_1 = require("./sr6.Modifiers.spec");
+const sr6_SR6Item_spec_1 = require("./sr6.SR6Item.spec");
 const quenchRegister = quench => {
-    quench.registerBatch("shadowrun5e.rules.modifiers", sr5_Modifiers_spec_1.shadowrunRulesModifiers);
-    quench.registerBatch("shadowrun5e.entities.items", sr5_SR5Item_spec_1.shadowrunSR5Item);
+    quench.registerBatch("shadowrun6e.rules.modifiers", sr6_Modifiers_spec_1.shadowrunRulesModifiers);
+    quench.registerBatch("shadowrun6e.entities.items", sr6_SR6Item_spec_1.shadowrunSR6Item);
 };
 exports.quenchRegister = quenchRegister;
 
-},{"./sr5.Modifiers.spec":215,"./sr5.SR5Item.spec":216}],215:[function(require,module,exports){
+},{"./sr6.Modifiers.spec":215,"./sr6.SR6Item.spec":216}],215:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.shadowrunRulesModifiers = void 0;
-const Modifiers_1 = require("../module/sr5/Modifiers");
+const Modifiers_1 = require("../module/sr6/Modifiers");
 const shadowrunRulesModifiers = context => {
     const { describe, it, assert } = context;
     const defaultModifiers = {
@@ -31883,7 +31883,7 @@ const shadowrunRulesModifiers = context => {
             total: -3
         }
     };
-    describe('SR5 Modifiers', () => {
+    describe('SR6 Modifiers', () => {
         it('should create default modifier values', () => {
             const modifiers = Modifiers_1.Modifiers.getDefaultModifiers();
             assert.deepEqual(modifiers, defaultModifiers);
@@ -31939,7 +31939,7 @@ const shadowrunRulesModifiers = context => {
             });
             assert.equal(modifiersInactive.hasActiveEnvironmental, false);
         });
-        it('should calculate the total according to sr5 rules', () => {
+        it('should calculate the total according to sr6 rules', () => {
             const modifiers = new Modifiers_1.Modifiers(defaultModifiers);
             assert.equal(modifiers.environmental.total, 0);
             modifiers.environmental.active.wind = -1;
@@ -32030,7 +32030,7 @@ const shadowrunRulesModifiers = context => {
 };
 exports.shadowrunRulesModifiers = shadowrunRulesModifiers;
 
-},{"../module/sr5/Modifiers":212}],216:[function(require,module,exports){
+},{"../module/sr6/Modifiers":212}],216:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -32042,9 +32042,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.shadowrunSR5Item = void 0;
-const SR5Item_1 = require("../module/item/SR5Item");
-const shadowrunSR5Item = context => {
+exports.shadowrunSR6Item = void 0;
+const SR6Item_1 = require("../module/item/SR6Item");
+const shadowrunSR6Item = context => {
     /**
      * Setup handling for all items within this test.
      */
@@ -32083,7 +32083,7 @@ const shadowrunSR5Item = context => {
     after(() => __awaiter(void 0, void 0, void 0, function* () {
         yield testing.teardown();
     }));
-    describe('SR5Items', () => {
+    describe('SR6Items', () => {
         it('Should create a naked item of any type', () => __awaiter(void 0, void 0, void 0, function* () {
             const item = yield testing.create({ type: 'action' });
             // Check basic foundry data integrity
@@ -32125,7 +32125,7 @@ const shadowrunSR5Item = context => {
             const embeddedAmmoData = embeddedItemDatas[0];
             const embeddedAmmo = weapon.getOwnedItem(embeddedAmmoData._id);
             assert.notStrictEqual(embeddedAmmo, undefined);
-            assert.instanceOf(embeddedAmmo, SR5Item_1.SR5Item);
+            assert.instanceOf(embeddedAmmo, SR6Item_1.SR6Item);
             if (!embeddedAmmo)
                 return; //type script gate...
             // Set an testing property.
@@ -32136,8 +32136,8 @@ const shadowrunSR5Item = context => {
         }));
     });
 };
-exports.shadowrunSR5Item = shadowrunSR5Item;
+exports.shadowrunSR6Item = shadowrunSR6Item;
 
-},{"../module/item/SR5Item":197}]},{},[201])
+},{"../module/item/SR6Item":197}]},{},[201])
 
 //# sourceMappingURL=bundle.js.map

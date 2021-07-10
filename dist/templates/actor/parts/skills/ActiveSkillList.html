@@ -1,6 +1,6 @@
 <div class="flexcol">
-    {{> 'systems/shadowrun5e/dist/templates/common/List/ListHeader.html'
-            name=(localize 'SR5.ActiveSkills')
+    {{> 'systems/shadowrun6e/dist/templates/common/List/ListHeader.html'
+            name=(localize 'SR6.ActiveSkills')
             itemCssClass="skill-header"
             icons=(SkillHeaderIcons 'active')
             rightSide=(SkillHeaderRightSide 'active' filters)
@@ -13,13 +13,13 @@
                     type="text"
                     value="{{filters.skills}}"
                     name="filters.skills"
-                    placeholder="{{localize 'SR5.Filter'}}..."
+                    placeholder="{{localize 'SR6.Filter'}}..."
             />
         </div>
     </div>
     <div class="scroll-area left light-border-right">
         {{#each data.skills.active as |skill sid|}}
-            {{> 'systems/shadowrun5e/dist/templates/common/List/ListItem.html'
+            {{> 'systems/shadowrun6e/dist/templates/common/List/ListItem.html'
                     name=(localizeSkill skill)
                     itemNameCssClass="skill-roll"
                     itemId=sid

@@ -1,9 +1,9 @@
-import SR5ActorData = Shadowrun.SR5ActorData;
+import SR6ActorData = Shadowrun.SR6ActorData;
 import TwoTrackActorData = Shadowrun.TwoTrackActorData;
 import WoundsActorData = Shadowrun.WoundsActorData;
 
 export class WoundsPrep {
-    static prepareWounds(data: SR5ActorData & TwoTrackActorData & WoundsActorData) {
+    static prepareWounds(data: SR6ActorData & TwoTrackActorData & WoundsActorData) {
         const { modifiers, track } = data;
         const count = 3 + Number(modifiers['wound_tolerance']);
         const stunWounds = track.stun.disabled ? 0 : Math.floor(track.stun.value / count);

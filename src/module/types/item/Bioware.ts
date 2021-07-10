@@ -1,6 +1,6 @@
 /// <reference path="../Shadowrun.ts" />
 declare namespace Shadowrun {
-    export type Bioware = SR5ItemData<BiowareData> & {
+    export type Bioware = SR6ItemData<BiowareData> & {
         type: 'bioware';
     };
 

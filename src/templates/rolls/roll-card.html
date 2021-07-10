@@ -1,5 +1,5 @@
 <div
-    class="sr5 chat-card roll-card"
+    class="sr6 chat-card roll-card"
     data-actor-id="{{actor.id}}"
     data-item-id="{{item.id}}"
     data-token-id="{{tokenId}}"
@@ -27,7 +27,7 @@
             {{title}}
         </span>
         {{#if previewTemplate}}
-        <div class="roll" title="{{localize 'SR5.PlaceTemplate'}}">
+        <div class="roll" title="{{localize 'SR6.PlaceTemplate'}}">
             <i class="fas fa-bullseye place-template"></i>
         </div>
         {{/if}}
@@ -36,35 +36,35 @@
         <div class="left-side">
             {{#if (isDefined roll.hits)}}
             <div class="limit-line">
-                <span class="key">{{localize "SR5.Hits"}}: </span
+                <span class="key">{{localize "SR6.Hits"}}: </span
                 ><span class="value">{{roll.hits}}</span>
             </div>
             {{/if}} {{#if roll.limit.value}}
             <div class="limit-line" title="{{localize limit.label}}">
-                <span class="key">{{localize "SR5.Limit"}}: </span>
+                <span class="key">{{localize "SR6.Limit"}}: </span>
                 <span class="value">{{roll.limit.value}}</span>
             </div>
             {{/if}}
             {{#if attack.damage}}
-                {{> 'systems/shadowrun5e/dist/templates/rolls/parts/Damage.html'
-                        name=(localize "SR5.DV")
+                {{> 'systems/shadowrun6e/dist/templates/rolls/parts/Damage.html'
+                        name=(localize "SR6.DV")
                         damage=attack.damage
                         showAP=true
                 }}
             {{/if}}
             {{#if attack.force}}
             <div class="limit-line">
-                <span class="key">{{localize "SR5.Force"}}</span>
+                <span class="key">{{localize "SR6.Force"}}</span>
                 <span class="value">{{attack.force}}</span>
             </div>
             {{/if}} {{#if attack.level}}
             <div class="limit-line">
-                <span class="key">{{localize "SR5.Level"}}</span>
+                <span class="key">{{localize "SR6.Level"}}</span>
                 <span class="value">{{attack.level}}</span>
             </div>
             {{/if}} {{#if attack.reach}}
             <div class="limit-line">
-                <span class="key">{{localize "SR5.Reach"}}</span>
+                <span class="key">{{localize "SR6.Reach"}}</span>
                 <span class="value">{{attack.reach}}</span>
             </div>
             {{/if}} {{#if attack.fireMode.value}}
@@ -74,48 +74,48 @@
             {{/if}} {{#if attack.blast.radius}}
             <div class="limit-line">
                 <div>
-                    <span class="key">{{localize "SR5.Radius"}}: </span>
+                    <span class="key">{{localize "SR6.Radius"}}: </span>
                     <span class="value">{{attack.blast.radius}}m</span>
                 </div>
             </div>
             {{/if}} {{#if attack.blast.dropoff}}
             <div class="limit-line">
-                <span class="key">{{localize "SR5.Dropoff"}}: </span>
+                <span class="key">{{localize "SR6.Dropoff"}}: </span>
                 <span class="value">{{attack.blast.dropoff}}/m</span>
             </div>
             {{/if}} {{#if damage}}
-                <div class="category-line">{{localize 'SR5.IncomingDamage'}}</div>
-                {{> 'systems/shadowrun5e/dist/templates/rolls/parts/Damage.html'
-                        name=(localize "SR5.Incoming")
+                <div class="category-line">{{localize 'SR6.IncomingDamage'}}</div>
+                {{> 'systems/shadowrun6e/dist/templates/rolls/parts/Damage.html'
+                        name=(localize "SR6.Incoming")
                         damage=damage.incoming
                         showAP=true
                 }}
-                {{> 'systems/shadowrun5e/dist/templates/rolls/parts/Damage.html'
-                        name=(localize "SR5.Modified")
+                {{> 'systems/shadowrun6e/dist/templates/rolls/parts/Damage.html'
+                        name=(localize "SR6.Modified")
                         damage=damage.modified
                         showAP=true
                 }}
             {{/if}} {{#if (isDefined incomingAttack.hits)}}
             <div class="limit-line">
-                <span class="key">{{localize "SR5.AttackerHits"}}</span>
+                <span class="key">{{localize "SR6.AttackerHits"}}</span>
                 <span class="value">{{incomingAttack.hits}}</span>
             </div>
             {{/if}}
             {{#if opposed}}
             <div class="category-line">
-                <span class="key">{{localize "SR5.NetHits"}}</span>
+                <span class="key">{{localize "SR6.NetHits"}}</span>
                 <span class="value">{{opposed.netHits}}</span>
             </div>
             {{/if}}
             {{#if knockedDown}}
             <div class="limit-line">
-                <span class="key">{{localize "SR5.Target"}}: </span>
-                <span class="value">{{localize "SR5.KnockedDown"}}</span>
+                <span class="key">{{localize "SR6.Target"}}: </span>
+                <span class="value">{{localize "SR6.KnockedDown"}}</span>
             </div>
             {{/if}}
             {{#if combat}} {{#if combat.initiative}}
             <div class="category-line">
-                <span class="key">{{localize "SR5.Initiative"}}</span>
+                <span class="key">{{localize "SR6.Initiative"}}</span>
                 <span class="value">{{combat.initiative}}</span>
             </div>
             {{/if}}{{/if}}
@@ -128,7 +128,7 @@
                 </div>
                 {{/each}} {{#if (isDefined roll)}}
                 <div class="limit-line">
-                    <span class="key bold">{{localize 'SR5.DicePool'}}:</span>
+                    <span class="key bold">{{localize 'SR6.DicePool'}}:</span>
                     <span class="value">{{roll.pool}}</span>
                 </div>
                 {{/if}}
@@ -164,8 +164,8 @@
 
     {{#if roll.glitched}}
     <div class="glitch-content">
-        <div class="glitch" {{#if showGlitchAnimation}} data-glitch="{{localize 'SR5.Glitch'}}" {{/if}}>
-            {{localize "SR5.Glitch"}}
+        <div class="glitch" {{#if showGlitchAnimation}} data-glitch="{{localize 'SR6.Glitch'}}" {{/if}}>
+            {{localize "SR6.Glitch"}}
         </div>
     </div>
     {{/if}}

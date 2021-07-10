@@ -1,4 +1,4 @@
-{{#> "systems/shadowrun5e/dist/templates/common/Attribute.html" dataName="attribute" dataId=attributeId}}
+{{#> "systems/shadowrun6e/dist/templates/common/Attribute.html" dataName="attribute" dataId=attributeId}}
     <div class="attribute-name roll {{#if rollId}}Roll{{/if}}">
         {{#if label}}
             {{localize label}}
@@ -8,13 +8,13 @@
     </div>
     <div class="attribute-value value">
         <span class="attribute-value-total">{{attribute.value}}</span>
-        {{> "systems/shadowrun5e/dist/templates/common/ValueModifiers.html" value=attribute}}
+        {{> "systems/shadowrun6e/dist/templates/common/ValueModifiers.html" value=attribute}}
     </div>
     <div class="track center {{#if disableBase}}{{#if disableManual}}invisible{{/if}}{{/if}}">
         <div class="attribute-input-container">
-            {{> 'systems/shadowrun5e/dist/templates/common/ValueInput.html'
+            {{> 'systems/shadowrun6e/dist/templates/common/ValueInput.html'
                     cssClass="attribute-input short"
-                    title=(localize 'SR5.BaseValue')
+                    title=(localize 'SR6.BaseValue')
                     size="2"
                     maxLength="2"
                     value=attribute.base
@@ -24,9 +24,9 @@
         </div>
         <div class="track-plus"></div>
         <div class="attribute-input-container">
-            {{> 'systems/shadowrun5e/dist/templates/common/ValueInput.html'
+            {{> 'systems/shadowrun6e/dist/templates/common/ValueInput.html'
                     cssClass="attribute-input short"
-                    title=(localize 'SR5.TemporaryModifiers')
+                    title=(localize 'SR6.TemporaryModifiers')
                     size="2"
                     maxLength="2"
                     value=attribute.temp
@@ -37,9 +37,9 @@
         {{!--
         {{#if (partsTotal attribute.mod)}}
         <div class="attribute-input-container">
-            {{> 'systems/shadowrun5e/dist/templates/common/ValueInput.html'
+            {{> 'systems/shadowrun6e/dist/templates/common/ValueInput.html'
                     cssClass="attribute-input short"
-                    title=(localize 'SR5.AutoModifiers')
+                    title=(localize 'SR6.AutoModifiers')
                     size="2"
                     maxLength="2"
                     value=(partsTotal attribute.mod)
@@ -49,4 +49,4 @@
         {{/if}}
         --}}
     </div>
-{{/"systems/shadowrun5e/dist/templates/common/Attribute.html"}}
+{{/"systems/shadowrun6e/dist/templates/common/Attribute.html"}}

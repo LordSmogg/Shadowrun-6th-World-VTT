@@ -1,12 +1,12 @@
 <div class="scroll-area">
-    {{> 'systems/shadowrun5e/dist/templates/common/List/ListHeader.html'
-            name=(localize 'SR5.Labels.ActorSheet.SpritePowers')
+    {{> 'systems/shadowrun6e/dist/templates/common/List/ListHeader.html'
+            name=(localize 'SR6.Labels.ActorSheet.SpritePowers')
             itemId='sprite_power'
             icons=(ItemHeaderIcons 'sprite_power')
             rightSide=(ItemHeaderRightSide 'sprite_power')
     }}
     {{#each sprite_powers as |item iid|}}
-        {{> 'systems/shadowrun5e/dist/templates/common/List/ListItem.html'
+        {{> 'systems/shadowrun6e/dist/templates/common/List/ListItem.html'
                 img=item.img
                 name=item.name
                 itemId=item._id

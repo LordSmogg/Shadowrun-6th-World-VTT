@@ -1,5 +1,5 @@
 declare namespace Shadowrun {
-    export type Program = SR5ItemData<ProgramData> & {
+    export type Program = SR6ItemData<ProgramData> & {
         type: 'program';
     };
 

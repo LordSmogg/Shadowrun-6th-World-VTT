@@ -172,7 +172,7 @@ export class WeaponImporter extends DataImporter {
             datas.push(data);
         }
 
-        // @ts-ignore // TODO: TYPE: This should be removed after typing of SR5Item
+        // @ts-ignore // TODO: TYPE: This should be removed after typing of SR6Item
         return await Item.create(datas);
     }
 }

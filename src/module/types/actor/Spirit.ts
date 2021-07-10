@@ -1,9 +1,9 @@
 /// <reference path="../Shadowrun.ts" />
 
 declare namespace Shadowrun {
-    export type SpiritType = keyof typeof SR5CONFIG.spiritTypes;
+    export type SpiritType = keyof typeof SR6CONFIG.spiritTypes;
 
-    export type SR5SpiritType = SR5ActorBase & {
+    export type SR6SpiritType = SR6ActorBase & {
         data: SpiritActorData;
         type: 'spirit';
     };

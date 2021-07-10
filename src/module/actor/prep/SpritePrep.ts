@@ -1,5 +1,5 @@
 import { BaseActorPrep } from './BaseActorPrep';
-import SR5SpriteType = Shadowrun.SR5SpriteType;
+import SR6SpriteType = Shadowrun.SR6SpriteType;
 import SpriteActorData = Shadowrun.SpriteActorData;
 import { SkillsPrep } from './functions/SkillsPrep';
 import { ModifiersPrep } from './functions/ModifiersPrep';
@@ -14,7 +14,7 @@ import { PartsList } from '../../parts/PartsList';
 /**
  * Prepare a Sprite Type of Actor
  */
-export class SpritePrep extends BaseActorPrep<SR5SpriteType, SpriteActorData> {
+export class SpritePrep extends BaseActorPrep<SR6SpriteType, SpriteActorData> {
     prepare() {
         ModifiersPrep.prepareModifiers(this.data);
         ModifiersPrep.clearAttributeMods(this.data);
@@ -59,11 +59,11 @@ export class SpritePrep extends BaseActorPrep<SR5SpriteType, SpriteActorData> {
 
         // setup initiative from overrides
         initiative.matrix.base.base = level * 2 + overrides.init;
-        PartsList.AddUniquePart(initiative.matrix.base.mod, 'SR5.Bonus', modifiers['matrix_initiative']);
+        PartsList.AddUniquePart(initiative.matrix.base.mod, 'SR6.Bonus', modifiers['matrix_initiative']);
         Helpers.calcTotal(initiative.matrix.base);
 
         initiative.matrix.dice.base = 4;
-        PartsList.AddUniquePart(initiative.matrix.dice.mod, 'SR5.Bonus', modifiers['matrix_initiative_dice']);
+        PartsList.AddUniquePart(initiative.matrix.dice.mod, 'SR6.Bonus', modifiers['matrix_initiative_dice']);
         Helpers.calcTotal(initiative.matrix.dice);
 
         // always in matrix perception
