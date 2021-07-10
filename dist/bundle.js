@@ -27904,6 +27904,21 @@ class SR6Item extends Item {
                     dpParts.addUniquePart(mod.name, modification.data.dice_pool);
                 }
             });
+			const modes = this.getWeaponModes();
+			if (modes) {
+				if (modes.single_shot) {
+					action.damage.mod = PartsList_1.PartsList.AddUniquePart(action.damage.mod, "SS", 0);
+				}
+				else if (modes.semi_auto) {
+					action.damage.mod = PartsList_1.PartsList.AddUniquePart(action.damage.mod, "SA", 1);
+				}
+				else if (modes.burst_fire) {
+					action.damage.mod = PartsList_1.PartsList.AddUniquePart(action.damage.mod, "BF", 2);
+				}
+				else if (modes.full_auto) {
+					action.damage.mod = PartsList_1.PartsList.AddUniquePart(action.damage.mod, "FA", 0);
+				}
+			}
             if (equippedAmmo) {
                 const ammoData = equippedAmmo.data.data;
                 // add mods to damage from ammo
@@ -28646,6 +28661,13 @@ class SR6Item extends Item {
         if (this.isRangedWeapon())
             return this.getRange();
     }
+	getModes() {
+        return this.wrapper.getModes();
+    }
+    getWeaponModes() {
+        if (this.isRangedWeapon())
+            return this.getModes();
+    }
     getAttackData(hits, actionTestData) {
         var _a;
         if (!this._canDealDamage()) {
@@ -29370,6 +29392,14 @@ class SR6ItemDataWrapper extends DataWrapper_1.DataWrapper {
             return this.data.data.range;
         if (this.data.type === 'weapon')
             return this.data.data.range;
+    }
+    getModes() {
+        if (!("range" in this.data.data))
+            return;
+        if (!("modes" in this.data.data.range))
+            return;
+        if (this.data.type === 'weapon')
+            return this.data.data.range.modes;
     }
     hasDefenseTest() {
         var _a, _b;
