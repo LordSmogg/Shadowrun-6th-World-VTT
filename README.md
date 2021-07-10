@@ -5,7 +5,7 @@ Lacking a foundry system for Shadowrun 6th edtion, I modified a 5th edition syst
 
 So what was changed:
 - Rolls on the character sheet (Memory, Judge ect)
-- 5th edtion default skills removed. Instead you need to add 6th edtion skills manually. If you name skills correctly according to the rulebook, they will be available for block and dodge defensive actions. You may want to make a template char with all the skills that you can just copy each time you need a new character.
+- Skills updated to 6e. Support for dodge and block.
 - Remember to toggle not using limits in the setting. I have also removed some of the places limits are displayed.
 - Attack and Defense ratings are missing. I reccomend putting those in descriptions.
 - Edge was tricky since you can now always go to 7 edge, I reccomend setting your edge as your base edge and then adding edge adjustment to reach 7. I have adjusted the edge roll to only roll from base edge. Its not so pretty but it works for the purpose of playing. 
