@@ -5,7 +5,9 @@
         <select name="cover">
             {{#select cover}}
             <option value="0">{{localize 'SR5.NoCover'}}</option>
+            <option value="1">(+1) {{localize 'SR5.PartialCover'}}</option>
             <option value="2">(+2) {{localize 'SR5.PartialCover'}}</option>
+            <option value="3">(+3) {{localize 'SR5.GoodCover'}}</option>
             <option value="4">(+4) {{localize 'SR5.GoodCover'}}</option>
             {{/select}}
         </select>

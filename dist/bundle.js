@@ -23649,23 +23649,23 @@ class Helpers {
     static mapRoundsToDefenseMod(rounds) {
         if (rounds === 1)
             return 0;
-        if (rounds === 3)
-            return -2;
-        if (rounds === 6)
-            return -5;
+        if (rounds === 2)
+            return 0;
+        if (rounds === 4)
+            return 0;
         if (rounds === 10)
-            return -9;
+            return 0;
         return 0;
     }
     static mapRoundsToDefenseDesc(rounds) {
         if (rounds === 1)
             return '';
-        if (rounds === 3)
-            return '-2';
-        if (rounds === 6)
-            return '-5';
+        if (rounds === 2)
+            return '';
+        if (rounds === 4)
+            return '';
         if (rounds === 10)
-            return '-9';
+            return '';
         if (rounds === 20)
             return 'SR5.DuckOrCover';
         return '';
