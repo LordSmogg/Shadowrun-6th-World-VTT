@@ -16,3 +16,12 @@ So what was changed:
 So in short, many things were adjusted to make it playable for 6th edtion, but its not perfect, and I dont expect to mantain it much. 
 
 The guys at RPG Framework are doing great progress on another Shadowrun 6th Edtion System for VTT, so I reccomend you check that out as well: https://www.rpgframework.de/index.php/en/welcome-to-rpg-framework/
+
+For 5th edtion system and the work that i branched: https://github.com/smilligan93/SR5-FoundryVTT 
+
+Licences
+Icons provided by Font Awesome: https://fontawesome.com/license
+
+Shadowrun is registered trademarks and/or trademarks of The Topps Company, Inc. 
+This is a fan project, not associated with Topps or Catalyst Games Lab.
+
