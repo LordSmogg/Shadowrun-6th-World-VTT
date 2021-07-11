@@ -27903,7 +27903,25 @@ class SR6Item extends Item {
                 if (modification.data.dice_pool) {
                     dpParts.addUniquePart(mod.name, modification.data.dice_pool);
                 }
-            });
+            });	
+/*
+			// cant seem to get his to work. But the idea is to get firering mode selected in the dropdown rather than on the weapon itself.
+			const mode = this.getLastFireMode();
+			if (mode) {
+				if (mode.single_shot) {
+					action.damage.mod = PartsList_1.PartsList.AddUniquePart(action.damage.mod, "SS", 0);
+				}
+				else if (mode.semi_auto) {
+					action.damage.mod = PartsList_1.PartsList.AddUniquePart(action.damage.mod, "SA", 1);
+				}
+				else if (mode.burst_fire) {
+					action.damage.mod = PartsList_1.PartsList.AddUniquePart(action.damage.mod, "BF", 2);
+				}
+				else if (mode.full_auto) {
+					action.damage.mod = PartsList_1.PartsList.AddUniquePart(action.damage.mod, "FA", 0);
+				}
+			}	
+*/			
 			const modes = this.getWeaponModes();
 			if (modes) {
 				if (modes.single_shot) {
@@ -28685,7 +28703,8 @@ class SR6Item extends Item {
         if (this.isCombatSpell() && (actionTestData === null || actionTestData === void 0 ? void 0 : actionTestData.spell)) {
             const force = actionTestData.spell.force;
             const damageParts = new PartsList_1.PartsList(data.damage.mod);
-            const spellDamage = this.getSpellDamage(force, hits);
+			const attribute = this.actor.findAttribute(this.getActionAttribute());
+            const spellDamage = this.getSpellDamage(force, hits, attribute.value);			 
             if (spellDamage) {
                 data.force = force;
                 data.damage.base = spellDamage.base;
@@ -28996,18 +29015,18 @@ class SR6Item extends Item {
      *
      * NOTE: This will NOT give you modified damage for direct combat spells
      */
-    getSpellDamage(force, hits) {
+    getSpellDamage(force, hits, magic) {
         if (!this.isCombatSpell())
             return;
         const action = this.getAction();
         if (!action)
             return;
         if (this.isDirectCombatSpell()) {
-            const damage = hits + force;
+            const damage = hits + Math.floor(force/2);
             return helpers_1.Helpers.createDamageData(damage, action.damage.type.value, 0, '', this);
         }
         if (this.isIndirectCombatSpell()) {
-            const damage = hits + force;
+            const damage = hits + Math.floor(force/2) + Math.ceil(magic/2);
             return helpers_1.Helpers.createDamageData(damage, action.damage.type.value, 0, '', this);
         }		
     }
