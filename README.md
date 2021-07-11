@@ -22,6 +22,10 @@ Reccomendations:
 - Toggle firering mode on weapon rather than the pop-up.
 - Set the combat tracker to display edge value. 
 
+Full Disclaimer:
+- This project is intended for my personal use only.
+- Any use is at own risk. No Liability or Warrenty is provided. 
+
 So in short, many things were adjusted to make it playable for 6th edtion, but its not perfect, and I dont expect to mantain it much. 
 
 The guys at RPG Framework are doing great progress on another Shadowrun 6th Edtion System for VTT, so I reccomend you check that out as well: https://www.rpgframework.de/index.php/en/welcome-to-rpg-framework/
