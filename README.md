@@ -3,15 +3,24 @@ Manifest: https://raw.githubusercontent.com/LordSmogg/Shadowrun-6th-World-VTT/ma
 So what is this:
 Lacking a foundry system for Shadowrun 6th edtion, I modified a 5th edition system to align it as close as i could to 6th without having to go too deep into coding. Basically i just wanted something that worked. 
 
-So what was changed:
+Updates from 5th -> 6th:
 - Rolls on the character sheet (Memory, Judge ect)
 - Skills updated to 6e. Support for dodge and block.
-- Remember to toggle not using limits in the setting. I have also removed some of the places limits are displayed.
-- Attack and Defense ratings are missing. I reccomend putting those in descriptions.
-- Edge was tricky since you can now always go to 7 edge, I reccomend setting your edge as your base edge and then adding edge adjustment to reach 7. I have adjusted the edge roll to only roll from base edge. Its not so pretty but it works for the purpose of playing. 
-- Firering mode was adjusted to deduct the right amount of bullets.
-- Conditions does no longer affect dice pool.
-- Spell damage works right for direct spells
+- Edge updated so the bar always goes to 7. 
+- Push the limit now deduct 4 edge.
+- Firering mode was adjusted to deduct the right amount of bullets and add Damage.
+- Environment Conditions does no longer affect dice pool automatically.
+- Cover levels 1-4 added for defense bonus dice.
+- Spell damage works more in line with 6th edtion.
+- AmpUp will display as AmpUp instead of Power and add to spell damage and drain.
+- Some display of limits and recoil removed.
+
+Reccomendations:
+- Toggle not using limits in the setting.
+- Use descriptions for Attack Ratings.
+- You might want to make an action to display Defense Rating.
+- Toggle firering mode on weapon rather than the pop-up.
+- Set the combat tracker to display edge value. 
 
 So in short, many things were adjusted to make it playable for 6th edtion, but its not perfect, and I dont expect to mantain it much. 
 
