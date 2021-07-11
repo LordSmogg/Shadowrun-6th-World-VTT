@@ -14452,7 +14452,7 @@ class SR6Actor extends Actor {
                 }
                 if (actor) {
                     const parts = new PartsList_1.PartsList();
-                    parts.addUniquePart('SR6.PushTheLimit', actor.getEdge().base);
+                    parts.addUniquePart('SR6.PushTheLimit', actor.getEdge().value);
                     ShadowrunRoller_1.ShadowrunRoller.basicRoll({
                         title: ` - ${game.i18n.localize('SR6.PushTheLimit')}`,
                         parts: parts.list,
@@ -20564,7 +20564,7 @@ class ShadowrunTestDialog {
         };
         if (actor) {
             buttons['edge'] = {
-                label: `${game.i18n.localize('SR6.PushTheLimit')} (+${actor.getEdge().base})`,
+                label: `${game.i18n.localize('SR6.PushTheLimit')} (+${actor.getEdge().value})`,
                 icon: '<i class="fas fa-bomb"></i>',
                 callback: () => {
                 },
@@ -31442,7 +31442,7 @@ class ShadowrunRoller {
         return __awaiter(this, void 0, void 0, function* () {
             basicProps.explodeSixes = true;
             delete basicProps.limit;
-            testData.parts.addUniquePart('SR6.PushTheLimit', actor.getEdge().base);
+            testData.parts.addUniquePart('SR6.PushTheLimit', actor.getEdge().value);
             yield actor.useEdge();
         });
     }
