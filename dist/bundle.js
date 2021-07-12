@@ -29022,11 +29022,11 @@ class SR6Item extends Item {
         if (!action)
             return;
         if (this.isDirectCombatSpell()) {
-            const damage = hits + Math.floor(force/2);
+            const damage = Math.floor(force/2);
             return helpers_1.Helpers.createDamageData(damage, action.damage.type.value, 0, '', this);
         }
         if (this.isIndirectCombatSpell()) {
-            const damage = hits + Math.floor(force/2) + Math.ceil(magic/2);
+            const damage = Math.floor(force/2) + Math.ceil(magic/2);
             return helpers_1.Helpers.createDamageData(damage, action.damage.type.value, 0, '', this);
         }		
     }
