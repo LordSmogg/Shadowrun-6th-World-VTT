@@ -27904,36 +27904,18 @@ class SR6Item extends Item {
                     dpParts.addUniquePart(mod.name, modification.data.dice_pool);
                 }
             });	
-/*
-			// cant seem to get his to work. But the idea is to get firering mode selected in the dropdown rather than on the weapon itself.
 			const mode = this.getLastFireMode();
-			if (mode) {
-				if (mode.single_shot) {
+			if (mode.value) {
+				if (mode.value==1) {
 					action.damage.mod = PartsList_1.PartsList.AddUniquePart(action.damage.mod, "SS", 0);
 				}
-				else if (mode.semi_auto) {
+				else if (mode.value==2) {
 					action.damage.mod = PartsList_1.PartsList.AddUniquePart(action.damage.mod, "SA", 1);
 				}
-				else if (mode.burst_fire) {
+				else if (mode.value==4) {
 					action.damage.mod = PartsList_1.PartsList.AddUniquePart(action.damage.mod, "BF", 2);
 				}
-				else if (mode.full_auto) {
-					action.damage.mod = PartsList_1.PartsList.AddUniquePart(action.damage.mod, "FA", 0);
-				}
-			}	
-*/			
-			const modes = this.getWeaponModes();
-			if (modes) {
-				if (modes.single_shot) {
-					action.damage.mod = PartsList_1.PartsList.AddUniquePart(action.damage.mod, "SS", 0);
-				}
-				else if (modes.semi_auto) {
-					action.damage.mod = PartsList_1.PartsList.AddUniquePart(action.damage.mod, "SA", 1);
-				}
-				else if (modes.burst_fire) {
-					action.damage.mod = PartsList_1.PartsList.AddUniquePart(action.damage.mod, "BF", 2);
-				}
-				else if (modes.full_auto) {
+				else {
 					action.damage.mod = PartsList_1.PartsList.AddUniquePart(action.damage.mod, "FA", 0);
 				}
 			}
