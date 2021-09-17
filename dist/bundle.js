@@ -19355,13 +19355,12 @@ var WeaponParser = /*#__PURE__*/function () {
           });
         }
 
-        if (chummerWeapon.ranges && chummerWeapon.ranges["near"] && chummerWeapon.ranges["close"] && chummerWeapon.ranges.medium && chummerWeapon.ranges["far"] && chummerWeapon.ranges.extreme) {
+        if (chummerWeapon.ranges && chummerWeapon.ranges["short"] && chummerWeapon.ranges.medium && chummerWeapon.ranges["long"] && chummerWeapon.ranges.extreme) {
           console.log(chummerWeapon.ranges);
           range.ranges = {
-            "near": parseInt(chummerWeapon.ranges["near"].split('-')[1]),			  
-            "close": parseInt(chummerWeapon.ranges["close"].split('-')[1]),
+            "short": parseInt(chummerWeapon.ranges["short"].split('-')[1]),
             medium: parseInt(chummerWeapon.ranges.medium.split('-')[1]),
-            "far": parseInt(chummerWeapon.ranges["far"].split('-')[1]),
+            "long": parseInt(chummerWeapon.ranges["long"].split('-')[1]),
             extreme: parseInt(chummerWeapon.ranges.extreme.split('-')[1])
           };
         } // TODO figure out how to add mods to weapons
@@ -21993,10 +21992,9 @@ exports.SR6 = {
         thrown: 'SR6.WeaponCatThrown',
     },
     weaponRanges: {
-        close: 'SR6.WeaponRangeClose',
-        near: 'SR6.WeaponRangeNear',
+        short: 'SR6.WeaponRangeShort',
         medium: 'SR6.WeaponRangeMedium',
-        far: 'SR6.WeaponRangeFar',
+        long: 'SR6.WeaponRangeLong',
         extreme: 'SR6.WeaponRangeExtreme',
     },
     qualityTypes: {
@@ -22319,10 +22317,9 @@ exports.SR = {
     combat: {
         environmental: {
             range_modifiers: {
-                close: 0,				
-                near: 0,
+                short: 0,
                 medium: 0,
-                far: 0,
+                long: 0,
                 extreme: 0,
                 // A modifier of zero will allow for users/gm to still test oor targets with their own judgement.
                 out_of_range: 0
@@ -25177,6 +25174,189 @@ Constants.MAP_CATEGORY_TO_SKILL = {
     'Unarmed': 'unarmed_combat',
 };
 Constants.WEAPON_RANGES = {
+    'Tasers': {
+        short: 5,
+        medium: 10,
+        long: 15,
+        extreme: 20,
+    },
+    'Holdouts': {
+        short: 5,
+        medium: 15,
+        long: 30,
+        extreme: 50,
+    },
+    'Light Pistols': {
+        short: 5,
+        medium: 15,
+        long: 30,
+        extreme: 50,
+    },
+    'Heavy Pistols': {
+        short: 5,
+        medium: 20,
+        long: 40,
+        extreme: 60,
+    },
+    'Machine Pistols': {
+        short: 5,
+        medium: 15,
+        long: 30,
+        extreme: 50,
+    },
+    'Submachine Guns': {
+        short: 10,
+        medium: 40,
+        long: 80,
+        extreme: 150,
+    },
+    'Assault Rifles': {
+        short: 25,
+        medium: 150,
+        long: 350,
+        extreme: 550,
+    },
+    'Shotguns': {
+        short: 10,
+        medium: 40,
+        long: 80,
+        extreme: 150,
+    },
+    'Shotguns (slug)': {
+        short: 10,
+        medium: 40,
+        long: 80,
+        extreme: 150,
+    },
+    'Shotguns (flechette)': {
+        short: 15,
+        medium: 30,
+        long: 45,
+        extreme: 60,
+    },
+    'Sniper Rifles': {
+        short: 50,
+        medium: 350,
+        long: 800,
+        extreme: 1500,
+    },
+    'Sporting Rifles': {
+        short: 50,
+        medium: 250,
+        long: 500,
+        extreme: 750,
+    },
+    'Light Machine Guns': {
+        short: 25,
+        medium: 200,
+        long: 400,
+        extreme: 800,
+    },
+    'Medium/Heavy Machinegun': {
+        short: 40,
+        medium: 250,
+        long: 750,
+        extreme: 1200,
+    },
+    'Assault Cannons': {
+        short: 50,
+        medium: 300,
+        long: 750,
+        extreme: 1500,
+    },
+    'Grenade Launchers': {
+        min: 5,
+        short: 50,
+        medium: 100,
+        long: 150,
+        extreme: 500,
+    },
+    'Missile Launchers': {
+        min: 20,
+        short: 70,
+        medium: 150,
+        long: 450,
+        extreme: 1500,
+    },
+    'Bows': {
+        short: 1,
+        medium: 10,
+        long: 30,
+        extreme: 60,
+        attribute: 'strength',
+    },
+    'Light Crossbows': {
+        short: 6,
+        medium: 24,
+        long: 60,
+        extreme: 120,
+    },
+    'Medium Crossbows': {
+        short: 9,
+        medium: 36,
+        long: 90,
+        extreme: 150,
+    },
+    'Heavy Crossbows': {
+        short: 15,
+        medium: 45,
+        long: 120,
+        extreme: 180,
+    },
+    'Thrown Knife': {
+        short: 1,
+        medium: 2,
+        long: 3,
+        extreme: 5,
+        attribute: 'strength',
+    },
+    'Net': {
+        short: 0.5,
+        medium: 1,
+        long: 1.5,
+        extreme: 2.5,
+        attribute: 'strength',
+    },
+    'Shuriken': {
+        short: 1,
+        medium: 2,
+        long: 5,
+        extreme: 7,
+        attribute: 'strength',
+    },
+    'Standard Grenade': {
+        short: 2,
+        medium: 4,
+        long: 6,
+        extreme: 10,
+        attribute: 'strength',
+    },
+    'Aerodynamic Grenade': {
+        min: 0,
+        short: 2,
+        medium: 4,
+        long: 8,
+        extreme: 15,
+        attribute: 'strength',
+    },
+    'Harpoon Gun': {
+        short: 5,
+        medium: 20,
+        long: 40,
+        extreme: 60,
+    },
+    'Harpoon Gun (Underwater)': {
+        short: 6,
+        medium: 24,
+        long: 60,
+        extreme: 120,
+    },
+    'Flamethrowers': {
+        short: 15,
+        medium: 20,
+        long: -1,
+        extreme: -1,
+    },
 };
 Constants.ROOT_IMPORT_FOLDER_NAME = 'SR6e';
 
@@ -26276,10 +26456,9 @@ class WeaponImporter extends DataImporter_1.DataImporter {
                 range: {
                     category: '',
                     ranges: {
-                        close: 0,						
-                        near: 0,
+                        short: 0,
                         medium: 0,
-                        far: 0,
+                        long: 0,
                         extreme: 0,
                     },
                     rc: {
@@ -26299,10 +26478,9 @@ class WeaponImporter extends DataImporter_1.DataImporter {
                 },
                 thrown: {
                     ranges: {
-                        close: 0,						
-                        near: 0,
+                        short: 0,
                         medium: 0,
-                        far: 0,
+                        long: 0,
                         extreme: 0,
                         attribute: '',
                     },
@@ -27436,7 +27614,7 @@ exports.ChatData = {
                 props.push(`${game.i18n.localize('SR6.Dropoff')} ${blast.dropoff}/m`);
             if (data.thrown.ranges) {
                 const mult = data.thrown.ranges.attribute && (item === null || item === void 0 ? void 0 : item.actor) ? item.actor.data.data.attributes[data.thrown.ranges.attribute].value : 1;
-                const ranges = [data.thrown.ranges.close, data.thrown.ranges.near, data.thrown.ranges.medium, data.thrown.ranges.far, data.thrown.ranges.extreme];
+                const ranges = [data.thrown.ranges.short, data.thrown.ranges.medium, data.thrown.ranges.long, data.thrown.ranges.extreme];
                 props.push(ranges.map((v) => v * mult).join('/'));
             }
         }

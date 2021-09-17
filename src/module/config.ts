@@ -137,10 +137,9 @@ export const SR6 = {
     },
 
     weaponRanges: {
-        close: 'SR6.WeaponRangeClose',
-        near: 'SR6.WeaponRangeNear',
+        short: 'SR6.WeaponRangeShort',
         medium: 'SR6.WeaponRangeMedium',
-        far: 'SR6.WeaponRangeFar',
+        long: 'SR6.WeaponRangeLong',
         extreme: 'SR6.WeaponRangeExtreme',
     },
 

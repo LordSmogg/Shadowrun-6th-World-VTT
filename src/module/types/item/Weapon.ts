@@ -45,10 +45,9 @@ declare namespace Shadowrun {
      * Weapon ranges data.
      */
     export type RangeData = {
-        close: number;		
-        near: number;
+        short: number;
         medium: number;
-        far: number;
+        long: number;
         extreme: number;
         attribute?: ActorAttribute;
     };

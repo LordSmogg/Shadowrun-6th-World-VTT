@@ -93,10 +93,9 @@ export class WeaponImporter extends DataImporter {
                 range: {
                     category: '',
                     ranges: {
-                        close: 0,						
-                        near: 0,
+                        short: 0,
                         medium: 0,
-                        far: 0,
+                        long: 0,
                         extreme: 0,
                     },
                     rc: {
@@ -116,10 +115,9 @@ export class WeaponImporter extends DataImporter {
                 },
                 thrown: {
                     ranges: {
-                        close: 0,						
-                        near: 0,
+                        short: 0,
                         medium: 0,
-                        far: 0,
+                        long: 0,
                         extreme: 0,
                         attribute: '',
                     },

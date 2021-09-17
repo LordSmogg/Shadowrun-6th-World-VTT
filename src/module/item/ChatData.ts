@@ -303,7 +303,7 @@ export const ChatData = {
 
             if (data.thrown.ranges) {
                 const mult = data.thrown.ranges.attribute && item?.actor ? item.actor.data.data.attributes[data.thrown.ranges.attribute].value : 1;
-                const ranges = [data.thrown.ranges.close, data.thrown.ranges.near, data.thrown.ranges.medium, data.thrown.ranges.far, data.thrown.ranges.extreme];
+                const ranges = [data.thrown.ranges.short, data.thrown.ranges.medium, data.thrown.ranges.long, data.thrown.ranges.extreme];
                 props.push(ranges.map((v) => v * mult).join('/'));
             }
         }

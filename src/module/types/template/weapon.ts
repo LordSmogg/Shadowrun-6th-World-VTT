@@ -1,9 +1,8 @@
 declare namespace Shadowrun {
     export type RangesTemplateData = {
-		close: RangeTemplateData,
-        near: RangeTemplateData,
+        short: RangeTemplateData,
         medium: RangeTemplateData,
-        far: RangeTemplateData,
+        long: RangeTemplateData,
         extreme: RangeTemplateData,
     }
 
