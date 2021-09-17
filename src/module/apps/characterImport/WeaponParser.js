@@ -107,15 +107,17 @@ export class WeaponParser {
                 });
             }
             if (chummerWeapon.ranges &&
-                chummerWeapon.ranges.short &&
+                chummerWeapon.ranges.close &&			
+                chummerWeapon.ranges.near &&
                 chummerWeapon.ranges.medium &&
-                chummerWeapon.ranges.long &&
+                chummerWeapon.ranges.far &&
                 chummerWeapon.ranges.extreme) {
                 console.log(chummerWeapon.ranges);
                 range.ranges = {
-                    short: parseInt(chummerWeapon.ranges.short.split('-')[1]),
+                    close: parseInt(chummerWeapon.ranges.close.split('-')[1]),					
+                    near: parseInt(chummerWeapon.ranges.near.split('-')[1]),
                     medium: parseInt(chummerWeapon.ranges.medium.split('-')[1]),
-                    long: parseInt(chummerWeapon.ranges.long.split('-')[1]),
+                    far: parseInt(chummerWeapon.ranges.far.split('-')[1]),
                     extreme: parseInt(chummerWeapon.ranges.extreme.split('-')[1]),
                 };
             }

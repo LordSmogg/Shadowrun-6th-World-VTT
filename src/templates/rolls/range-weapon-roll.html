@@ -33,7 +33,7 @@
         <label>{{localize 'SR6.Range'}}</label>
         <select name="range" {{#if disableTargetRange}}disabled title="{{localize "SR6.Dialogs.RangedWeaponTest.EnvironmentalOverwriteSet"}}"{{/if}}>
             {{#select targetRange}} {{#each ranges as |range key|}}
-            <option value="{{range.modifier}}">{{localize range.label}} ({{range.distance}} m)</option>
+            <option value="{{range.modifier}}">{{localize range.label}} (AR {{range.distance}})</option>
             {{/each}} {{/select}}
         </select>
     </div>
