@@ -26456,10 +26456,10 @@ class WeaponImporter extends DataImporter_1.DataImporter {
                 range: {
                     category: '',
                     ranges: {
-                        short: 0,
-                        medium: 0,
-                        long: 0,
-                        extreme: 0,
+                        short: 4,
+                        medium: 50,
+                        long: 250,
+                        extreme: 500,
                     },
                     rc: {
                         value: 0,
@@ -26467,7 +26467,7 @@ class WeaponImporter extends DataImporter_1.DataImporter {
                         mod: [],
                     },
                     modes: {
-                        single_shot: false,
+                        single_shot: true,
                         semi_auto: false,
                         burst_fire: false,
                         full_auto: false,
@@ -26478,10 +26478,10 @@ class WeaponImporter extends DataImporter_1.DataImporter {
                 },
                 thrown: {
                     ranges: {
-                        short: 0,
-                        medium: 0,
-                        long: 0,
-                        extreme: 0,
+                        short: 4,
+                        medium: 50,
+                        long: 250,
+                        extreme: 500,
                         attribute: '',
                     },
                     blast: {
