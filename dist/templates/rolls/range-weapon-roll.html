@@ -6,7 +6,7 @@
     </div>
     {{/if}}
     <div class="form-group">
-        <label>{{localize 'SR6.FireMode'}}{{#if rc}} ({{localize 'SR6.Total'}} {{localize 'SR6.RecoilCompensation'}}{{rc}}){{/if}}</label>
+        <label>{{localize 'SR6.FireMode'}}</label>
         <select name="fireMode">
             {{#select fireMode}} {{#each fireModes as |description count|}}
             <option value="{{count}}">
@@ -29,13 +29,5 @@
         </select>
     </div>
     {{else}}
-    <div class="form-group">
-        <label>{{localize 'SR6.Range'}}</label>
-        <select name="range" {{#if disableTargetRange}}disabled title="{{localize "SR6.Dialogs.RangedWeaponTest.EnvironmentalOverwriteSet"}}"{{/if}}>
-            {{#select targetRange}} {{#each ranges as |range key|}}
-            <option value="{{range.modifier}}">{{localize range.label}} ({{range.distance}} m)</option>
-            {{/each}} {{/select}}
-        </select>
-    </div>
     {{/if}}
 </form>

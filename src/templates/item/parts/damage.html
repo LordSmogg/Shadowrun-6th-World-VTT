@@ -60,20 +60,5 @@
             </select>
         </div>
     </div>
-    {{#ifne item.type "spell"}}
-    <div class="form-line">
-        <div class="label">
-            {{localize "SR6.AP"}}
-        </div>
-        <div class="inputs">
-            <input
-                type="text"
-                name="data.action.damage.ap.base"
-                value="{{data.action.damage.ap.base}}"
-                data-dtype="Number"
-                placeholder="AP"
-            />
-        </div>
-    </div>
-    {{/ifne}} {{/if}}
+ {{/if}}
 </div>
