@@ -24280,13 +24280,6 @@ ___________________
     static renderChatMessage(message, html, data) {
         chat.addRollListeners(message, html);
     }
-    static renderItemDirectory(app, html) {
-        const button = $('<button>Import Chummer Data</button>');
-        html.find('footer').before(button);
-        button.on('click', (event) => {
-            new import_form_1.Import().render(true);
-        });
-    }
 }
 exports.HooksManager = HooksManager;
 
