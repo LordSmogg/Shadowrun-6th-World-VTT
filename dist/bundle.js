@@ -31457,9 +31457,9 @@ const registerSystemSettings = () => {
         name: 'SETTINGS.ApplyLimitsName',
         hint: 'SETTINGS.ApplyLimitsDescription',
         scope: 'world',
-        config: true,
+        config: false,
         type: Boolean,
-        default: true,
+        default: false,
     });
     game.settings.register(constants_1.SYSTEM_NAME, 'displayDefaultRollCard', {
         name: 'SETTINGS.DisplayDefaultRollCardName',
