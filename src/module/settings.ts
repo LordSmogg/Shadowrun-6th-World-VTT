@@ -30,9 +30,9 @@ export const registerSystemSettings = () => {
         name: 'SETTINGS.ApplyLimitsName',
         hint: 'SETTINGS.ApplyLimitsDescription',
         scope: 'world',
-        config: true,
+        config: false,
         type: Boolean,
-        default: true,
+        default: false,
     });
 
     game.settings.register(SYSTEM_NAME, 'displayDefaultRollCard', {
