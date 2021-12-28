@@ -2,13 +2,13 @@
     "name": "shadowrun6e",
     "title": "Shadowrun 6th Edition",
     "description": "Shadowrun 6th Edition game",
-    "version": "0.8.9.16",
+    "version": "0.9",
     "templateVersion": "3",
     "author": "LordSmogg",
     "esmodules": ["dist/bundle.js"],
     "styles": ["dist/bundle.css"],
-    "minimumCoreVersion": "0.8.9",
-    "compatibleCoreVersion": "0.8.9",
+    "minimumCoreVersion": "0.9",
+    "compatibleCoreVersion": "0.9",
     "languages": [
         {
             "lang": "en",
@@ -50,7 +50,7 @@
     "socket": true,
     "manifest": "https://raw.githubusercontent.com/LordSmogg/Shadowrun-6th-World-VTT/master/system.json",
     "url": "https://github.com/LordSmogg/Shadowrun-6th-World-VTT",
-    "download": "https://github.com/LordSmogg/Shadowrun-6th-World-VTT/archive/refs/tags/v0.8.9.16.zip",
+    "download": "https://github.com/LordSmogg/Shadowrun-6th-World-VTT/archive/refs/tags/v0.9.zip",
     "allowBugReporter": true,
     "bugs": "https://github.com/LordSmogg/Shadowrun-6th-World-VTT/issues"
 }
